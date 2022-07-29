@@ -1,0 +1,17 @@
+{% load crispy_forms_tags %}
+<div class="container base-container login" style="margin-top: 30px;">
+    <h5>{{message}}</h5>
+    <h2>Sign in</h2>
+            <div class="d-flex justify-content-center justify-content-md-start" style="margin: 40px 0;">
+            <div class="base-div col-md-5 col-10 formLogin">
+            <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button	class="btn btn-brand"	type="submit">Sign in</button>
+            </form>
+        </article>
+    
+        </div>
+        </div>
+    </div>
