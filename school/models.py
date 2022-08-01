@@ -41,21 +41,29 @@ class Classes(models.Model):
 '''
 
 class Student(models.Model):
+    student_roll=models.IntegerField( null=True,blank=True)
     student_name=models.CharField(max_length =255, null=True,blank=True)
-    student_course_name=models.CharField(max_length =255, null=True,blank=True)
+    #student_course_name=models.CharField(max_length =255, null=True,blank=True)
     student_school =models.ForeignKey( School, on_delete=models.CASCADE)
     student_teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
     student_class=models.CharField(max_length =255, null=True,blank=True)
+    student_session=models.CharField(max_length =255,null=True,blank=True)
+
     def __str__(self):
         return self.student_name
 
 
 class AssignedTeacher(models.Model):
-    course_name=models.CharField(max_length =255, null=True,blank=True,choices=COURSE_CHOICES)
+    #course_name=models.CharField(max_length =255, null=True,blank=True,choices=COURSE_CHOICES)
     course_class=models.CharField(max_length =255,null=True,blank=True,choices=CLASS_CHOICES)
     course_teacher=models.ForeignKey( Teacher, on_delete=models.CASCADE)
     course_school=models.ForeignKey( School, on_delete=models.CASCADE)
+    course_session=models.CharField(max_length =255,null=True,blank=True)
     def __str__(self):
-        return self.course_name
+        return self.course_class
 
 
+class SchoolSessions(models.Model):
+    session=models.CharField(max_length =255,null=True,blank=True)
+    def __str__(self):
+        return self.session

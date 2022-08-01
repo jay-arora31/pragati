@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
+import django.contrib.auth as auth1
 
 from django.contrib.auth import logout, authenticate, login, get_user_model
 from authapp.models import CustomUser
@@ -10,8 +11,15 @@ from django.shortcuts import render,get_object_or_404,redirect,reverse
 from django.contrib import messages
 from .decorators import school_auth
 from authapp.forms import CustomUserCreationForm,School_info,Teacher_info
+from django.shortcuts import render, HttpResponseRedirect
 
 from school.models import *
+def logout(request):
+    # Log out the user.
+    auth1.logout(request)
+    # Return to homepage.
+    return redirect('login')
+
 
 def home( request):
     return render(request,'home.html')
@@ -46,6 +54,7 @@ def register_teacher( request):
                 print("form is va;id")
                 user=form.save(commit =False)
                 user.email =user.email.lower()
+                user.username=user.email
                 user.active =False
                 user.is_teacher=True
                 user.save()
@@ -88,13 +97,16 @@ def login(request):
     return render(request,'login.html', {'form':form,})
 
 def school_home(request):
-    if request.user.is_school:
+
 
         return render(request,'school_home.html')
-    else:
-        return render(request,'wrong.html')
+
 def govt_home(request):
     return render(request,'govt_home.html')
 
 def teacher_home(request):
-    return render(request,'teacher_home.html')
+    students=Student.objects.filter(student_teacher__t_info__email=request.user)
+    context={
+        'students':students
+    }
+    return render(request,'teacher_home.html',context)

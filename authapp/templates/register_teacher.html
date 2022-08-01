@@ -1,27 +1,46 @@
 
-<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
-    <h1>Teacher register</h1>
-    <style>
-        .name{
-            margin: 40px;
-        }
-    </style>
-      <hr>
-      <div class="d-flex justify-content-center justify-content-md-start">
-        <div class="base-div col-md-8 col-lg-4" style="background-color: whitesmoke; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2),
-      -3px -3px 4px rgba(255, 255, 255, 1); margin-top: 30px;">
-          <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Add Teachers</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="students.html">Teachers</a></li>
+          <li class="breadcrumb-item active">Add Teachers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+            <!-- <div class="row"> -->
+            <div class="col-12">
+              <h5 class="form-title"><span>Teacher Information</span></h5>
+            </div>
             <form action="" method="POST">
               {% csrf_token %}
               {{form}}
               {{info_form}}
-            
-            <div style="display: grid;">
-            <button class="btn btn-brand mt-3" type="submit">Save </button>
+
+
+<br>
+            <div class="col-12" style="margin-left: -12px;">
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-        </form>
-          </article>
+
+          </form>
         </div>
       </div>
     </div>
-    
+  </div>
+</div>
+  {% endblock %}
+  
+  

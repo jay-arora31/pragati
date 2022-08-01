@@ -21,6 +21,9 @@ from . import views
 urlpatterns = [
       path('assign_teacher/',views.assign_teacher,name='assign_teacher' ),
       path('add_student/',views.add_student,name='add_student' ),
+      path('teacher_view/',views.teacher_view,name='teacher_view' ),
+      path('teacher_delete/<int:id>',views.teacher_delete,name='teacher_delete' ),
+
 
       
 

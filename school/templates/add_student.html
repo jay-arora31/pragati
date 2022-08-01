@@ -25,7 +25,18 @@
             <form action="" method="POST">
               {% csrf_token %}
               {{form}}
- 
+              <select class="form-select form-select-lg mb-3"  name="class" aria-label=".form-select-lg example">
+                <option selected>Choose Class</option>
+                {% for i in teacher_classes %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select class="form-select form-select-lg mb-3"  name="session" aria-label=".form-select-lg example">
+                <option selected>Choose Session</option>
+                {% for i in teacher_session %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
             
             <div style="display: grid;">
             <button class="btn btn-brand mt-3" type="submit">Save </button>

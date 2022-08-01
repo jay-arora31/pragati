@@ -22,21 +22,24 @@ class CustomUserCreationForm(UserCreationForm):
     
     class Meta(UserCreationForm.Meta):
         model =CustomUser
-        fields =['username','email']
+        fields =['email']
 
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields.pop('password2')
         self.fields['password1'].help_text =""
-        self.fields['username'].help_text=""
+        #self.fields['username'].help_text=""
         self.fields['password1'].widget.attrs.update(style='max-height: 33px')
-        self.fields['username'].widget.attrs.update(style='max-height: 33px')
+        #self.fields['username'].widget.attrs.update(style='max-height: 33px')
         self.fields['email'].widget.attrs.update(style='max-height: 33px')
+        #self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
 
         self.helper = FormHelper()
         self.helper.layout=Layout(
-            'username',
+            
             'email',
             'password1',
             Submit('submit', 'Sign up')
@@ -62,7 +65,7 @@ class School_info(forms.ModelForm):
 class Teacher_info(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(Teacher_info,self).__init__(*args,**kwargs)
-        self.fields['t_name'].widget.attrs['placeholder'] = 'Type a message...'
+        self.fields['t_name'].widget.attrs['class'] = 'form-control'
  
     class Meta:
                 model =Teacher
