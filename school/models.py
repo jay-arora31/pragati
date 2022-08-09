@@ -33,6 +33,7 @@ class Teacher(models.Model):
     t_info= models.ForeignKey(settings.AUTH_USER_MODEL,db_index=True,on_delete =models.CASCADE)
     def __str__(self):
         return self.t_name
+
 '''
 class Classes(models.Model):
     c_standard=models.CharField(max_length =255, null=True,blank=True)
@@ -40,21 +41,24 @@ class Classes(models.Model):
     c_teacher =models.ForeignKey( Teacher,related_name='teacher_info',on_delete=models.CASCADE)
 '''
 
-class Student(models.Model):
-    student_roll=models.IntegerField( null=True,blank=True)
-    student_name=models.CharField(max_length =255, null=True,blank=True)
-    #student_course_name=models.CharField(max_length =255, null=True,blank=True)
-    student_school =models.ForeignKey( School, on_delete=models.CASCADE)
-    student_teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
-    student_class=models.CharField(max_length =255, null=True,blank=True)
-    student_session=models.CharField(max_length =255,null=True,blank=True)
-
+class SchoolSessions(models.Model):
+    session=models.CharField(max_length =255,null=True,blank=True)
     def __str__(self):
-        return self.student_name
+        return self.session
+
+
+
+class class_subject(models.Model):
+    subject_name=models.CharField(max_length =255, null=True,blank=True,choices=COURSE_CHOICES)
+    subject_class=models.CharField(max_length =255, null=True,blank=True,choices=CLASS_CHOICES)
+    subject_learning=models.IntegerField(null=True,blank=True,default=0)
+    subject_school=models.ForeignKey( School, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.subject_school.s_name
 
 
 class AssignedTeacher(models.Model):
-    #course_name=models.CharField(max_length =255, null=True,blank=True,choices=COURSE_CHOICES)
+    course_name=models.ForeignKey( class_subject, on_delete=models.CASCADE)
     course_class=models.CharField(max_length =255,null=True,blank=True,choices=CLASS_CHOICES)
     course_teacher=models.ForeignKey( Teacher, on_delete=models.CASCADE)
     course_school=models.ForeignKey( School, on_delete=models.CASCADE)
@@ -62,8 +66,31 @@ class AssignedTeacher(models.Model):
     def __str__(self):
         return self.course_class
 
+        
+class Student(models.Model):
+    student_roll=models.IntegerField( null=True,blank=True)
+    student_name=models.CharField(max_length =255, null=True,blank=True)
+    student_course_name=models.CharField(max_length =255, null=True,blank=True)
+    student_school =models.ForeignKey( School, on_delete=models.CASCADE)
+    student_teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    student_class=models.CharField(max_length =255, null=True,blank=True)
+    student_session=models.CharField(max_length =255,null=True,blank=True)
 
-class SchoolSessions(models.Model):
-    session=models.CharField(max_length =255,null=True,blank=True)
+ 
+
+
+
+
+
+
+class StudentMarks(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    eng=models.IntegerField(null=True,blank=True,default=0)
+    math=models.IntegerField(null=True,blank=True,default=0)
+    sci=models.IntegerField(null=True,blank=True,default=0)
+    sst=models.IntegerField(null=True,blank=True,default=0)
+    hindi=models.IntegerField(null=True,blank=True,default=0)
+    tot=models.IntegerField(null=True,blank=True,default=0)
+    per=models.FloatField(null=True,blank=True,default=0)
     def __str__(self):
-        return self.session
+        return self.student_info.student_name

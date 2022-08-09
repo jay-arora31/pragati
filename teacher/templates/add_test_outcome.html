@@ -1,0 +1,81 @@
+
+
+
+{%  load static %}
+{{request.user}}
+
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
+<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
+    <h1>Select Class and session of Student</h1>
+    <style>
+        .name{
+            margin: 40px;
+        }
+    </style>
+      <hr>
+      <div class="d-flex justify-content-center justify-content-md-start">
+        <div class="base-div col-md-8 col-lg-4" style="background-color: whitesmoke; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2),
+      -3px -3px 4px rgba(255, 255, 255, 1); margin-top: 30px;">
+          <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
+            <form action="{% url 'add_question_outcome' %}" method="POST">
+                {% csrf_token %}
+
+              <select class="form-select form-select-lg mb-3"  name="test_class" aria-label=".form-select-lg example">
+                <option selected>Choose Class</option>
+                {% for i in test_class %}
+                <option value="{{i}}" selected>{{i}}</option>
+                {% endfor %}
+              </select>
+              <select class="form-select form-select-lg mb-3"  name="test_session" aria-label=".form-select-lg example">
+                <option selected>Choose Session</option>
+                {% for i in test_session %}
+                <option value="{{i}}" selected>{{i}}</option>
+                {% endfor %}
+              </select>
+       
+              <select class="form-select form-select-lg mb-3"  name="test_subject" aria-label=".form-select-lg example">
+                <option selected>Choose Subjects</option>
+                {% for i in test_subject %}
+                <option value="{{i}}" selected>{{i}}</option>
+                {% endfor %}
+              </select>
+       
+                 
+              <select class="form-select form-select-lg mb-3"  name="test_type" aria-label=".form-select-lg example">
+                <option selected>Choose TestType</option>
+                {% for i in test_type %}
+                <option value="{{i}}" selected>{{i}}</option>
+                {% endfor %}
+              </select>
+              {% with ''|center:count as range %}
+              {% for _ in range %}
+              <label for="">Question {{ forloop.counter}}</label>
+
+             
+              <select class="form-select form-select-lg mb-3"  name="text{{ forloop.counter}}" aria-label=".form-select-lg example">
+                <option selected>Choose Course Outcome</option>
+                {% with ''|center:co_count as range %}
+                {% for _ in range %}
+                <option value="CO{{ forloop.counter}}">CO{{ forloop.counter}}</option>
+                {% endfor %}
+                {% endwith %}
+                                
+              </select>
+         
+              <br> <br> <br>
+              {% endfor %}
+              {% endwith %}
+            <div style="display: grid;">
+            <button class="btn btn-brand mt-3" type="submit">Filter </button>
+            </div>
+        </form>
+          </article>
+        </div>
+      </div>
+    </div>
+    

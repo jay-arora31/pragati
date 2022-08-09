@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('authapp.urls')),
     path('school/',include('school.urls')),
+    path('teacher/',include('teacher.urls')),
 ]

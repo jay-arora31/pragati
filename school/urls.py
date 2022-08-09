@@ -20,10 +20,18 @@ from . import views
 
 urlpatterns = [
       path('assign_teacher/',views.assign_teacher,name='assign_teacher' ),
-      path('add_student/',views.add_student,name='add_student' ),
+      #path('add_student/',views.add_student,name='add_student' ),
       path('teacher_view/',views.teacher_view,name='teacher_view' ),
       path('teacher_delete/<int:id>',views.teacher_delete,name='teacher_delete' ),
-
+      path('select_student/',views.select_student,name='select_student' ),
+      #path('add_marks/',views.add_marks,name='add_marks' ),
+      path('submit_marks/',views.submit_marks,name='submit_marks' ),
+      path('assign_subject/',views.assign_subject,name='assign_subject' ),
+      path('view_subjects/',views.view_subjects,name='view_subjects' ),
+      path('view_class_subjects/<str:key>/',views.view_class_subjects,name='view_class_subjects' ),
+        path('get-topics-ajax/', views.get_topics_ajax, name="get_topics_ajax"),
+      path('subject_delete/<int:id>/',views.subject_delete,name='subject_delete' ),
+      path('view_assigned_teachers',views.view_assigned_teachers,name='view_assigned_teachers' ),
 
       
 

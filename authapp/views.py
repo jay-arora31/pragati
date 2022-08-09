@@ -34,6 +34,7 @@ def register_school( request):
                 print("form is va;id")
                 user=form.save(commit =False)
                 user.email =user.email.lower()
+                user.username=user.email
                 user.active =False
                 user.is_school=True
                 user.save()
@@ -97,8 +98,6 @@ def login(request):
     return render(request,'login.html', {'form':form,})
 
 def school_home(request):
-
-
         return render(request,'school_home.html')
 
 def govt_home(request):

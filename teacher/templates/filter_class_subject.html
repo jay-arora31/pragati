@@ -1,0 +1,55 @@
+
+
+
+{%  load static %}
+{{request.user}}
+
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
+<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
+    <h1>Select Class and session of Student</h1>
+    <style>
+        .name{
+            margin: 40px;
+        }
+    </style>
+      <hr>
+      <div class="d-flex justify-content-center justify-content-md-start">
+        <div class="base-div col-md-8 col-lg-4" style="background-color: whitesmoke; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2),
+      -3px -3px 4px rgba(255, 255, 255, 1); margin-top: 30px;">
+          <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
+            <form action="{% url 'add_student' %}" method="GET">
+                {% csrf_token %}
+
+              <select class="form-select form-select-lg mb-3"  name="student_class" aria-label=".form-select-lg example">
+                <option selected>Choose Class</option>
+                {% for i in teacher_classes %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select class="form-select form-select-lg mb-3"  name="student_session" aria-label=".form-select-lg example">
+                <option selected>Choose Session</option>
+                {% for i in teacher_session %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select class="form-select form-select-lg mb-3"  name="subject" aria-label=".form-select-lg example">
+                <option selected>Choose Subject</option>
+                {% for i in classes %}
+                <option value="{{i.course_name.subject_name}}">{{i.course_name.subject_name}}</option>
+                {% endfor %}
+              </select>
+            
+            <div style="display: grid;">
+            <button class="btn btn-brand mt-3" type="submit">Filter </button>
+            </div>
+        </form>
+          </article>
+        </div>
+      </div>
+    </div>
+    

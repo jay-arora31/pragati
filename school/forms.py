@@ -6,6 +6,7 @@ from msilib.schema import Class
 from django import forms
 from .models import *
 from school.models import *
+from teacher.models import *
 
 from django import forms
 
@@ -49,5 +50,45 @@ class AddStudentForm(forms.ModelForm):
 
 
 
+class AddMarks(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(AddMarks,self).__init__(*args,**kwargs)
+        self.fields['eng'].widget.attrs['class'] = 'form-control'
 
+ 
+    class Meta:
+                model =StudentMarks
+                fields =('eng','hindi','math','sst','sci')
+                
+                labels = {
+                            'eng': ('English'),
+                            'hindi': ('Hindi'),
+                            'math': ('Maths'),
+                            'sst': ('Social studies'),
+                            'sci': ('Science'),
+                }
+
+
+
+
+
+class AssignClassCourse(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(AssignClassCourse,self).__init__(*args,**kwargs)
+        self.fields['subject_name'].widget.attrs['class'] = 'form-control form-group'
+        self.fields['subject_learning'].widget.attrs['class'] = 'form-control form-group'
+        self.fields['subject_class'].widget.attrs['class'] = 'form-control form-group'
+    class Meta:
+                model =class_subject
+                fields =('subject_name','subject_class','subject_learning')
+                widgets = {
+     
+
+                    }
+                labels = {
+                            
+                             'subject_name': ('Subject Name'),
+                             'subject_class': ('Subject Class'),
+                             'subject_learning': ('Subject Learning Outcome'),
+                }    
 
