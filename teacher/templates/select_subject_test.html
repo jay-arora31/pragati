@@ -22,24 +22,19 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="form-title"><span>Student Information</span></h5>
-            <form action="{% url 'add_student' %}" method="GET">
-              {% csrf_token %}
-        
-                 
+            <form action="{% url 'add_student_marks' %}" method="GET">
+              <!-- <div class="row"> -->
+              <div class="col-12">
+                <h5 class="form-title"><span>Filter Class</span></h5>
+              </div>
              
               <div class=" col-sm-11">
                 <div class="form-group">
-                  {{form}}
-                </div>
-              </div>
-     
-              <div class=" col-sm-11">
-                <div class="form-group">
-                  <label>Class</label>
-                  <select class="form-control">
-                    {% for i in student_class %}
-                    <option value="{{i}}" selected>{{i}}</option>
+                  <label>Session</label>
+                  <select class="form-control" name="test_session">
+                    <option selected>Choose Session</option>
+                    {% for i in session %}
+                    <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -49,10 +44,11 @@
 
               <div class=" col-sm-11">
                 <div class="form-group">
-                  <label>Session</label>
-                  <select class="form-control" name="course_session">
-                    {% for i in student_session  %}
-                    <option value="{{i}}" selected>{{i}}</option>
+                  <label>Class</label>
+                  <select class="form-control" name="test_class">
+                    <option selected>Choose Class</option>
+                    {% for i in class_all %}
+                    <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -62,15 +58,29 @@
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Subject</label>
-                  <select class="form-control" name="subject">
-                    {% for i in subject %}
-                    <option value="{{i}}" selected>{{i}}</option>
-                    {% endfor %}
+                  <select class="form-control" name="test_subject">
+                    <option selected>Choose Subject</option>
+                    {% for i in subjects %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Test</label>
+                  <select class="form-control" name="test_type">
+                    <option selected>Choose Test Type</option>
+                    {% for i in tests %}
+                <option value="{{i.test.test_name}}">{{i.test.test_name}}</option>
+                {% endfor %}
                   </select>
                 </div>
               </div>
      
-
+         
+             
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>

@@ -24,7 +24,7 @@ class AddTestForm(forms.ModelForm):
         self.fields['no_que'].widget.attrs['class'] = 'form-control form-group'
     class Meta:
                 model =AddTest
-                fields =('test_name','test_class','total_marks','no_que')
+                fields =('test_name','test_class','no_que','total_marks')
                 widgets = {
      
 
@@ -32,4 +32,5 @@ class AddTestForm(forms.ModelForm):
                 labels = {
                             
                              'test_name': ('Test Name'),
+                             'no_que': ('Number of question'),
                 }    

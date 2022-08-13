@@ -1,7 +1,9 @@
-{% load static %}
-teacher Home
+     
 
-{{request.user.email}}
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+{% block content %}
 
 
 <a href="{%  url 'filter_class_subject'  %}">Filter Class and subject </a>
@@ -16,6 +18,8 @@ teacher Home
 <div class="container">
   <a href="{%  url 'view_all_test'  %}">View Tests</a><br>
   <a href="{%  url 'select_test_outcome'  %}">Add Outcomes</a>
+  <a href="{%  url 'add_test'  %}">Add Test</a>
+  <a href="{%  url 'select_subject_test'  %}">Select Test</a>
   
 <table class="table">
     <thead class="thead-dark">
@@ -38,3 +42,4 @@ teacher Home
   
 </div>
   
+{% endblock %}

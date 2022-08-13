@@ -12,6 +12,7 @@ from django.contrib import messages
 from .decorators import school_auth
 from authapp.forms import CustomUserCreationForm,School_info,Teacher_info
 from django.shortcuts import render, HttpResponseRedirect
+import plotly.express as px
 
 from school.models import *
 def logout(request):
@@ -98,7 +99,23 @@ def login(request):
     return render(request,'login.html', {'form':form,})
 
 def school_home(request):
-        return render(request,'school_home.html')
+    student=Student.objects.filter(student_school__s_info__email=request.user)
+    data=[]
+    for i in student:
+        data.append("Class "+i.student_class)
+        print(i.student_class)
+
+    fig = px.histogram(
+        x=data,
+        
+        title="Student Count",
+        labels={'x': 'Classes'}
+    )
+    fig.update_layout(yaxis_title="Number of Students")
+
+    chart = fig.to_html()
+    
+    return render(request,'school_home.html',context={'chart': chart})
 
 def govt_home(request):
     return render(request,'govt_home.html')

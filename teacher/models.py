@@ -31,7 +31,24 @@ class AddTest(models.Model):
 class AssignOutcome(models.Model):
     question_no=models.IntegerField( null=True,blank=True)
     course_ot=models.CharField(max_length =255, null=True,blank=True)
+    mark=models.IntegerField( null=True,blank=True)
     test=models.ForeignKey( AddTest, on_delete=models.CASCADE)
     subject =models.ForeignKey( class_subject, on_delete=models.CASCADE)
     school =models.ForeignKey( School, on_delete=models.CASCADE)
     teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.school.s_name+"____"+self.subject.subject_name+"_____"+self.test.test_name+"___Class--"+self.subject.subject_class
+
+
+
+class TestMark(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    question_info=models.ForeignKey( AssignOutcome, on_delete=models.CASCADE)
+    obtain_mark=models.IntegerField(null=True,blank=True)
+    test_type=models.ForeignKey( AddTest, on_delete=models.CASCADE)
+    subject =models.ForeignKey( class_subject, on_delete=models.CASCADE)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.question_info.question_no)
+

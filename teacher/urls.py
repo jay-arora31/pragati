@@ -23,11 +23,18 @@ urlpatterns = [
      
             #path('add_marks/',views.add_marks,name='add_marks' ),
             path('add_student/',views.add_student,name='add_student' ),
+            path('add_student_excel/',views.add_student_excel,name='add_student_excel' ),
+
+            
             path('filter_class_subject/',views.filter_class_subject,name='filter_class_subject' ),
             path('add_test/',views.add_test,name='add_test' ),
             path('view_all_test/',views.view_all_test,name='view_all_test' ),
             path('select_test_outcome/',views.select_test_outcome,name='select_test_outcome' ),
             path('add_question_outcome/',views.add_question_outcome,name='add_question_outcome' ),
+            path('select_subject_test/',views.select_subject_test,name='select_subject_test' ),
+            path('add_student_marks/',views.add_student_marks,name='add_student_marks' ),
+            path('filter_class_subject1/',views.filter_class_subject1,name='filter_class_subject1' ),
+            path('add_student_filter_class_subject/',views.add_student_filter_class_subject,name='add_student_filter_class_subject' ),
 
 
 ]

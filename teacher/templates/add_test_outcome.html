@@ -55,6 +55,7 @@
               {% with ''|center:count as range %}
               {% for _ in range %}
               <label for="">Question {{ forloop.counter}}</label>
+              <input type="text" class="form-select-lg " name="mark{{ forloop.counter}}" placeholder="Enter Question Marks">
 
              
               <select class="form-select form-select-lg mb-3"  name="text{{ forloop.counter}}" aria-label=".form-select-lg example">

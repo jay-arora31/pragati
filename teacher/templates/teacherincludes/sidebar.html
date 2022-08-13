@@ -1,0 +1,46 @@
+{% load static %}
+<div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+               <div id="sidebar-menu" class="sidebar-menu">
+                  <ul>
+                    <li class="menu-title">
+                      <span>Main Menu</span>
+                    </li>
+        
+            
+        
+                    <li class="submenu">
+                     <a href="#"><i class="fas fa-user-graduate"></i> <span> Student</span> <span class="menu-arrow"></span></a>
+                     <ul>
+                       <li><a href="{% url 'filter_class_subject' %}">Add Student Manually</a></li>
+                       <li><a href="{% url 'add_student_excel' %}">Add Students from excel</a></li>
+                       <li><a href="{% url 'teacher_view' %}">View Student</a></li>
+                     </ul>
+                   </li>
+                  
+                   <li class="submenu">
+                    <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Test</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                      <li><a href="{% url 'add_test' %}">Add Test</a></li>
+                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
+                    </ul>
+                  </li>
+                  <li class="submenu">
+                    <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Evaluation</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                      <li><a href="{% url 'select_subject_test' %}">Add Marks</a></li>
+                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
+                    </ul>
+                  </li>
+                  </ul>
+                </div>
+            </div>
+         </div>
+   
+      <footer>
+               <p>Copyright © 2020 Dreamguys.</p>
+      </footer>
+
+
+
+

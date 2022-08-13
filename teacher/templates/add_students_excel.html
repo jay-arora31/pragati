@@ -23,23 +23,20 @@
         <div class="card">
           <div class="card-body">
             <h5 class="form-title"><span>Student Information</span></h5>
-            <form action="{% url 'add_student' %}" method="GET">
+            <form action="{% url 'add_student_excel' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
         
                  
              
-              <div class=" col-sm-11">
-                <div class="form-group">
-                  {{form}}
-                </div>
-              </div>
-     
+            
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Class</label>
-                  <select class="form-control">
-                    {% for i in student_class %}
-                    <option value="{{i}}" selected>{{i}}</option>
+                  <select class="form-control" name="course_class">
+                    <option >Select Course Class</option>
+
+                    {% for i in course_classes %}
+                    <option value="{{i}}" >{{i}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -51,8 +48,10 @@
                 <div class="form-group">
                   <label>Session</label>
                   <select class="form-control" name="course_session">
-                    {% for i in student_session  %}
-                    <option value="{{i}}" selected>{{i}}</option>
+                    <option >Select Course Session</option>
+
+                    {% for i in course_session  %}
+                    <option value="{{i}}" >{{i}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -63,14 +62,20 @@
                 <div class="form-group">
                   <label>Subject</label>
                   <select class="form-control" name="subject">
-                    {% for i in subject %}
+                    {% for i in course_subjects %}
                     <option value="{{i}}" selected>{{i}}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
-     
-
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  
+              <label >Upload Student file</label><br>
+              <input class="form-control" id="file" type="File" name="actual_file_name" >
+                </div>
+              </div>
+   
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
