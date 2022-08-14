@@ -102,7 +102,8 @@ def school_home(request):
     student=Student.objects.filter(student_school__s_info__email=request.user)
     data=[]
     for i in student:
-        data.append("Class "+i.student_class)
+        print(i.student_class)
+        data.append("Class "+str(i.student_class))
         print(i.student_class)
 
     fig = px.histogram(
@@ -119,10 +120,57 @@ def school_home(request):
 
 def govt_home(request):
     return render(request,'govt_home.html')
-
+import json
 def teacher_home(request):
     students=Student.objects.filter(student_teacher__t_info__email=request.user)
+    data=[]
+    for i in students:
+        print(i.student_class)
+        data.append("Class "+str(i.student_class))
+        print(i.student_class)
+ 
+    fig = px.histogram(
+        x=data,
+        
+        title="Student Count",
+        labels={'x': 'Classes'}
+    )
+
+    fig.update_layout(yaxis_title="Number of Students"
+    ,
+        xaxis = dict(           # attribures for x axis 
+        showline = True,
+        showgrid = True,
+        linecolor = 'black',
+        tickfont = dict(
+            family = 'Calibri'
+        )
+    ),
+    yaxis = dict(           # attribures for y axis 
+        showline = True,
+        showgrid = True,
+        linecolor = 'black',
+        tickfont = dict(
+            family = 'Times New Roman'
+        )
+    ),
+    plot_bgcolor = 'white' )
+    class_data=data
+    label1=set(data)
+    labels=list(label1)
+    class_data_list=[]
+    class_data_list.append(class_data)
+    chart = fig.to_html()
+    data1=[1,1,1,1,2,3,3,3]
+    course_list = ['Computer Science','Computer Science', 'Computer Engineering']
+    print(class_data_list)
     context={
-        'students':students
+        'students':students,
+        'chart':chart,
+        'class_data':class_data,
+        'labels':labels,
+        'course_list':course_list,
+        'data1':data1,
+        'class_data_list':class_data_list
     }
     return render(request,'teacher_home.html',context)

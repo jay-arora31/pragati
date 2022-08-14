@@ -45,14 +45,7 @@
        
      
 
-              <div class=" col-sm-11">
-                <div class="form-group">
-                  <label>Select Subject</label>
-                  <select class="form-control" name="subject" id="subject">
-                  <option value="">Select Subject</option>
-                  </select>
-                </div>
-              </div>
+     
      
               <div class=" col-sm-11">
                 <div class="form-group">
@@ -78,49 +71,16 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script >
-     $("#student_class1").change(function () {
-        var student_class1 = $(this).val();
-        
-        alert(student_class1)
-        $.ajax({
-            url: '/teacher/filter_class_subject1/',
-            data: {
-                'student_class': student_class1
-            },
-            dataType: 'json',
-            success: function (data) {
-              $('#subject').find('option').remove();
-              $('#subject').append($('<option>', {
-                    value: "Select Subject",
-                    text:  "Select Subject"
-                }));
-                $('#course_session').find('option').remove();
-              $('#course_session').append($('<option>', {
-                    value: "Select Session",
-                    text:  "Select Session"
-                }));
-              for (var i in data['subject_data']) {
-              subject=data['subject_data'][i]
-              alert(subject)
-              $('#subject').append($('<option>', {
-                    value: subject,
-                    text: subject
-                }));
-              }
-            }
-        });
 
-    });
 
-    $("#subject").change(function () {
-        var course_subject = $(this).val();
-        var course_class =$('#student_class1 :selected').text();
+    $("#student_class1").change(function () {
+        var course_class = $(this).val();
 
         alert(course_class)
         $.ajax({
             url: '/teacher/add_student_filter_class_subject/',
             data: {
-                'course_subject': course_subject,
+                
                 'course_class': course_class
             },
             dataType: 'json',

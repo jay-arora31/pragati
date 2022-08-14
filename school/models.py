@@ -70,11 +70,13 @@ class AssignedTeacher(models.Model):
 class Student(models.Model):
     student_roll=models.IntegerField( null=True,blank=True)
     student_name=models.CharField(max_length =255, null=True,blank=True)
-    student_course_name=models.CharField(max_length =255, null=True,blank=True)
+    #student_course_name=models.CharField(max_length =255, null=True,blank=True)
     student_school =models.ForeignKey( School, on_delete=models.CASCADE)
     student_teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
     student_class=models.CharField(max_length =255, null=True,blank=True)
     student_session=models.CharField(max_length =255,null=True,blank=True)
+    def __str__(self):
+        return self.student_school.s_name+"___"+self.student_name
 
  
 

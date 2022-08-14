@@ -14,7 +14,7 @@
                      <ul>
                        <li><a href="{% url 'filter_class_subject' %}">Add Student Manually</a></li>
                        <li><a href="{% url 'add_student_excel' %}">Add Students from excel</a></li>
-                       <li><a href="{% url 'teacher_view' %}">View Student</a></li>
+                       <li><a href="{% url 'view_student' %}">View Student</a></li>
                      </ul>
                    </li>
                   
@@ -29,6 +29,13 @@
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Evaluation</span> <span class="menu-arrow"></span></a>
                     <ul>
                       <li><a href="{% url 'select_subject_test' %}">Add Marks</a></li>
+                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
+                    </ul>
+                  </li>
+                  <li class="submenu">
+                    <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Charts</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                      <li><a href="{% url 'select_subject_test' %}"> Marks Charts</a></li>
                       <li><a href="{% url 'view_all_test' %}">View Test</a></li>
                     </ul>
                   </li>
