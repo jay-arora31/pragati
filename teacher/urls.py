@@ -37,6 +37,7 @@ urlpatterns = [
             path('filter_class_subject1/',views.filter_class_subject1,name='filter_class_subject1' ),
             path('add_student_filter_class_subject/',views.add_student_filter_class_subject,name='add_student_filter_class_subject' ),
             path('filter_student_marks_outcomes1/',views.filter_student_marks_outcomes1,name='filter_student_marks_outcomes1' ),
+            path('add_marks_excel/',views.add_marks_excel,name='add_marks_excel' ),
 
 
 ]

@@ -409,6 +409,89 @@ def add_student_marks(request):
 
             }
         return render(request,'add_student_marks.html',context1 )
+
+def add_marks_excel(request):
+    if request.method=='POST':
+            test_class1 = request.POST['test_class']
+            test_session1 = request.POST['test_session']
+            test_subject1 = request.POST['test_subject']
+            test_type1 = request.POST['test_type']
+            actual_file = request.FILES['actual_file_name']
+            print(actual_file)
+            print("Hey Uploading data")
+            
+            print(actual_file)
+            df=pd.read_csv(actual_file,)
+            df.reset_index(drop=True)
+            print(df.head(5))
+            print(test_type1)
+            test_class=[]
+            test_session=[]
+            test_subject=[]
+            test_type=[]
+            test_class.append(test_class1)
+            test_session.append(test_session1)
+            test_subject.append(test_subject1)
+            test_type.append(test_type1)
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
+            test_data=AddTest.objects.filter(test_name=test_type1,teacher__t_info__email=request.user,subject__subject_name=test_subject1,test_class=test_class1,session=test_session1,school__s_info__email=teacher.t_school.s_info.email)
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
+            subject_data=class_subject.objects.get(subject_school__s_info__email=teacher.t_school.s_info.email,subject_name=test_subject1,subject_class=test_class1)
+            test_data=AddTest.objects.get(test_name=test_type1,teacher__t_info__email=request.user,subject__subject_name=test_subject1,test_class=test_class1,session=test_session1,school__s_info__email=teacher.t_school.s_info.email)
+            question_marks1=AssignOutcome.objects.filter(teacher__t_info__email=request.user,test__test_name=test_type1,test__session=test_session1,subject__subject_name=test_subject1,school__s_info__email=teacher.t_school.s_info.email)
+            mark_box_count=0
+            for i in question_marks1:
+                        mark_box_count=mark_box_count+1
+                        print(i.question_no)
+            count=0
+            for i in range(len(df)):
+                for j in range(mark_box_count):
+                    count+=1
+                    data_marks=df.iloc[i][j+1]
+                    que_info=AssignOutcome.objects.get(question_no=j+1,teacher__t_info__email=request.user,test__test_name=test_type1,test__session=test_session1,subject__subject_name=test_subject1,school__s_info__email=teacher.t_school.s_info.email)
+                    #data_marks=request.POST.get('mark'+str(i),'')
+                    student=Student.objects.get(student_roll=df.iloc[i][0],student_class=test_class1,student_session=test_session1,student_teacher__t_info__email=request.user,student_school__s_info__email=teacher.t_school.s_info.email)
+                    obj=TestMark(teacher=teacher,
+                    student_info=student,
+                    question_info=que_info,
+                    obtain_mark=data_marks,test_type=test_data,subject=subject_data,school=school)
+                    print("Save")
+                    obj.save()
+                
+            return render(request,'add_marks_excel.html' )
+
+    tests=AssignOutcome.objects.filter(teacher__t_info=request.user)
+    print("Hey")
+    session1=[]
+    class_all=[]
+    subjects=[]
+    for i in tests:
+        session1.append(i.test.session)
+        class_all.append(i.test.test_class)
+        subjects.append(i.subject.subject_name)
+
+    session2=set(session1)
+    session=list(session2)
+
+    class_all1=set(class_all)
+    class_all2=[]
+    class_all2=list(class_all1)
+
+    subjects1=set(subjects)
+    subject_all=[]
+    subject_all=list(subjects1)
+    context={
+        'tests':tests,
+        'session':session,
+        'class_all':class_all2,
+        'subjects':subject_all,
+    } 
+
+    return render(request,'add_marks_excel.html',context )
+
+
 from django.http import JsonResponse
 
 
@@ -473,60 +556,89 @@ def view_student(request):
 
 
 def filter_student_marks_outcomes1(request):
-    teacher=Teacher.objects.get(t_info__email=request.user)
-    outcome_data=AssignOutcome.objects.filter(
-        teacher__t_info__email=request.user,
-        school__s_info__email=teacher.t_school.s_info.email,
-        subject__subject_name='English',
-        test__session='2022-2023' )
-    heading_list=[]
-    heading_list.append('Roll')
-    outcome_dict={}
-    for i in outcome_data:
-        print(i.question_no)
-        print(i.course_ot)
-        print(i.test.test_name)
-        if i.course_ot in outcome_dict:
-            if i.course_ot not in heading_list:
-                heading_list.append(i.course_ot)
-            outcome_dict[i.course_ot]+=i.mark
-        else:
-            outcome_dict[i.course_ot]=i.mark
-    teacher=Teacher.objects.get(t_info__email=request.user)
-    student=TestMark.objects.filter(
-        teacher__t_info__email=request.user,
-        school__s_info__email=teacher.t_school.s_info.email,
-        subject__subject_name='English',
-        test_type__session='2022-2023'
-    )
-    student_dict={
-    }
-    for i in student:
-        new_dict={}
-        if i.student_info.student_roll not in student_dict:
-            student_dict[i.student_info.student_roll]=new_dict
-            for j in student:
-                if j.student_info.student_roll==i.student_info.student_roll:
-                    if j.question_info.course_ot in new_dict:
-                        new_dict[j.question_info.course_ot]+=j.obtain_mark
-                    else:
-                        new_dict[j.question_info.course_ot]=j.obtain_mark
-    student_dict_keys=list(student_dict.keys())
-    all_over_dict={}
-    for i in student_dict:
-            roll=student_dict_keys[i-1]
-            grade_dict={}
-            all_over_dict[roll]=grade_dict
-            student_list=[]
-            student_list.append(roll)
-            for j in student_dict[i]:
-                if student_dict[i][j]>=outcome_dict[j]*0.6:
-                    grade_dict[j]=(True)
-                else:
-                    grade_dict[j]=(False)
-    context={
-        'all_over_dict':all_over_dict,
-        'heading_list':heading_list
-    }
+        teacher=Teacher.objects.get(t_info__email=request.user)
 
-    return render(request,'view_student_outcome_view.html' ,context)
+        data=AssignOutcome.objects.filter(
+            teacher__t_info__email=request.user,
+            school__s_info__email=teacher.t_school.s_info.email,
+        )
+        
+        if request.method=='POST':
+            session=request.POST['session']
+            subject=request.POST['subject']
+            subject_class=request.POST['subject_class']
+            data=AssignOutcome.objects.filter(
+            teacher__t_info__email=request.user,
+            school__s_info__email=teacher.t_school.s_info.email,
+        )
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            outcome_data=AssignOutcome.objects.filter(
+                teacher__t_info__email=request.user,
+                school__s_info__email=teacher.t_school.s_info.email,
+                subject__subject_name=subject,
+                test__session=session,
+                subject__subject_class= subject_class)
+            heading_list=[]
+            heading_list.append('Roll')
+            outcome_dict={}
+            for i in outcome_data:
+                print(i.question_no)
+                print(i.course_ot)
+                print(i.test.test_name)
+                if i.course_ot in outcome_dict:
+                    if i.course_ot not in heading_list:
+                        heading_list.append(i.course_ot)
+                    outcome_dict[i.course_ot]+=i.mark
+                else:
+                    outcome_dict[i.course_ot]=i.mark
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            student=TestMark.objects.filter(
+                teacher__t_info__email=request.user,
+                school__s_info__email=teacher.t_school.s_info.email,
+                subject__subject_name=subject,
+                test_type__session=session,
+                subject__subject_class=subject_class
+            )
+            student_dict={
+            }
+            for i in student:
+                new_dict={}
+                if i.student_info.student_roll not in student_dict:
+                    student_dict[i.student_info.student_roll]=new_dict
+                    for j in student:
+                        if j.student_info.student_roll==i.student_info.student_roll:
+                            if j.question_info.course_ot in new_dict:
+                                new_dict[j.question_info.course_ot]+=j.obtain_mark
+                            else:
+                                new_dict[j.question_info.course_ot]=j.obtain_mark
+            student_dict_keys=list(student_dict.keys())
+            print("Outcome dict",outcome_dict)
+            print("Student Dict",student_dict)
+            print(student_dict_keys)
+            iteration=0
+            all_over_dict={}
+            for i in student_dict:
+                    print(i)
+                    roll=student_dict_keys[iteration]
+                    iteration+=1
+                    grade_dict={}
+                    all_over_dict[roll]=grade_dict
+                    student_list=[]
+                    student_list.append(roll)
+                    for j in student_dict[i]:
+                        if student_dict[i][j]>=outcome_dict[j]*0.6:
+                            grade_dict[j]=(True)
+                        else:
+                            grade_dict[j]=(False)
+            print(all_over_dict)
+            context={
+                'all_over_dict':all_over_dict,
+                'heading_list':heading_list,
+                'data':data
+            }
+
+            return render(request,'view_student_outcome_view.html' ,context)
+        context={
+            'data':data
+        }
+        return render(request,'view_student_outcome_view.html' ,context)
