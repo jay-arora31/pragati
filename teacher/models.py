@@ -12,6 +12,18 @@ TEST_CHOICES= [
 
         ]
 
+Sport_Choice= [
+        ('School', 'School'),
+        ('National', 'National'),
+        ('State', 'State'),
+       
+
+        ]
+Sport_Rank= [
+        ('1st Rank', '1st Rank'),
+        ('2nd Rank', '2nd Rank'),
+        ('3rd Rank', '3rd Rank'),
+        ]
 
 
 
@@ -52,3 +64,26 @@ class TestMark(models.Model):
     def __str__(self):
         return str(self.question_info.question_no)
 
+class Sports(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    sport_name=models.CharField(max_length =255, null=True,blank=True)
+    sport_level=models.CharField(max_length =255, null=True,blank=True)
+    sport_rank=models.CharField(max_length =255, null=True,blank=True)
+    sport_class=models.IntegerField(null=True,blank=True)
+    sport_session=models.CharField(max_length =255, null=True,blank=True)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.student_info.student_name)
+
+
+class Cultural(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    cultural_name=models.CharField(max_length =255, null=True,blank=True)
+    cultural_rank=models.CharField(max_length =255, null=True,blank=True)
+    cultural_class=models.IntegerField(null=True,blank=True)
+    cultural_session=models.CharField(max_length =255, null=True,blank=True)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.student_info.student_name)

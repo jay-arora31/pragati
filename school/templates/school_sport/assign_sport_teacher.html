@@ -38,7 +38,7 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body">
-          <form action="{% url 'assign_teacher' %}" method="POST">
+          <form action="{% url 'assign_sport_teacher' %}" method="POST">
             <div class="row">
                       
               {% csrf_token %}
@@ -50,13 +50,15 @@
               </div>
               <div class="col-sm-11">
                 <div class="form-group">
-                  <label>Subject</label>
-                  <select name="subjects" class="form-control">
-                    <option>Select Subejct</option>
+                  <label>Class</label>
+                  <select name="sport_class" class="form-control">
+                    <option>Select Class</option>
                    
-                    <option value="English">English</option>
-                    <option value="Maths">Maths</option>
-                    <option value="Science">Science</option>
+                    <option value="1">Standard 1</option>
+                    <option value="2">Standard 2</option>
+                    <option value="3">Standard 3</option>
+                    <option value="4">Standard 4</option>
+                
                   </select>
                 </div>
               </div>

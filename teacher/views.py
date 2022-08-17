@@ -642,3 +642,163 @@ def filter_student_marks_outcomes1(request):
             'data':data
         }
         return render(request,'view_student_outcome_view.html' ,context)
+
+
+
+
+
+
+
+
+#######################################====================Sports Section========================################################
+
+
+
+
+def select_sport(request):
+    if request.method=='POST':
+            sport_name=request.POST['sport_name']
+            sport_level=request.POST['sport_level']
+            sport_rank=request.POST['sport_rank']
+            sport_classes=request.POST['sport_classes']
+            sport_session=request.POST['sport_session']
+            roll=request.POST['roll']
+            print(
+                "Data Printing",
+                sport_name,
+                 sport_level,
+            sport_rank,
+            sport_classes,
+            sport_session,
+            roll
+                
+            )
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
+            studentinfo=Student.objects.get(
+                student_roll=roll,
+                student_class=sport_classes,
+                student_session=sport_session,
+                student_school__s_info__email=teacher.t_school.s_info.email,
+
+
+              )
+            sport_obj=Sports(
+                student_info=studentinfo,
+                sport_name=sport_name,
+                sport_level=sport_level,
+                sport_rank=sport_rank,
+                sport_class=sport_classes,
+                sport_session=sport_session,
+                school=school,
+                teacher=teacher
+            )
+            sport_obj.save()
+            return redirect('select_sport')
+    classes=AssignSportTeacher.objects.filter(sport_teacher__t_info__email=request.user)
+    sport_classes=[]
+    for i in classes:
+        sport_classes.append(i.sport_class)
+    context={
+        'sport_classes':sport_classes,
+    }
+    return render(request,'sport/select_sport.html' ,context)
+
+
+def view_sport(request):
+    data=Sports.objects.filter(teacher__t_info__email=request.user)
+    context={
+        'data':data
+    }
+    return render(request,'sport/view_sports.html',context)
+
+def sport_filter_session(request):
+
+          data = {}
+          print("Hey I am In function")
+          if request.GET.get('sport_class', None) is not None:
+              
+              course_class = request.GET.get('sport_class')
+
+              teacher=Teacher.objects.get(t_info__email=request.user)
+
+              sessions=AssignSportTeacher.objects.filter(sport_class=course_class,sport_teacher__t_info__email=request.user,sport_school__s_info__email=teacher.t_school.s_info.email)
+              print("hey I am in subject session")
+
+              session_list=[]
+              for i in sessions:
+                if i.sport_session not in session_list:
+                    session_list.append(i.sport_session)
+              print("Session list",session_list)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['session_list']=session_list
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
+
+
+
+
+def sport_filter_session(request):
+          data = {}
+          print("Hey I am In function")
+          if request.GET.get('sport_class', None) is not None:
+              
+              course_class = request.GET.get('sport_class')
+
+              teacher=Teacher.objects.get(t_info__email=request.user)
+
+              sessions=AssignSportTeacher.objects.filter(sport_teacher__t_info__email=request.user,sport_school__s_info__email=teacher.t_school.s_info.email)
+              print("hey I am in subject session")
+
+              session_list=[]
+              for i in sessions:
+                if i.sport_session not in session_list:
+                    session_list.append(i.sport_session)
+              print("Session list",session_list)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['session_list']=session_list
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
+
+
+
+
+
+def sport_filter_roll(request):
+          data = {}
+          print("Hey I am In function")
+          if request.GET.get('sport_class', None) is not None:
+              
+              course_class = request.GET.get('sport_class')
+              sport_session = request.GET.get('sport_session')
+              print(course_class,sport_session)
+              teacher=Teacher.objects.get(t_info__email=request.user)
+              students=Student.objects.filter(
+                student_class=course_class,
+                student_session=sport_session,
+                student_school__s_info__email=teacher.t_school.s_info.email,
+
+
+              )
+              print("hey I am in subject session")
+              print(students)
+              roll_list=[]
+              for i in students:
+                    roll_list.append(i.student_roll)
+              print("roll_list list",roll_list)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['roll_list']=roll_list
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)

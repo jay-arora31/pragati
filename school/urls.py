@@ -31,7 +31,8 @@ urlpatterns = [
       path('view_class_subjects/<str:key>/',views.view_class_subjects,name='view_class_subjects' ),
         path('get-topics-ajax/', views.get_topics_ajax, name="get_topics_ajax"),
       path('subject_delete/<int:id>/',views.subject_delete,name='subject_delete' ),
-      path('view_assigned_teachers',views.view_assigned_teachers,name='view_assigned_teachers' ),
+      path('view_assigned_teachers/',views.view_assigned_teachers,name='view_assigned_teachers' ),
+      path('assign_sport_teacher/',views.assign_sport_teacher,name='assign_sport_teacher' ),
 
       
 

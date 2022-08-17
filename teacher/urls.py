@@ -38,6 +38,10 @@ urlpatterns = [
             path('add_student_filter_class_subject/',views.add_student_filter_class_subject,name='add_student_filter_class_subject' ),
             path('filter_student_marks_outcomes1/',views.filter_student_marks_outcomes1,name='filter_student_marks_outcomes1' ),
             path('add_marks_excel/',views.add_marks_excel,name='add_marks_excel' ),
+            path('select_sport/',views.select_sport,name='select_sport' ),
+            path('sport_filter_session/',views.sport_filter_session,name='sport_filter_session' ),
+            path('sport_filter_roll/',views.sport_filter_roll,name='sport_filter_roll' ),
+            path('view_sport/',views.view_sport,name='view_sport' ),
 
 
 ]

@@ -28,7 +28,7 @@ def assign_teacher(request):
                 school=School.objects.get(s_info__email=request.user)
                 
                 get_subject_detail=class_subject.objects.get(subject_class=assign_form.course_class,subject_name=subjects,subject_school__s_info__email=request.user)
-                checking=AssignedTeacher.objects.filter(course_class=assign_form.course_class,course_session=session,course_school=school)
+                checking=AssignedTeacher.objects.filter(course_name__subject_name=subjects,course_class=assign_form.course_class,course_session=session,course_school=school)
                 
                 print("checking email",email)
                 print(checking)
@@ -228,3 +228,38 @@ def view_assigned_teachers(request):
         }    
         return render(request,'school/view_assigned_teachers.html',context)
     
+
+
+
+
+########################################============================Sport Section =======================#################################
+
+
+
+def assign_sport_teacher(request):
+    if request.method=='POST':
+        sport_class=request.POST['sport_class']
+        #t_name=request.POST['t_name']
+        t_email=request.POST['t_email']
+        session=request.POST['session']
+        teacher=Teacher.objects.get(t_info__email=t_email)
+        school=School.objects.get(s_info__email=request.user)
+        sport_obj=AssignSportTeacher(
+            sport_class=sport_class,
+            sport_teacher=teacher,
+            sport_school=school,
+            sport_session=session
+            
+            )
+        sport_obj.save()
+        return redirect('assign_sport_teacher')
+    teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
+    sessions=SchoolSessions.objects.all()
+    for i in teachers:
+        print(i.t_name)
+        print(i.t_info.email)
+    context={
+        'sessions':sessions,
+        'teachers':teachers
+    }
+    return render(request,'school_sport/assign_sport_teacher.html',context)

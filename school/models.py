@@ -9,6 +9,7 @@ from django.conf import settings
 COURSE_CHOICES= [
         ('English', 'English'),
         ('Maths', 'Maths'),
+        ('Science', 'Science'),
 
         ]
 CLASS_CHOICES= [
@@ -96,3 +97,12 @@ class StudentMarks(models.Model):
     per=models.FloatField(null=True,blank=True,default=0)
     def __str__(self):
         return self.student_info.student_name
+
+
+class AssignSportTeacher(models.Model):
+    sport_class=models.CharField(max_length =255,null=True,blank=True,choices=CLASS_CHOICES)
+    sport_teacher=models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    sport_school=models.ForeignKey( School, on_delete=models.CASCADE)
+    sport_session=models.CharField(max_length =255,null=True,blank=True)
+    def __str__(self):
+        return self.sport_class
