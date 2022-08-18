@@ -6,6 +6,7 @@ import imp
 from multiprocessing import context
 from django.shortcuts import redirect, render
 import pandas as pd
+import operator
 
 import teacher
 from .models import *
@@ -188,7 +189,7 @@ def add_test(request):
 def view_all_test(request):
     teacher=Teacher.objects.get(t_info__email=request.user)
     school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
-    tests=AddTest.objects.filter(school=school)
+    tests=AddTest.objects.filter(school=school,teacher__t_info__email=request.user)
     context={
         'tests':tests,
     }
@@ -380,7 +381,7 @@ def add_student_marks(request):
             subject_data=class_subject.objects.get(subject_school__s_info__email=teacher.t_school.s_info.email,subject_name=test_subject1,subject_class=test_class1)
             test_data=AddTest.objects.get(test_name=test_type1,teacher__t_info__email=request.user,subject__subject_name=test_subject1,test_class=test_class1,session=test_session1,school__s_info__email=teacher.t_school.s_info.email)
             student=Student.objects.get(student_roll=student_roll1,student_class=test_class1,student_session=test_session1,student_teacher__t_info__email=request.user,student_school__s_info__email=teacher.t_school.s_info.email)
-            checking=TestMark.objects.filter(student_info__student_roll=student_roll1,test_type__test_name=test_type1,test_type__session=test_session1,teacher__t_info__email=request.user,school__s_info__email=teacher.t_school.s_info.email)
+            checking=TestMark.objects.filter(subject__subject_name=test_subject1,student_info__student_roll=student_roll1,test_type__test_name=test_type1,test_type__session=test_session1,teacher__t_info__email=request.user,school__s_info__email=teacher.t_school.s_info.email)
             print(checking.exists())
             print(checking)
             print(checking.count() == 0,"checking.count() == 0")
@@ -567,6 +568,7 @@ def filter_student_marks_outcomes1(request):
             session=request.POST['session']
             subject=request.POST['subject']
             subject_class=request.POST['subject_class']
+            print(subject,"Subject")
             data=AssignOutcome.objects.filter(
             teacher__t_info__email=request.user,
             school__s_info__email=teacher.t_school.s_info.email,
@@ -665,8 +667,8 @@ def select_sport(request):
             roll=request.POST['roll']
             print(
                 "Data Printing",
-                sport_name,
-                 sport_level,
+            sport_name,
+            sport_level,
             sport_rank,
             sport_classes,
             sport_session,
@@ -713,7 +715,6 @@ def view_sport(request):
     return render(request,'sport/view_sports.html',context)
 
 def sport_filter_session(request):
-
           data = {}
           print("Hey I am In function")
           if request.GET.get('sport_class', None) is not None:
@@ -802,3 +803,184 @@ def sport_filter_roll(request):
              return JsonResponse(data)
           else:
              return JsonResponse(data)
+
+
+# Creates a sorted dictionary (sorted by key)
+from collections import OrderedDict
+import numpy as np 
+
+def testing_function(request):
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            outcome_data=AssignOutcome.objects.filter(
+                teacher__t_info__email=request.user,
+                school__s_info__email=teacher.t_school.s_info.email,
+                subject__subject_name='English',
+                test__session='2022-2023',
+                subject__subject_class= '1')
+            heading_list=[]
+            heading_list.append('Roll')
+            outcome_dict={}
+            for i in outcome_data:
+                print(i.question_no)
+                print(i.course_ot)
+                print(i.test.test_name)
+                if i.course_ot in outcome_dict:
+                    if i.course_ot not in heading_list:
+                        heading_list.append(i.course_ot)
+                    outcome_dict[i.course_ot]+=i.mark
+                else:
+                    outcome_dict[i.course_ot]=i.mark
+            student=TestMark.objects.filter(
+                student_info__student_roll=101,
+                teacher__t_info__email=request.user,
+                school__s_info__email=teacher.t_school.s_info.email,
+                subject__subject_name='English',
+                test_type__session='2022-2023',
+                subject__subject_class='1'
+            )
+            print(student)
+            student_dict={
+            }
+            new_dict={}
+            
+            for j in student:
+                        if j.question_info.course_ot in new_dict:
+                            new_dict[j.question_info.course_ot]+=j.obtain_mark
+                        else:
+                            new_dict[j.question_info.course_ot]=j.obtain_mark
+            student_dict_keys=list(student_dict.keys())
+            print("Outcome dict",outcome_dict)
+            print("Student Dict",new_dict)
+
+            for key,value in outcome_dict.items():
+                if key not in new_dict:
+                        new_dict[key]=0
+
+            sorted_dict= dict(sorted(new_dict.items(), key=lambda item: item[1])) 
+            sorted_dict_outcome= dict(sorted(outcome_dict.items(), key=lambda item: item[1])) 
+
+            print("Sorted new dict",sorted_dict)
+
+            print("Sorted Outcome dict",sorted_dict_outcome)
+            grade_list=[]
+            for i in sorted_dict:
+                        if sorted_dict[i]>=sorted_dict_outcome[i]*0.6:
+                            grade_list.append(True)
+                        else:
+                            grade_list.append(False)
+            print(grade_list,"Grade list")
+            return render(request,'testing_template.html' )
+
+
+def testing_function_login(request):
+    class_count=0
+    subject_count=0
+    school=School.objects.all()
+    student_all_over_dict={}
+    for i in school:
+        print(i.s_info.email)
+        school_email=i.s_info.email
+        class_list=[]
+
+        classes=class_subject.objects.filter(subject_school__s_info__email=school_email)
+        for a in classes:
+            if a.subject_class not in class_list:
+                class_list.append(a.subject_class)
+        for class_single in class_list:
+            print("==================================class single=====================")
+            class_count+=1
+            subject_list=[]
+            class_data=class_single
+            student_dict={}
+            subjects=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data)
+            subject_count_data=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data).count()
+            student_check_dict={}
+            for i in subjects:
+                subject_count+=1
+                subject_data=i.subject_name
+                outcome_data=AssignOutcome.objects.filter(
+                school__s_info__email=school_email,
+                subject__subject_name=subject_data,
+                test__session='2022-2023',
+                subject__subject_class= class_data)
+                heading_list=[]
+                heading_list.append('Roll')
+                outcome_dict={}
+                for i in outcome_data:
+                    if i.course_ot in outcome_dict:
+                            if i.course_ot not in heading_list:
+                                heading_list.append(i.course_ot)
+                            outcome_dict[i.course_ot]+=i.mark
+                    else:
+                        outcome_dict[i.course_ot]=i.mark
+                student=TestMark.objects.filter(
+                school__s_info__email=school_email,
+                subject__subject_name=subject_data,
+                test_type__session='2022-2023',
+                subject__subject_class=class_data
+                )
+                print(student)
+                student_dict={}
+
+                for i in student:
+                    new_dict={}
+                    if i.student_info.student_roll not in student_dict:
+                        student_dict[i.student_info.student_roll]=new_dict
+                        for j in student:
+                            if j.student_info.student_roll==i.student_info.student_roll:
+                                if j.question_info.course_ot in new_dict:
+                                    new_dict[j.question_info.course_ot]+=j.obtain_mark
+                                else:
+                                    new_dict[j.question_info.course_ot]=j.obtain_mark
+                student_dict_keys=list(student_dict.keys())
+                iteration=0
+                all_over_dict={}
+                for i in student_dict:
+
+                        roll=i
+                        iteration+=1
+                        grade_dict={}
+                        all_over_dict[roll]=grade_dict
+                        student_list=[]
+                        student_list.append(roll)
+                        for j in student_dict[i]:
+                            if student_dict[i][j]>=outcome_dict[j]*0.6:
+                                grade_dict[j]=True  
+                            else:
+                                grade_dict[j]=False
+                        print(grade_dict)
+                        grade_list=list(grade_dict.values())
+                        final_check = all(grade_list)
+                        if final_check:
+                            if roll in student_check_dict:
+                                student_check_dict[roll]+=1
+                            else:
+                                student_check_dict[roll]=1
+
+
+                print("Student check list",student_check_dict)
+                for key,value in student_check_dict.items():
+                    print("Value of dict",value)
+                    if value==subject_count_data:
+                        key=str(school_email)
+                        if key in student_all_over_dict:
+                            student_all_over_dict[school_email]+=1
+                        else:
+                            student_all_over_dict[school_email]=1
+        print("Student_Check DIct value",student_all_over_dict)
+
+        sorted_d = dict( sorted(student_all_over_dict.items(), key=operator.itemgetter(1),reverse=True))
+        print('Dictionary in descending order by value : ',sorted_d)
+        school_list=[]
+        for i in sorted_d:
+            school_names=School.objects.get(s_info__email=i)
+            school_list.append(school_names.s_name)
+        print(school_list)
+    context={
+        'sorted_d':sorted_d,
+        'school_list':school_list
+    }
+    return render(request,'testing_template.html',context )
+
+
+

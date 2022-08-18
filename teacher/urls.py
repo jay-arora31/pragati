@@ -42,6 +42,8 @@ urlpatterns = [
             path('sport_filter_session/',views.sport_filter_session,name='sport_filter_session' ),
             path('sport_filter_roll/',views.sport_filter_roll,name='sport_filter_roll' ),
             path('view_sport/',views.view_sport,name='view_sport' ),
+            path('testing_function/',views.testing_function,name='testing_function' ),
+            path('testing_function_login/',views.testing_function_login,name='testing_function_login' ),
 
 
 ]

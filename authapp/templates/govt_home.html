@@ -1,3 +1,71 @@
-Goverment Home
 
-{{request.user.email}}
+
+{% extends 'govtbase.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="content container-fluid">
+                    <div class="page-header">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <h3 class="page-title">School Ranking</h3>
+                          <ul class="breadcrumb">
+                           
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="form-title"><span></span></h5>
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                  <tr>
+                                    <th>Rank</th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>School Name</th>
+                                    
+                             
+                                    <!-- <th>Roll No</th>
+                                    <th>Class</th> -->
+                
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in school_list %}
+                                  <tr>
+                                    <td>{{ forloop.counter}}</td>
+                                    <td>           </td>
+                                    <td>           </td>
+                                    <td>{{i}}</td>
+                         
+                                 
+                                  </tr>
+                                    {% endfor %}
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+{% endblock %}
+
+

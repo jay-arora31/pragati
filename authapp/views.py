@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 import django.contrib.auth as auth1
-
+import operator
 from django.contrib.auth import logout, authenticate, login, get_user_model
 from authapp.models import CustomUser
 from django.contrib.auth import logout,login as auth_login
@@ -15,6 +15,8 @@ from django.shortcuts import render, HttpResponseRedirect
 import plotly.express as px
 
 from school.models import *
+
+from teacher.models import *
 def logout(request):
     # Log out the user.
     auth1.logout(request)
@@ -119,7 +121,114 @@ def school_home(request):
     return render(request,'school_home.html',context={'chart': chart})
 
 def govt_home(request):
-    return render(request,'govt_home.html')
+    class_count=0
+    subject_count=0
+    school=School.objects.all()
+    student_all_over_dict={}
+    for i in school:
+        print(i.s_info.email)
+        school_email=i.s_info.email
+        class_list=[]
+
+        classes=class_subject.objects.filter(subject_school__s_info__email=school_email)
+        for a in classes:
+            if a.subject_class not in class_list:
+                class_list.append(a.subject_class)
+        for class_single in class_list:
+            print("==================================class single=====================")
+            class_count+=1
+            subject_list=[]
+            class_data=class_single
+            student_dict={}
+            subjects=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data)
+            subject_count_data=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data).count()
+            student_check_dict={}
+            for i in subjects:
+                subject_count+=1
+                subject_data=i.subject_name
+                outcome_data=AssignOutcome.objects.filter(
+                school__s_info__email=school_email,
+                subject__subject_name=subject_data,
+                test__session='2022-2023',
+                subject__subject_class= class_data)
+                heading_list=[]
+                heading_list.append('Roll')
+                outcome_dict={}
+                for i in outcome_data:
+                    if i.course_ot in outcome_dict:
+                            if i.course_ot not in heading_list:
+                                heading_list.append(i.course_ot)
+                            outcome_dict[i.course_ot]+=i.mark
+                    else:
+                        outcome_dict[i.course_ot]=i.mark
+                student=TestMark.objects.filter(
+                school__s_info__email=school_email,
+                subject__subject_name=subject_data,
+                test_type__session='2022-2023',
+                subject__subject_class=class_data
+                )
+                print(student)
+                student_dict={}
+
+                for i in student:
+                    new_dict={}
+                    if i.student_info.student_roll not in student_dict:
+                        student_dict[i.student_info.student_roll]=new_dict
+                        for j in student:
+                            if j.student_info.student_roll==i.student_info.student_roll:
+                                if j.question_info.course_ot in new_dict:
+                                    new_dict[j.question_info.course_ot]+=j.obtain_mark
+                                else:
+                                    new_dict[j.question_info.course_ot]=j.obtain_mark
+                student_dict_keys=list(student_dict.keys())
+                iteration=0
+                all_over_dict={}
+                for i in student_dict:
+
+                        roll=i
+                        iteration+=1
+                        grade_dict={}
+                        all_over_dict[roll]=grade_dict
+                        student_list=[]
+                        student_list.append(roll)
+                        for j in student_dict[i]:
+                            if student_dict[i][j]>=outcome_dict[j]*0.6:
+                                grade_dict[j]=True  
+                            else:
+                                grade_dict[j]=False
+                        print(grade_dict)
+                        grade_list=list(grade_dict.values())
+                        final_check = all(grade_list)
+                        if final_check:
+                            if roll in student_check_dict:
+                                student_check_dict[roll]+=1
+                            else:
+                                student_check_dict[roll]=1
+
+
+                print("Student check list",student_check_dict)
+                for key,value in student_check_dict.items():
+                    print("Value of dict",value)
+                    if value==subject_count_data:
+                        key=str(school_email)
+                        if key in student_all_over_dict:
+                            student_all_over_dict[school_email]+=1
+                        else:
+                            student_all_over_dict[school_email]=1
+        print("Student_Check DIct value",student_all_over_dict)
+
+        sorted_d = dict( sorted(student_all_over_dict.items(), key=operator.itemgetter(1),reverse=True))
+        print('Dictionary in descending order by value : ',sorted_d)
+        school_list=[]
+        for i in sorted_d:
+            school_names=School.objects.get(s_info__email=i)
+            school_list.append(school_names.s_name)
+        print(school_list)
+    context={
+        'sorted_d':sorted_d,
+        'school_list':school_list
+    }
+    return render(request,'govt_home.html',context)
 import json
 def teacher_home(request):
     students=Student.objects.filter(student_teacher__t_info__email=request.user)

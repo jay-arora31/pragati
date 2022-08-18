@@ -87,3 +87,13 @@ class Cultural(models.Model):
     teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
     def __str__(self):
         return str(self.student_info.student_name)
+
+class AcademicCount(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    academic_count=models.IntegerField(null=True,blank=True)
+    school=models.ForeignKey( School, on_delete=models.CASCADE)
+    subject=models.CharField(max_length =255, null=True,blank=True)
+    academic_class=models.CharField(max_length =255, null=True,blank=True)
+
+    def __str__(self):
+        return str(self.school.s_name)
