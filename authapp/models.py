@@ -18,6 +18,7 @@ class CustomUser(AbstractUser):
     is_school = models.BooleanField(default = False)
     is_govt = models.BooleanField(default = False)
     is_teacher = models.BooleanField(default = False)
+    is_student = models.BooleanField(default = False)
     admin = models.BooleanField(default = False)
     is_active =models.BooleanField(default=True) 
 

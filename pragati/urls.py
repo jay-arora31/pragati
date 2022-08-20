@@ -21,4 +21,5 @@ urlpatterns = [
     path('',include('authapp.urls')),
     path('school/',include('school.urls')),
     path('teacher/',include('teacher.urls')),
+    path('student/',include('student.urls')),
 ]

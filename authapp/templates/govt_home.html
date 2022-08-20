@@ -25,31 +25,56 @@
                             <h5 class="form-title"><span></span></h5>
                             <table class="table table-hover table-center mb-0 datatable">
                                 <thead>
+
+
                                   <tr>
                                     <th>Rank</th>
-                                    <th>
-
-                                    </th>
-                                    <th>
-
-                                    </th>
+                                  
                                     <th>School Name</th>
+                                    <th>Point</th>
                                     
-                             
+                             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                             <th>        </th>
+              
                                     <!-- <th>Roll No</th>
                                     <th>Class</th> -->
                 
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    {% for i in school_list %}
+                                  {% for key, value in again_dict.items %}
                                   <tr>
                                     <td>{{ forloop.counter}}</td>
-                                    <td>           </td>
-                                    <td>           </td>
-                                    <td>{{i}}</td>
-                         
+                          
+                                    {% for key2,value2 in value.items %}
+                                    <td>
+                                      {% if key2 == "points" %}
+                                      <span class="badge badge-pill badge-primary">Sports</span>
+
+                                      {{value2}}
+                               
+                                    {% elif key2 == "cal" %}
+                                   
+
+                                      <span class="badge badge-pill badge-success">Cultural</span>
+
+                                      {{value2}}
+                                
+                                    {% else %}
                                  
+                                      
+                                      {{value2}}
+                                      
+                                  </td>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
                                   </tr>
                                     {% endfor %}
                                 </tbody>

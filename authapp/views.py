@@ -91,6 +91,9 @@ def login(request):
                 return redirect('govt_home')
             elif user.is_teacher:
                 return redirect('teacher_home')
+            elif user.is_student:
+                return redirect('student_home')
+
 
 
 
@@ -117,8 +120,42 @@ def school_home(request):
     fig.update_layout(yaxis_title="Number of Students")
 
     chart = fig.to_html()
-    
-    return render(request,'school_home.html',context={'chart': chart})
+    sport_data=Sports.objects.filter(school__s_info__email=request.user)
+    points=0
+    for i in sport_data:
+        print(i.sport_name)
+        print(i.sport_name=='National')
+        if i.sport_level=='National':
+            if i.sport_rank=='1st Rank':
+                points+=12
+            elif i.sport_rank=='2nd Rank':
+                points+=8
+            elif i.sport_rank=='3rd Rank':
+                points+=4
+        elif i.sport_level=='State':
+            if i.sport_rank=='1st Rank':
+                points+=9
+            elif i.sport_rank=='2nd Rank':
+                points+=6
+            elif i.sport_rank=='3rd Rank':
+                points+=3
+        elif i.sport_level=='School':
+            if i.sport_rank=='1st Rank':
+                points+=6
+            elif i.sport_rank=='2nd Rank':
+                points+=4
+            elif i.sport_rank=='3rd Rank':
+                points+=2
+        elif i.sport_level=='participated':
+                points+=1
+    print("Pointsss",points)
+    cal=points%5
+    print("Division",cal)
+    points=points-cal
+    points=points/5
+    print("Badges Count",int(points))
+    points=int(points)
+    return render(request,'school_home.html',context={'chart': chart,'sport_badges':points})
 
 def govt_home(request):
     class_count=0
@@ -216,7 +253,7 @@ def govt_home(request):
                         else:
                             student_all_over_dict[school_email]=1
         print("Student_Check DIct value",student_all_over_dict)
-
+        
         sorted_d = dict( sorted(student_all_over_dict.items(), key=operator.itemgetter(1),reverse=True))
         print('Dictionary in descending order by value : ',sorted_d)
         school_list=[]
@@ -224,12 +261,65 @@ def govt_home(request):
             school_names=School.objects.get(s_info__email=i)
             school_list.append(school_names.s_name)
         print(school_list)
+        school_email_list=sorted_d.keys()
+        sports_point=[]
+
+        for email in school_email_list:
+            sport_data=Sports.objects.filter(school__s_info__email=email)
+            print("School email")
+            print(sports_point)
+
+            points=0
+            for i in sport_data:
+                print("Cal sports data")
+                if i.sport_level=='National':
+                    if i.sport_rank=='1st Rank':
+                        points+=12
+                    elif i.sport_rank=='2nd Rank':
+                        points+=8
+                    elif i.sport_rank=='3rd Rank':
+                        points+=4
+                elif i.sport_level=='State':
+                    if i.sport_rank=='1st Rank':
+                        points+=9
+                    elif i.sport_rank=='2nd Rank':
+                        points+=6
+                    elif i.sport_rank=='3rd Rank':
+                        points+=3
+                elif i.sport_level=='School':
+                    if i.sport_rank=='1st Rank':
+                        points+=6
+                    elif i.sport_rank=='2nd Rank':
+                        points+=4
+                    elif i.sport_rank=='3rd Rank':
+                        points+=2
+                elif i.sport_level=='participated':
+                        points+=1
+            
+            sports_point.append(points)
+            print("================Value ",points,"===================")
+    print(sports_point)
+    new_list=[1,2]
+    again_dict={}
+    for i in range(len(school_list)):
+        print(school_list[i])
+        sport_dict={}
+        sport_dict['school']=school_list[i]
+        sport_dict['points']=sports_point[i]
+        sport_dict['cal']=new_list[i]
+        again_dict[i]=sport_dict
+    print(again_dict)
+
     context={
         'sorted_d':sorted_d,
-        'school_list':school_list
+        'school_list':school_list,
+        'sports_point':sports_point,
+        'again_dict':again_dict
     }
     return render(request,'govt_home.html',context)
 import json
+
+
 def teacher_home(request):
     students=Student.objects.filter(student_teacher__t_info__email=request.user)
     data=[]
@@ -283,3 +373,7 @@ def teacher_home(request):
         'class_data_list':class_data_list
     }
     return render(request,'teacher_home.html',context)
+
+
+def student_home(request):
+    return render(request,'student_home.html')

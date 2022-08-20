@@ -19,18 +19,8 @@ from . import views
 
 
 urlpatterns = [
-      path('home/',views.home,name='home' ),
-      path('school_home/',views.school_home,name='school_home' ),
-      path('govt_home/',views.govt_home,name='govt_home' ),
-      path('teacher_home/',views.teacher_home,name='teacher_home' ),
-      path('student_home/',views.student_home,name='student_home' ),
-
-      
-      path('register_school/',views.register_school,name='register_school' ),
-      path('register_teacher/',views.register_teacher,name='register_teacher' ),
-
-      path('',views.login,name='login' ),
-      path('logout/',views.logout,name='logout_view' ),
+      path('student_result/',views.student_result,name='student_result' ),
+     
 
 ]
 

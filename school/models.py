@@ -71,6 +71,7 @@ class AssignedTeacher(models.Model):
 class Student(models.Model):
     student_roll=models.IntegerField( null=True,blank=True)
     student_name=models.CharField(max_length =255, null=True,blank=True)
+    #
     #student_course_name=models.CharField(max_length =255, null=True,blank=True)
     student_school =models.ForeignKey( School, on_delete=models.CASCADE)
     student_teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
@@ -106,3 +107,22 @@ class AssignSportTeacher(models.Model):
     sport_session=models.CharField(max_length =255,null=True,blank=True)
     def __str__(self):
         return self.sport_class
+
+
+class AssignCulturalTeacher(models.Model):
+    cul_class=models.CharField(max_length =255,null=True,blank=True,choices=CLASS_CHOICES)
+    cul_teacher=models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    cul_school=models.ForeignKey( School, on_delete=models.CASCADE)
+    cul_session=models.CharField(max_length =255,null=True,blank=True)
+    def __str__(self):
+        return self.cul_class
+
+
+
+
+class StudentAccount(models.Model):
+    student_info=models.ForeignKey( Student,on_delete=models.CASCADE)
+    s_school =models.ForeignKey( School,on_delete=models.CASCADE)
+    s_info= models.ForeignKey(settings.AUTH_USER_MODEL,db_index=True,on_delete =models.CASCADE)
+    def __str__(self):
+        return self.s_info.email

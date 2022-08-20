@@ -76,3 +76,4 @@ class Teacher_info(forms.ModelForm):
                 labels = {
                             't_name': ('Teachers Name'),
                 }
+

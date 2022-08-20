@@ -1,0 +1,111 @@
+
+     
+     
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="row alertMessages" style="position: absolute; width: 100%; z-index: 101; margin-top: 15px; backdrop-filter: blur(3px); ">
+  <div class="col-md-3 col-1"></div>
+  <div style="font-family: 'Lato', sans-serif;"
+    class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} alert-dismissible fade show col-md-6 col-10 text-center">
+    {{message}}
+    <a href="{% url 'assign_teacher' %}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Assign Class</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="teachers.html">Teachers</a>
+          </li>
+          <li class="breadcrumb-item active">Assign Class</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'assign_sport_teacher' %}" method="POST">
+            <div class="row">
+                      
+              {% csrf_token %}
+
+              <div class="col-sm-11">
+                <div class="form-group">
+                  {{form}}
+                </div>
+              </div>
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <label>Class</label>
+                  <select name="sport_class" class="form-control">
+                    <option>Select Class</option>
+                   
+                    <option value="1">Standard 1</option>
+                    <option value="2">Standard 2</option>
+                    <option value="3">Standard 3</option>
+                    <option value="4">Standard 4</option>
+                
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <label>Teacher</label>
+                  <select name="t_name" class="form-control">
+                    <option>Select Teacher</option>
+                    {% for i in teachers %}
+                    <option value="{{i.t_name}}">{{i.t_name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <label>Teacher Email</label>
+                  <select name="t_email"  class="form-control">
+                    <option>Select Teacher Email</option>
+                    {% for i in teachers %}
+                    <option value="{{i.t_info.email}}">{{i.t_info.email}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select  name="session" class="form-control">
+                    <option>Select Session</option>
+                    {% for i in sessions %}
+                    <option value="{{i.session}}">{{i.session}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

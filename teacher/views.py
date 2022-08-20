@@ -7,6 +7,7 @@ from multiprocessing import context
 from django.shortcuts import redirect, render
 import pandas as pd
 import operator
+from authapp.forms import CustomUserCreationForm
 
 import teacher
 from .models import *
@@ -60,7 +61,8 @@ def add_student(request):
             print(session1)
           
             form =AddStudentForm(request.GET)
-            if form.is_valid():
+            form2 =CustomUserCreationForm(request.GET)
+            if form.is_valid() and form2.is_valid():
                 print("Hey Form is va;id")
                 student_form=form.save(commit =False)
                 print(student_form.student_name is None)
@@ -74,20 +76,28 @@ def add_student(request):
                     student_form.student_class=class_no
                     student_form.student_session=session
                     student_form.save()
-                            
+                    student_foorm=form2.save(commit =False)
+                    student_foorm.is_student=True
+                    student_foorm.username=student_foorm.email
+                    student_foorm.save()
+                    student_cred=StudentAccount(student_info=student_form,s_school=school,s_info=student_foorm)
+                    student_cred.save()
                     form=AddStudentForm()
+                    form2=CustomUserCreationForm()
                     context={
                         'student_class':class_no,
                         'student_session':session1,
-                      
+                        'form2':form2,
                         'form':form,
                     }
                     return render(request,'add_student.html',context )
-            form=AddStudentForm()
+            fform=AddStudentForm()
+            form2=CustomUserCreationForm()
             context={
                         'student_class':class_no,
                         'student_session':session1,
                         'form':form,
+                        'form2':form2
                     }
             return render(request,'add_student.html',context )
 

@@ -7,6 +7,7 @@ from .forms import *
 from django.contrib import messages
 from authapp.models import *
 from teacher.models import *
+from authapp.forms import *
 
 
 from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
@@ -263,3 +264,43 @@ def assign_sport_teacher(request):
         'teachers':teachers
     }
     return render(request,'school_sport/assign_sport_teacher.html',context)
+
+
+
+
+
+def assign_cultural_teacher(request):
+    if request.method=='POST':
+        sport_class=request.POST['sport_class']
+        #t_name=request.POST['t_name']
+        t_email=request.POST['t_email']
+        session=request.POST['session']
+        teacher=Teacher.objects.get(t_info__email=t_email)
+        school=School.objects.get(s_info__email=request.user)
+        sport_obj=AssignCulturalTeacher(
+            cul_class=sport_class,
+            cul_teacher=teacher,
+            cul_school=school,
+            cul_session=session
+            
+            )
+        sport_obj.save()
+        return redirect('assign_cultural_teacher')
+    teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
+    sessions=SchoolSessions.objects.all()
+    for i in teachers:
+        print(i.t_name)
+        print(i.t_info.email)
+    context={
+        'sessions':sessions,
+        'teachers':teachers
+    }
+    return render(request,'cultural/assign_sport_teacher.html',context)
+
+
+def student_register(request):
+    form=CustomUserCreationForm()
+    context={
+        'form':form
+    }
+    return render(request,'student_template/student_register.html',context)

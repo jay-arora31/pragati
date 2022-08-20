@@ -6,7 +6,13 @@
                     <li class="menu-title">
                       <span>Main Menu</span>
                     </li>
-        
+                    <li class="submenu">
+                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Student</span> <span class="menu-arrow"></span></a>
+                      <ul>  
+                        <li><a href="{% url 'student_register' %}">Add Student Credentials</a></li>
+                        <li><a href="cul_edit.html">Edit Cultural</a></li>
+                      </ul>
+                    </li>
             
         
                     <li class="submenu">
@@ -44,13 +50,13 @@
         
                     <li class="submenu">
                       <a href="#"><i class="fas fa-user-graduate"></i> <span> Cultural</span> <span class="menu-arrow"></span></a>
-                      <ul>
-                        <li><a href="add_cultural.html">Add Cultural</a></li>
+                      <ul>  
+                        <li><a href="{% url 'assign_cultural_teacher' %}">Add Cultural</a></li>
                         <li><a href="cul_edit.html">Edit Cultural</a></li>
                       </ul>
                     </li>
         
-        
+                    
         
                   </ul>
                 </div>
