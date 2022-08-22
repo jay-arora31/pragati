@@ -162,8 +162,11 @@ def govt_home(request):
     subject_count=0
     school=School.objects.all()
     student_all_over_dict={}
+    
     for i in school:
+        print("=====================Hey School=========================")
         print(i.s_info.email)
+        print(i.s_name)
         school_email=i.s_info.email
         class_list=[]
 

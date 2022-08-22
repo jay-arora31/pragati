@@ -6,6 +6,18 @@
 
 {% block content %}
 
+{% if messages %}
+{% for message in messages %}
+<div class="row alertMessages" style="position: absolute; width: 100%; z-index: 101; margin-top: 15px; backdrop-filter: blur(3px); ">
+  <div class="col-md-3 col-1"></div>
+  <div style="font-family: 'Lato', sans-serif;"
+    class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} alert-dismissible fade show col-md-6 col-10 text-center">
+    {{message}}
+    <a href="{% url 'assign_teacher' %}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
   <div class="content container-fluid">
     <div class="page-header">
       <div class="row align-items-center">

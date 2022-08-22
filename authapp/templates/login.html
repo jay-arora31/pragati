@@ -1,17 +1,951 @@
+{% load static %}
 {% load crispy_forms_tags %}
-<div class="container base-container login" style="margin-top: 30px;">
-    <h5>{{message}}</h5>
-    <h2>Sign in</h2>
-            <div class="d-flex justify-content-center justify-content-md-start" style="margin: 40px 0;">
-            <div class="base-div col-md-5 col-10 formLogin">
-            <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
-            <form method="POST">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <button	class="btn btn-brand"	type="submit">Sign in</button>
-            </form>
-        </article>
-    
-        </div>
-        </div>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>PRAGATI</title>
+
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link rel="stylesheet" href="{% static 'login/lib/owlcarousel/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'login/lib/animate/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'login/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <script type="text/javascript" lang="javascript" src="./school_registration.js"></script>
+  <script type="text/javascript">
+    var citiesByState = {
+      Ahmednagar: [
+        'Ahmednagar Nagar',
+        'Shevgaon ',
+        'Pathardi ',
+        'Parner ',
+        'Sangamner',
+        'Kopargaon ',
+        'Akole ',
+        'Shrirampur',
+        'Nevasa ',
+        'Rahata ',
+        'Rahuri	',
+        'Karjat	Shrigonda',
+        'Karjat ',
+        'Jamkhed'
+      ],
+
+
+      Akola: [
+        'Akola ',
+        'Akot',
+        'Telhara ',
+        'Balapur',
+        'Patur ',
+        'Murtajapur',
+        'Barshitakli'
+      ],
+
+      Amravati: [
+        'Amravati ',
+        'Bhatukali',
+        'Nandgaon Khandeshwar',
+        'Dharni	',
+        'Chikhaldara',
+        'Achalpur',
+        'Chandurbazar',
+        'Morshi	',
+        'Warud ',
+        'Daryapur',
+        'Anjangaon-Surji',
+        'Chandur',
+        'Dhamangaon',
+        'Tiosa'
+      ],
+
+      Aurangabad: [
+        'Aurangabad',
+        'Kannad ',
+        'Soegaon',
+        'Sillod	',
+        'Phulambri',
+        'Khuldabad ',
+        'Vaijapur',
+        'Gangapur',
+        'Paithan'
+      ],
+
+
+      Beed: [
+        'Beed ',
+        'Ashti',
+        'Patoda ',
+        'Shirur-Kasar',
+        'Georai ',
+        'Ambejogai Majalgaon',
+        'Wadwani',
+        'Kaij ',
+        'Dharur',
+        'Parli ',
+        'Ambejogai'
+      ],
+
+
+      Bhandara: [
+        'Tumsar',
+        'Mohadi',
+        'Bhandara',
+        'Paoni',
+        'Sakoli',
+        'Lakhani',
+        'Lakhandur'
+      ],
+
+
+      Buldhana: ['Buldhana', 'Chikhli ', 'Deulgaon Raja	', 'Jalgaon Jamod', 'Sangrampur', 'Malkapur', 'Motala ', 'Nandura', 'Khamgaon', 'Shegaon ', 'Mehkar	', 'Sindkhed Raja', 'Lonar '],
+
+      Chandrapur: [
+        'Chandrapur',
+        'Saoli',
+        'Mul ',
+        'Ballarpur',
+        'Pombhurna ',
+        'Gondpimpri',
+        'Warora	',
+        'Chimur ',
+        'Bhadravati',
+        'Bramhapuri',
+        'Nagbhid ',
+        'Sindewahi ',
+        'Rajura	',
+        'Korpana ',
+        'Jivati '
+      ],
+
+
+      Dhule: ['Dhule', 'Sakri ', 'Sindkheda', 'Shirpur'],
+
+
+      Gadchiroli: [
+        'Gadchiroli',
+        'Dhanora',
+        'Chamorshi',
+        'Mulchera ',
+        'Desaiganj',
+        'Armori ',
+        'Kurkheda ',
+        'Korchi ',
+        'Aheri	',
+        'Bhamragad',
+        'Sironcha'
+      ],
+
+
+      Gondia: [
+        'Gondia	',
+        'Tiroda	',
+        'Gondia	',
+        'Arjuni Morgaon	',
+        'Deori	Amgaon ',
+        'Gondia	Salekasa ',
+        'Arjuni Morgaon	Sadak Arjuni ',
+        'Deori'
+      ],
+
+
+      Hingoli: [
+        'Hingoli ',
+        'Sengaon',
+        'Kalamnuri',
+        'Basmath',
+        'Aundha Nagnath'
+      ],
+
+
+      Jalgaon: ['Jalgaon', 'Jamner', 'Erandol', 'Dharangaon', 'Bhusawal', 'Raver ', 'Muktainagar', 'Bodwad ', 'Yawal', 'Amalner', 'Parola', 'Chopda ', 'Pachora', 'Bhadgaon ', 'Chalisgaon'],
+
+
+      Jalna: [
+        'Jalna',
+        'Bhokardan',
+        'Jafrabad',
+        'Badnapur',
+        'Partur	Ambad',
+        'Ghansawangi',
+        'Partur ',
+        'Mantha'
+      ],
+
+
+      Kolhapur: [
+        'Karvir',
+        'Hatkanangle',
+        'Shirol',
+        'Kagal',
+        'Panhala',
+        'Gadhinglaj',
+        'Radhanagari',
+        'Chandgad',
+        'Shahuwadi',
+        'Bhudargad',
+        'Ajra',
+        'Bavda'
+      ],
+
+
+      Latur: [
+        'Latur',
+        'Ausa-Renapur',
+        'Ahmedpur',
+        'Jalkot',
+        'Chakur ',
+        'Shirur Anantpal',
+        'Ausa-Renapur',
+        'Nilanga',
+        'Deoni ',
+        'Udgir'
+      ],
+
+
+
+
+
+      MumbaiSuburban: ["Kurla (Mulund)", "Andheri", "Borivali"],
+
+
+
+      Nagpur: [
+        'Nagpur (Urban)	',
+        'Nagpur (Rural)',
+        'Kamptee',
+        'Hingna ',
+        'Katol	',
+        'Narkhed ',
+        'Savner	',
+        'Kalameshwar',
+        'Ramtek	',
+        'Mouda ',
+        'Parseoni',
+        'Umred	',
+        'Kuhi ',
+        'Bhiwapur'
+      ],
+
+
+      Nanded: [
+        'Nanded ',
+        'Ardhapur ',
+        'Mudkhed',
+        'Bhokar',
+        'Umri',
+        'Loha ',
+        'Kandhar',
+        'Kinwat	',
+        'Himayatnagar',
+        'Hadgaon ',
+        'Mahur ',
+        'Deglur	',
+        'Mukhed ',
+        'Dharmabad',
+        'Biloli ',
+        'Naigaon (Khairgaon)'
+      ],
+
+
+      Nandurbar: ["Nandurbar", "Navapur", "Shahada", "Talode", "Akkalkuwa", "Akrani"],
+
+
+
+      Nashik: ["Nashik", "Igatpuri ", "Dindori", "Peth ", "Trimbakeshwar", "Kalwan", "Deola ", "Surgana ", "Baglan (Satana)", "Malegaon ", "Nandgaon ", "Chandwad", "Niphad ", " Sinnar ", " Yeola "],
+
+      Osmanabad: [
+        'Osmanabad',
+        'Tuljapur',
+        'Bhum',
+        'Paranda ',
+        'Kalamb	Washi',
+        'Kalamb ',
+        'Umarga	Lohara',
+        'Umarga'
+      ],
+
+
+      Palghar: [
+        'Palghar',
+        'Vasai ',
+        'Dahanu ',
+        'Talasari',
+        'Jawhar',
+        'Mokhada',
+        'Vada ',
+        'Vikramgad'
+      ],
+
+      Parbhani: [
+        'Parbhani',
+        'Sonpeth ',
+        'Gangakhed',
+        'Palam ',
+        'Purna ',
+        'Sailu	',
+        'Jintur ',
+        'Manwath',
+        'Pathri'
+      ],
+
+
+      Pune: [
+        'Pune City  ',
+        'Haveli ',
+        'Haveli - PCMC ',
+        'Khed	Khed (Rajgurunagar) ',
+        'Junnar  ',
+        'Ambegaon (Ghodegaon) ',
+        'Maval	Maval (Vadgaon)  ',
+        'Mulshi (Paud)  ',
+        'Shirur ',
+        'Bhor	Purandhar (Saswad) ',
+        'Velhe',
+        'Bhor ',
+        'Baramati',
+        'Indapur',
+        'Daund'
+      ],
+
+
+      Raigad: [
+        'Pen ',
+        'Alibaug ',
+        'Murud ',
+        'Panvel',
+        ' Uran',
+        'Karjat(Matheran)',
+        'Khalapur ',
+        'Mangaon ',
+        'Tala ',
+        'Roha ',
+        'Sudhagad (Pali) ',
+        ' Mahad',
+        '  Poladpur ',
+        'Shrivardhan',
+        ' Mhasla '
+      ],
+
+      Ratnagiri: [
+        ' Ratnagiri ',
+        ' Sangameshwar(Deorukh) ',
+        ' Lanja ',
+        ' Rajapur ',
+        'Chiplun',
+        ' Guhagar ',
+        ' Dapoli',
+        'Mandangad ',
+        'Khed '
+      ],
+
+      Sangli: [
+        'Miraj ',
+        'Kavathe-Mahankal ',
+        'Tasgaon',
+        'Jat ',
+        'Walwa	Walwa (Islampur) ',
+        'Shirala',
+        'Khanapur',
+        'Atpadi ',
+        'Palus',
+        'Kadegaon'
+      ],
+
+
+      Satara: [
+        'Satara',
+        'Jaoli',
+        'Koregaon',
+        'Wai	',
+        'Mahabaleshwar ',
+        'Khandala ',
+        'Phaltan',
+        'Maan (Dahiwadi)',
+        'Khatav (Vaduj)',
+        'Karad	Patan',
+        'Karad '
+      ],
+
+
+      Sindhudurg: [
+        'Kankavli',
+        ' Vaibhavwadi	',
+        ' Devgad',
+        ' Malwan',
+        ' Sawantwadi',
+        'Kudal	',
+        'Vengurla	',
+        'Dodamarg (Kasal)'
+      ],
+
+      Solapur: [
+        'Solapur North',
+        'Barshi ',
+        'Solapur South',
+        'Akkalkot ',
+        'Kurduwadi ',
+        'Karmala ',
+        'Pandharpur',
+        'Mohol ',
+        'Malshiras	',
+        'Mangalvedhe Sangole',
+        'Mangalvedhe'
+      ],
+
+
+      Thane: [
+        ' Thane',
+        ' Kalyan',
+        ' Murbad ',
+        'Bhiwandi',
+        'Shahapur',
+        'Ulhasnagar',
+        'Ambarnath '
+      ],
+
+      Wardha: [
+        'Wardha ',
+        'Deoli',
+        'Seloo ',
+        'Arvi',
+        'Ashti',
+        'Karanja',
+        'Hinganghat',
+        'Samudrapur',
+      ],
+
+      Washim: [
+        'Washim ',
+        'Malegaon ',
+        'Risod',
+        'Mangrulpir',
+        'Karanja ',
+        'Manora '
+      ],
+
+      Yavatmal: [
+        'Yavatmal',
+        'Arni ',
+        'Babhulgaon',
+        'Kalamb ',
+        'Darwha	',
+        'Digras',
+        'Ner ',
+        'Pusad	',
+        'Umarkhed ',
+        'Mahagaon ',
+        'Kelapur',
+        'Ralegaon ',
+        'Ghatanji ',
+        'Wani	',
+        'Maregaon',
+        'Zari Jamani'
+      ]
+    }
+
+
+    function makeSubmenu(value) {
+      if (value.length == 0) document.getElementById("citySelect").innerHTML = "<option></option>";
+      else {
+        var citiesOptions = "";
+        for (cityId in citiesByState[value]) {
+          citiesOptions += "<option>" + citiesByState[value][cityId] + "</option>";
+        }
+        document.getElementById("citySelect").innerHTML = citiesOptions;
+      }
+    }
+
+    function displaySelected() {
+      var country = document.getElementById("countrySelect").value;
+      var city = document.getElementById("citySelect").value;
+      alert(country + "\n" + city);
+    }
+
+    function resetSelection() {
+      document.getElementById("countrySelect").selectedIndex = 0;
+      document.getElementById("citySelect").selectedIndex = 0;
+    }
+  </script>
+
+
+</head>
+
+<body>
+  
+
+  <!-- Navbar Start -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <!-- <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>PRAGATI</h2> -->
+      <img src="{% static 'login/img/123.png' %}" style=" width:96px">
+      <img src="{% static 'login/img/qqq.png' %}" style="margin-left:23px">
+      <img src="{% static 'login/img/ppp.png' %}">
+
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
+        <a href="index.html" class="nav-item nav-link active">Home</a>
+        <a href="contact.html" class="nav-item nav-link">Contact</a>
+
+      </div>
+
+      <button class="btn py-4 px-lg-5 d-none d-lg-block" onclick="document.getElementById('id01').style.display='block'"><b>REGISTER</b><i class="fa fa-arrow-right ms-3"></i></button>
+
+      <!-- The Modal -->
+      <div id="id01" class="modal">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/action_page.php">
+          <div class="imgcontainer">
+            <img src="{% static 'login/img/123.png' %}" alt="Avatar" class="avatar" style="width:100px;height:50px">
+            <!-- <img src="img/ppp.png" alt="Avatar" class="avatar" style="width:90px;height:50px;margin-left:60px"> -->
+            <img src="{%  static 'login/img/qqq.png' %}" alt="Avatar" class="avatar" style="width:70px;height:50px;margin-left:210px">
+            <br><br>
+            <h2 style="color:#161E54">REGISTER</h2>
+          </div>
+
+          <div class="container">
+
+            <label for="uname"><b>School Name</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label for="email"><b>email</b></label>
+            <input type="text" placeholder="Enter email" name="email" required>
+            <br>
+            <label for="dis"><b>District</b></label><br>
+            <!-- <input type="text" placeholder="Enter District" name="dis" required> -->
+            <select id="districtSelect" size="1" onchange="makeSubmenu(this.value)">
+              <option value="" disabled selected>Choose District</option>
+              <option>Ahmednagar</option>
+              <option>Akola</option>
+              <option>Amravati</option>
+              <option>Aurangabad</option>
+              <option>Bhandara</option>
+              <option>Buldhana</option>
+              <option>Chandrapur</option>
+              <option>Dhule</option>
+              <option>Gadchiroli</option>
+              <option>Gondia</option>
+              <option>Hingoli</option>
+              <option>Jalgaon</option>
+              <option>Jalna</option>
+              <option>Kolhapur</option>
+              <option>Latur</option>
+              <option>MumbaiSuburban</option>
+              <option>Nagpur</option>
+              <option>Nanded</option>
+              <option>Nandurbar</option>
+              <option>Nashik</option>
+              <option>Osmanabad</option>
+              <option>Palghar</option>
+              <option>Parbhani</option>
+              <option>Pune</option>
+              <option>Raigad</option>
+              <option>Ratnagiri</option>
+              <option>Sangli</option>
+              <option>Satara</option>
+              <option>Sindhudurg</option>
+              <option>Solapur</option>
+              <option>Thane</option>
+              <option>Wardha</option>
+              <option>Washim</option>
+              <option>Yavatmal</option>
+
+
+
+            </select>
+
+            <label for="cit"><b>City</b></label><br>
+            <!-- <input type="text" placeholder="Enter City" name="cit" required> -->
+            <select id="citySelect" size="1">
+              <option value="" disabled selected>Choose City</option>
+              <option></option>
+            </select>
+
+
+            <br>
+            <br>
+            <button class="sub" type="submit">Register</button>
+            <a href="index.html"><button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button></a>
+          </div>
+        </form>
+      </div>
+
+      <button class="btn py-4 px-lg-5 d-none d-lg-block" onclick="document.getElementById('id02').style.display='block'"><strong>LOGIN</strong><i class="fa fa-arrow-right ms-3"></i></button>
+
+      <!-- The Modal -->
+      <div id="id02" class="modal">
+        <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" method="post">
+          <div class="imgcontainer">
+
+            <img src="{% static 'login/img/123.png' %}" alt="Avatar" class="avatar" style="width:100px;height:50px">
+            <!-- <img src="img/ppp.png" alt="Avatar" class="avatar" style="width:90px;height:50px;margin-left:60px"> -->
+            <img src="{% static 'login/img/qqq.png' %}" alt="Avatar" class="avatar" style="width:80px;height:50px;margin-left:200px">
+
+            <br><br>
+
+            <h2 style="color:#161E54;text-align:centre;">LOGIN</h2>
+
+
+
+            <!-- <img src="img/qqq.png" alt="Avatar" class="avatar" style="width:100px;height:100px">
+            <img src="img/ppp.png" alt="Avatar" class="avatar" style="width:200px;height:100px"> -->
+          </div>
+
+          <div class="container">
+            {% csrf_token %}
+            {{ form|crispy }}
+          
+
+            <button class="sub" type="submit">Login</button>
+            <a href="index.html"><button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button></a>
+
+          </div>
+        </form>
+      </div>
+
     </div>
+    </div>
+    </div>
+
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <div class="subHeading" style="background-color:rgb(7, 7, 74) ">
+    <marquee behavior="scroll" direction="left" style="color:rgb(255, 255, 255)"><strong>Welcome to Pragati Portal...</strong> </marquee>
+  </div>
+
+
+  <!-- Carousel Start -->
+  <div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+      <div class="owl-carousel-item position-relative">
+        <img class="img-fluid" src="{% static 'login/img/1.png' %}" alt="">
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(255, 255, 255, 0);">
+        </div>
+      </div>
+
+      <div class="owl-carousel-item position-relative">
+        <img class="img-fluid" src="{% static 'login/img/third.png' %}" alt="">
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(255, 255, 255, 0);">
+          <div class="container">
+            <div class="row justify-content-start">
+              <div class="col-sm-10 col-lg-8">
+                <h5 class="text text-uppercase mb-3 animated slideInDown" style="color:beige"> STUDENTS PROGRESS TRACKER</h5>
+                <h1 class="display-3 text-white animated slideInDown">ENABLES YOU TO TRACK PROGRESS IN BEST WAY</h1>
+                <p class="fs-5 text-white mb-4 pb-2"></p> -->
+                <a href="school_registration.html" class="btn  py-md-3 px-md-5 animated slideInRight">Register</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+          <img class="img-fluid" src="{% static 'login/img/2.png' %}" alt="">
+          <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(255, 255, 255, 0);">
+            <!-- <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-sm-10 col-lg-8">
+                                    <h5 class="text text-uppercase mb-3 animated slideInDown" style="color:beige"> STUDENTS PROGRESS TRACKER</h5>
+                                    <h1 class="display-3 text-white animated slideInDown">ENABLES YOU TO TRACK PROGRESS IN BEST WAY</h1>
+                                    <p class="fs-5 text-white mb-4 pb-2"></p> -->
+            <!-- <a href="school_registration.html" class="btn  py-md-3 px-md-5 animated slideInRight">Register</a> --> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  </div>
+
+  <!-- Carousel End -->
+
+
+
+  <!-- Service Start -->
+  <div class="container-xxl py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="service-item text-center pt-3">
+            <div class="p-4">
+              <i class="fa fa-3x fa-globe text-primary mb-4"></i>
+              <h5 class="mb-3">Outcome based learning </h5>
+              <p>It enables you to track progress according to the CO's</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="service-item text-center pt-3">
+            <div class="p-4">
+              <i class="fa fa-3x fa-globe text-primary mb-4"></i>
+              <h5 class="mb-3">Sports</h5>
+              <p>It enables you to track the sports activities in school</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="service-item text-center pt-3">
+            <div class="p-4">
+              <i class="fa fa-3x fa-home text-primary mb-4"></i>
+              <h5 class="mb-3">Cultural</h5>
+              <p>It enables you to track the sports activities in school</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+          <div class="service-item text-center pt-3">
+            <div class="p-4">
+              <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
+              <h5 class="mb-3">Feedbacks </h5>
+              <p> OCR technique to attain feedbacks from teachers for students </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Service End -->
+
+
+  <!-- About Start -->
+  <div class="container-xxl py-5">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+          <div class="position-relative h-100">
+            <!-- <img class="img-fluid position-absolute w-100 h-100" src="img/about.jpg" alt="" style="object-fit: cover;"> -->
+            <video width="550" height="450" controls preload="auto">
+              <source src="https://media.geeksforgeeks.org/wp-content/uploads/20190616234019/Canvas.move_.mp4" type="video/mp4">
+              <source src="https://media.geeksforgeeks.org/wp-content/uploads/20190616234019/Canvas.move_.ogg" type="video/ogg">
+            </video>
+          </div>
+        </div>
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+          <h6 class="section-title bg-white text-start  pe-3" style="color:#181d38">About Us</h6>
+          <h1 class="mb-4" style="color:#181d38">ABOUT</h1>
+          <p class="mb-4">PRAGATI Portal is a progress tracker, which follows outcome based learning.There are three login panels for School to track the activities of whole school, teachers to track the progress of the classes and subjects assigned
+            to them and also student to get their progress card online</p>
+          <p class="mb-4">It enables you to less manual mistakes, entering data through excel sheets also OCR technique in process</p>
+          <div class="row gy-2 gx-4 mb-4">
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Enables editing of data, Ease in revising</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Allows Multiple Teachers to Access Data at One time</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Ease in identifying CO and student's interest</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Comparison of past and present performance</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Self Improvisation</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Entire Students Analysis</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Less prone to Errors</p>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Safe and Secure</p>
+            </div>
+          </div>
+          <a class="btn  py-3 px-5 mt-2" href="">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About End -->
+
+
+  <!-- Categories Start -->
+  <div class="container-xxl py-5 category">
+    <div class="container">
+      <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+        <h6 class="section-title bg-white text-center  px-3" style="color:#181d38;font-size:x-large">PRAGATI</h6>
+        <h1 class="mb-5"></h1>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-7 col-md-6">
+          <div class="row g-3">
+            <div class="col-lg-12 col-md-12 wow zoomIn" data-wow-delay="0.1s">
+              <a class="position-relative d-block overflow-hidden" href="">
+                <img class="img-fluid" src="{% static 'login/img/1.jpg' %}" alt="">
+
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.3s">
+              <a class="position-relative d-block overflow-hidden" href="">
+                <img class="img-fluid" src="{% static 'login/' %}" alt="">
+
+
+
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.5s">
+              <a class="position-relative d-block overflow-hidden" href="">
+                <img class="img-fluid" src="{% static 'login/img/3.avif' %}" alt="">
+
+
+
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;">
+          <a class="position-relative d-block h-100 overflow-hidden" href="">
+            <img class="img-fluid position-absolute w-100 h-100" src="{% static 'login/img/4.jpg' %}" alt="" style="object-fit: cover;">
+
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Categories Start -->
+
+
+
+
+  <!-- Testimonial Start -->
+  <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+      <div class="text-center">
+        <h6 class="section-title bg-white text-center text-primary px-3">What our motive is!</h6>
+        <h1 class="mb-5">To make tracking easier!</h1>
+      </div>
+      <div class="owl-carousel testimonial-carousel position-relative">
+        <div class="testimonial-item text-center">
+          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/sch.png' %}" style="width: 80px; height: 80px;">
+          <h5 class="mb-0">SCHOOLS</h5>
+          <p>GNHS</p>
+          <div class="testimonial-text bg-light text-center p-4">
+            <p class="mb-0">We get to know details about our whole school activities, that is school at a glance </p>
+          </div>
+        </div>
+        <div class="testimonial-item text-center">
+          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/stud.jfif'  %}" style="width: 80px; height: 80px;">
+          <h5 class="mb-0">STUDENT</h5>
+          <p>A 4th grade student</p>
+          <div class="testimonial-text bg-light text-center p-4">
+            <p class="mb-0">It gets us to analyse our progress at one glance</p>
+          </div>
+        </div>
+        <div class="testimonial-item text-center">
+          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/stud.jfif' %}" style="width: 80px; height: 80px;">
+          <h5 class="mb-0">STUDENT</h5>
+          <p>A 5th grade student</p>
+          <div class="testimonial-text bg-light text-center p-4">
+            <p class="mb-0">It gets us to analyse our progress at one glance</p>
+          </div>
+        </div>
+        <div class="testimonial-item text-center">
+          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/sch.png' %}" style="width: 80px; height: 80px;">
+          <h5 class="mb-0">SCHOOLS</h5>
+          <p>GNHS1</p>
+          <div class="testimonial-text bg-light text-center p-4">
+            <p class="mb-0">We get to know details about our whole school activities, that is school at a glance </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Testimonial End -->
+
+
+  <!-- Footer Start -->
+  <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+
+      <div class="container">
+        <div class="copyright">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              &copy; <a class="border-bottom" href="#">PRAGATI</a>, All Right Reserved.
+
+
+              GOV <a class="border-bottom" href="index.html"></a><br><br>
+              Team <a class="border-bottom" href="index">Elite_CSEian</a>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <div class="footer-menu">
+                <a href="">Home</a>
+                <a href="">Cookies</a>
+                <a href="">Help</a>
+                <a href="">FQAs</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg  btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript Libraries -->
+<script src="{% static 'login/lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'login/lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'login/lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'login/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'login/js/main.js' %}"></script>
+
+  
+
+    <!-- Template Javascript -->
+    <script src=""></script>
+    <script>
+      // Get the modal
+      var modal = document.getElementById('id01');
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
+
+</body>
+
+</html>

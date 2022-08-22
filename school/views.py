@@ -304,3 +304,12 @@ def student_register(request):
         'form':form
     }
     return render(request,'student_template/student_register.html',context)
+
+
+
+def view_sports_teacher(request):
+    sport_data=AssignSportTeacher.objects.filter(sport_school__s_info__email=request.user)
+    context={
+        'sport_data':sport_data
+    }
+    return render(request,'school_sport/view_assigned_sport.html',context)

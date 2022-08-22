@@ -4,92 +4,179 @@
 {% load static %}
 
 {% block content %}
-<div class="col-sm-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="content container-fluid">
-                    <div class="page-header">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <h3 class="page-title">School Ranking</h3>
-                          <ul class="breadcrumb">
-                           
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="card">
-                          <div class="card-body">
-                            <h5 class="form-title"><span></span></h5>
-                            <table class="table table-hover table-center mb-0 datatable">
-                                <thead>
+
+<style>
+  body {
+    font-family: 'Lato', Arial, sans-serif;
+
+  }
+
+  .checked {
+    color: red;
+  }
+
+  .checked_cul {
+    color: green;
+  }
+
+  .gold {
+    color: gold;
+  }
+
+  .silver {
+    color: silver;
+  }
+
+  .bronze {
+    color: #CD7F32;
+
+  }
+
+  .container>header {
+    margin: 0 auto;
+    padding: 1em;
+    text-align: center;
+  }
+
+  .container>header h1 {
+    font-weight: 600;
+    font-size: 3em;
+    margin: 0;
+  }
+
+  .wrapper {
+    line-height: 1.5em;
+    margin: 0 auto;
+    padding: 2em 0 3em;
+    width: 90%;
+    max-width: 2000px;
+    overflow: hidden;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+  }
+
+  th {
+    background-color: #C36A2D;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+    font-size: 20px;
+  }
+
+  td,
+  th {
+    padding: 1em 1.5em;
+    text-align: left;
+  }
+
+  tbody th {
+    background-color: #2ea879;
+  }
+
+  tbody tr:nth-child(2n-1) {
+    background-color: #FCECDD;
+    transition: all .125s ease-in-out;
+  }
+
+  tbody tr:hover {
+    background-color: #FFC288;
+  }
+
+  td.rank {
+    text-transform: capitalize;
+  }
+</style>
+
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">State School Ranking</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="teachers.html">Government</a>
+          </li>
+          <li class="breadcrumb-item active">School Rankings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-xs-5 ">
+                <img src="maha.png" alt="img" style="width:100px;height:100px;text-align:center;margin-left:130px">
+              </div>
+              <div class="col-md-9 col-xs-7">
+                <h1 style="color:black;margin-left:150px"><strong>SSRF</strong></h1>
+                <h3 style="color:black">State School Ranking Framework</h3>
+              </div>
+
+            </div>
+
+          </div>
+          <form>
+            <div class="container">
+
+              <div class="wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>School</th>
+                      <th>Sports</th>
+                      <th>Cultural</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for key, value in again_dict.items %}
+                    <tr>
+                      <td class="rank">{{ forloop.counter}}
+                        {% if forloop.counter == 1 %} <i class="fa fa-medal fa-2x gold"></i>{% endif %}
+                        {% if forloop.counter == 2 %} <i class="fa fa-medal fa-2x silver"></i>{% endif %}
+                        {% if forloop.counter == 3 %} <i class="fa fa-medal fa-2x bronze"></i>{% endif %}
+                        
+                        </td>
+                      {% for key2,value2 in value.items %}
+                      {% if key2 == "school" %}
+                      <td class="team"><b>{{value2}}</b>
+                      </td>
+                      {% elif key2 == "points"  %}
+                      <td class="points">
+                        <i class="fa fa-trophy checked fa-lg"></i>&nbsp;&nbsp;<b>{{value2}}</b>
 
 
-                                  <tr>
-                                    <th>Rank</th>
-                                  
-                                    <th>School Name</th>
-                                    <th>Point</th>
-                                    
-                             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                             <th>        </th>
-              
-                                    <!-- <th>Roll No</th>
-                                    <th>Class</th> -->
-                
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {% for key, value in again_dict.items %}
-                                  <tr>
-                                    <td>{{ forloop.counter}}</td>
-                          
-                                    {% for key2,value2 in value.items %}
-                                    <td>
-                                      {% if key2 == "points" %}
-                                      <span class="badge badge-pill badge-primary">Sports</span>
 
-                                      {{value2}}
-                               
-                                    {% elif key2 == "cal" %}
-                                   
 
-                                      <span class="badge badge-pill badge-success">Cultural</span>
+                      </td>
+                      {% else %}
+                      <td class="up-down">
+                        <i class="fa fa-trophy checked_cul fa-lg"></i>&nbsp;&nbsp;<b>{{value2}}</b>
 
-                                      {{value2}}
-                                
-                                    {% else %}
-                                 
-                                      
-                                      {{value2}}
-                                      
-                                  </td>
-                                    {% endif %}
-                                    {% endfor %}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  
 
-                                  </tr>
-                                    {% endfor %}
-                                </tbody>
-                              </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                  </tbody>
+                </table>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 

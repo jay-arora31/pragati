@@ -90,6 +90,8 @@ def add_student(request):
                         'form2':form2,
                         'form':form,
                     }
+                    messages.success(request, 'Student added successfully')
+
                     return render(request,'add_student.html',context )
             fform=AddStudentForm()
             form2=CustomUserCreationForm()
@@ -880,6 +882,12 @@ def testing_function(request):
                             grade_list.append(False)
             print(grade_list,"Grade list")
             return render(request,'testing_template.html' )
+
+
+
+
+
+
 
 
 def testing_function_login(request):

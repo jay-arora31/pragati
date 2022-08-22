@@ -1,63 +1,92 @@
 
+     
 
+{% extends 'teacherbase.html' %}
+{% load static %}
 
-{%  load static %}
-{{request.user}}
+{% block content %}
 
-
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
-<div class="container base-container bookEdit" style="margin-top: 30px; margin-bottom: 30px;">
-    <h1>Select Class and session of Student</h1>
-    <style>
-        .name{
-            margin: 40px;
-        }
-    </style>
-      <hr>
-      <div class="d-flex justify-content-center justify-content-md-start">
-        <div class="base-div col-md-8 col-lg-4" style="background-color: whitesmoke; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2),
-      -3px -3px 4px rgba(255, 255, 255, 1); margin-top: 30px;">
-          <article class="card-body col-md-9 col-lg-9" style="margin: 0 auto;">
-            <form action="{% url 'add_question_outcome' %}" method="GET">
-                {% csrf_token %}
-
-              <select class="form-select form-select-lg mb-3"  name="test_class" aria-label=".form-select-lg example">
-                <option selected>Choose Class</option>
-                {% for i in tests %}
-                <option value="{{i.test_class}}">{{i.test_class}}</option>
-                {% endfor %}
-              </select>
-              <select class="form-select form-select-lg mb-3"  name="test_session" aria-label=".form-select-lg example">
-                <option selected>Choose Session</option>
-                {% for i in tests %}
-                <option value="{{i.session}}">{{i.session}}</option>
-                {% endfor %}
-              </select>
-       
-              <select class="form-select form-select-lg mb-3"  name="test_subject" aria-label=".form-select-lg example">
-                <option selected>Choose Subjects</option>
-                {% for i in tests %}
-                <option value="{{i.subject.subject_name}}">{{i.subject.subject_name}}</option>
-                {% endfor %}
-              </select>
-       
-                 
-              <select class="form-select form-select-lg mb-3"  name="test_type" aria-label=".form-select-lg example">
-                <option selected>Choose TestType</option>
-                {% for i in tests %}
-                <option value="{{i.test_name}}">{{i.test_name}}</option>
-                {% endfor %}
-              </select>
-            <div style="display: grid;">
-            <button class="btn btn-brand mt-3" type="submit">Filter </button>
-            </div>
-        </form>
-          </article>
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Add Students</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">Students</a></li>
+            <li class="breadcrumb-item active">Add Students</li>
+          </ul>
         </div>
       </div>
     </div>
-    
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form action="{% url  'add_question_outcome' %}" method="GET">
+              <!-- <div class="row"> -->
+              <div class="col-12">
+                <h5 class="form-title"><span>Filter Class</span></h5>
+              </div>
+             
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Class</label>
+                  <select class="form-control" name="test_class">
+                    <option selected>Choose Class</option>
+                    {% for i in tests %}
+                    <option value="{{i.test_class}}">{{i.test_class}}</option>
+                                        {% endfor %}
+                  </select>
+                </div>
+              </div>
+     
+
+
+        
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Choose Subject</label>
+                  <select class="form-control" name="test_session">
+                    <option selected>Choose Session</option>
+                    {% for i in tests %}
+                    <option value="{{i.session}}">{{i.session}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select class="form-control" name="test_subject">
+                    <option selected>Choose Session</option>
+                    {% for i in tests %}
+                    <option value="{{i.subject.subject_name}}">{{i.subject.subject_name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+     
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Test</label>
+                  <select class="form-control" name="test_type">
+                    <option selected>Choose TestType</option>
+                    {% for i in tests %}
+                    <option value="{{i.test_name}}">{{i.test_name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+     
+         <button type="submit">Submit</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    {% endblock %}

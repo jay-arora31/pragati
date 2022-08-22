@@ -6,15 +6,7 @@
                     <li class="menu-title">
                       <span>Main Menu</span>
                     </li>
-                    <li class="submenu">
-                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Student</span> <span class="menu-arrow"></span></a>
-                      <ul>  
-                        <li><a href="{% url 'student_register' %}">Add Student Credentials</a></li>
-                        <li><a href="cul_edit.html">Edit Cultural</a></li>
-                      </ul>
-                    </li>
-            
-        
+                    
                     <li class="submenu">
                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Teacher</span> <span class="menu-arrow"></span></a>
                      <ul>
@@ -23,19 +15,19 @@
                      </ul>
                    </li>
                    <li class="submenu">
-                    <a href="#"><i class="fas fa-user-graduate"></i> <span> Assign Subject</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="fas fa-user-graduate"></i> <span> Academics</span> <span class="menu-arrow"></span></a>
                     <ul>
-                      <li><a href="{% url 'assign_subject' %}">Assign Subject</a></li>
-                      <li><a href="aca_edit.html">Edit Academics</a></li>
-                      <li><a href="view_academic.html">view Academics</a></li>
+                      <li><a href="{% url 'assign_subject' %}">Add Academics</a></li>
+                      
+                      <li><a href="{% url 'view_subjects' %}">view Academics</a></li>
                     </ul>
                   </li>
                     <li class="submenu">
-                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Academics</span> <span class="menu-arrow"></span></a>
+                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Assign Academics</span> <span class="menu-arrow"></span></a>
                       <ul>
-                        <li><a href="{% url 'assign_teacher' %}">Add Academics</a></li>
-                        <li><a href="aca_edit.html">Edit Academics</a></li>
-                        <li><a href="view_academic.html">view Academics</a></li>
+                        <li><a href="{% url 'assign_teacher' %}">Assign subject </a></li>
+                        <!-- <li><a href="aca_edit.html">Edit Academics</a></li> -->
+                        <li><a href="{% url 'view_assigned_teachers' %}">view Academics</a></li>
                       </ul>
                     </li>
         
@@ -43,7 +35,7 @@
                       <a href="#"><i class="fas fa-baseball-ball"></i> <span> Sports</span> <span class="menu-arrow"></span></a>
                       <ul>
                         <li><a href="{% url 'assign_sport_teacher' %}">Add sport</a></li>
-                        <li><a href="sport_edit.html">Edit Sport</a></li>
+                        <li><a href="{% url 'view_sports_teacher' %}">View Sport</a></li>
                       </ul>
                     </li>
         
