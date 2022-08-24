@@ -40,7 +40,11 @@ def assign_teacher(request):
                     assign_form.course_session=session
 
                     assign_form.save()
-                    return redirect('school_home')
+                    messages.success(request,"Teacher Successfully Assigned to Class")
+                    form=AssignCourseTeacher()
+                    teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
+                    sessions=SchoolSessions.objects.all()
+                    return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions})
                 else:
                     form=AssignCourseTeacher()
                     messages.error(request,"class already assigned")
@@ -59,7 +63,43 @@ def assign_teacher(request):
         print(i.t_info.email)
     return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions})
 
+def class_wise_subject(request):
+          data = {}
+          if request.GET.get('course_class', None) is not None:
+              course_class = request.GET.get('course_class')
 
+              subjects=class_subject.objects.filter(subject_class=course_class,subject_school__s_info__email=request.user)
+              print(subjects)
+              subject_data=[]
+              for i in subjects:
+                subject_data.append(i.subject_name)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['subject_data']=subject_data
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
+def teacher_namewise_email(request):
+          data = {}
+          if request.GET.get('teacher_name', None) is not None:
+              teacher_name = request.GET.get('teacher_name')
+              print(teacher_name)
+
+              email_data=Teacher.objects.filter(t_name=teacher_name,t_school__s_info__email=request.user)
+              print(email_data)
+              email_data1=[]
+              for i in email_data:
+                email_data1.append(i.t_info.email)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['email_data']=email_data1
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
    
 def teacher_view(request):
     teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
@@ -151,10 +191,14 @@ def assign_subject(request):
         if form.is_valid():
             print("subject is fine")
             subject=form.save(commit=False)
-            school=School.objects.get(s_info__email=request.user)
-            subject.subject_school=school
-            subject.save()
-            return redirect('school_home')
+            checking=class_subject.objects.filter(subject_name=subject.subject_name,subject_class=subject.subject_class)
+            if not checking.exists():
+                school=School.objects.get(s_info__email=request.user)
+                subject.subject_school=school
+                subject.save()
+                messages.success(request,"Subject added to class successfully")
+            else:
+                messages.error(request,"Already Added Subject to this class")
 
     form=AssignClassCourse()
     context={

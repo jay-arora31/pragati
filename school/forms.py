@@ -15,7 +15,8 @@ from django import forms
 class AssignCourseTeacher(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(AssignCourseTeacher,self).__init__(*args,**kwargs)
-        self.fields['course_class'].widget.attrs['class'] = 'form-control form-group'
+        self.fields['course_class'].widget.attrs['class'] = 'form-control class_id form-group'
+        self.fields['course_class'].widget.attrs['id'] = 'class_id'
         self.fields['course_class'].widget.attrs['placeholder'] = 'form-control form-group'
     class Meta:
                 model =AssignedTeacher

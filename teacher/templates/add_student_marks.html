@@ -25,51 +25,91 @@
             <h5 class="form-title"><span>Student Information</span></h5>
             <form   action="{% url 'add_student_marks' %}"  method="POST">
               {% csrf_token %}
+             
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Choose Roll Number</label>
+                  <select class="form-control" name="student_roll">
+                    <option >Choose Roll Number</option>
+                    {% for i in student_data %}
+                    <option value="{{i.student_roll}}" >{{i.student_roll}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+     
 
-              <select class="form-select form-select-lg mb-3"  name="student_roll" aria-label=".form-select-lg example">
-                  <option >Choose Roll Number</option>
-                  {% for i in student_data %}
-                  <option value="{{i.student_roll}}" >{{i.student_roll}}</option>
-                  {% endfor %}
-                </select>
-              <select class="form-select form-select-lg mb-3"  name="test_session" aria-label=".form-select-lg example">
+
+             
+              <div class=" col-sm-11">
+                <div class="form-group">
+              <select class="form-control"  name="test_session" aria-label=".form-select-lg example">
                   <option selected>Choose Session</option>
                   {% for i in test_session %}
                   <option value="{{i}}" selected>{{i}}</option>
                   {% endfor %}
                 </select>
-         
-            <select class="form-select form-select-lg mb-3"  name="test_class" aria-label=".form-select-lg example">
+              </div>
+            </div>
+   
+        
+            <div class=" col-sm-11">
+              <div class="form-group">
+
+            <select class="form-control"  name="test_class" aria-label=".form-select-lg example">
 
               <option selected>Choose Class</option>
               {% for i in test_class %}
               <option value="{{i}}" selected>{{i}}</option>
               {% endfor %}
             </select>
-            <select class="form-select form-select-lg mb-3"  name="test_subject" aria-label=".form-select-lg example">
+          </div>
+        </div>
+        <div class=" col-sm-11">
+          <div class="form-group">
+            <select class="form-control"  name="test_subject" aria-label=".form-select-lg example">
               <option selected>Choose Subject</option>
               {% for i in test_subject %}
               <option value="{{i}}" selected>{{i}}</option>
               {% endfor %}
             </select>
-            <select class="form-select form-select-lg mb-3"  name="test_type" aria-label=".form-select-lg example">
+          </div>
+        </div>
+
+        <div class=" col-sm-11">
+          <div class="form-group">
+            <select class="form-control"  name="test_type" aria-label=".form-select-lg example">
               <option selected>Choose Test Type</option>
               {% for i in test_type %}
               <option value="{{i}}" selected>{{i}}</option>
               {% endfor %}
             </select>
+          </div>
+        </div>
+
+         
+          {% for i in question_marks %}
+          <div class=" col-sm-8">
+            {% if forloop.counter == 1  %}
             <label for="">Total Question</label>
             <label for="" >{{mark_box_count}}</label>
-          <label style="margin-left: 260px;" for="">Max Marks</label>
-          {% for i in question_marks %}
-          <label for="">question {{ forloop.counter}}</label>
+          <label style="position: relative; float: right;" for="">Max Marks</label>
+          {% endif %}
+            <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Question {{ forloop.counter}}</span>
+            </div>
+            <input type="text" class="form-control" name="mark{{ forloop.counter}}"  placeholder="Obtained Marks">
+            <label class="form-control col-sm-2" style="padding-bottom: 1px; background-color: gray;" for="">{{i.mark}}</label>
+        </div>
 
-          <input type="text" class=" form-select-lg mb-3"  name="mark{{ forloop.counter}}" id="">
-        &nbsp;&nbsp;&nbsp;&nbsp;  <label for="">{{i.mark}}</label>
-           {% endfor %}
-          <div style="display: grid;">
-          <button class="btn btn-brand mt-3" type="submit">Filter </button>
-          </div>
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+         
+         
       </form>
           </div>
         </div>

@@ -10,11 +10,8 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">Add Students</h3>
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="students.html">Students</a></li>
-            <li class="breadcrumb-item active">Add Students</li>
-          </ul>
+          <h3 class="page-title">Select Subject Outcomes</h3>
+       
         </div>
       </div>
     </div>
@@ -27,14 +24,24 @@
               <div class="col-12">
                 <h5 class="form-title"><span>Filter Class</span></h5>
               </div>
-             
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select class="form-control" name="test_session">
+                    {% for i in tests %}
+                    <option value="{{i.session}}" selected>{{i.session}}</option>
+                    {% endfor %}
+                  </select>
+                
+                </div>
+              </div>
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Class</label>
-                  <select class="form-control" name="test_class">
+                  <select class="form-control" name="test_class" id="test_class">
                     <option selected>Choose Class</option>
-                    {% for i in tests %}
-                    <option value="{{i.test_class}}">{{i.test_class}}</option>
+                    {% for i in class_list %}
+                    <option value="{{i}}">Standard {{i}}</option>
                                         {% endfor %}
                   </select>
                 </div>
@@ -47,26 +54,16 @@
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Choose Subject</label>
-                  <select class="form-control" name="test_session">
-                    <option selected>Choose Session</option>
-                    {% for i in tests %}
-                    <option value="{{i.session}}">{{i.session}}</option>
-                    {% endfor %}
+                  
+                  <select class="form-control" name="test_subject" id="test_subject">
+                    <option selected>Choose Subject</option>
+
+                
                   </select>
                 </div>
               </div>
 
-              <div class=" col-sm-11">
-                <div class="form-group">
-                  <label>Session</label>
-                  <select class="form-control" name="test_subject">
-                    <option selected>Choose Session</option>
-                    {% for i in tests %}
-                    <option value="{{i.subject.subject_name}}">{{i.subject.subject_name}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
+        
      
               <div class=" col-sm-11">
                 <div class="form-group">
@@ -88,5 +85,37 @@
       </div>
     </div>
   </div>
+<script>
+       $("#test_class").change(function () {
+        var course_class = $(this).val();
 
+        $.ajax({
+            url: '/teacher/teacher_select_wise_subject/',
+            data: {
+                
+                'course_class': course_class
+            },
+            dataType: 'json',
+            success: function (data) {
+              $("#test_subject").empty();
+              $('#test_subject').append($('<option>', {
+                    value: 'Select Subject',
+                    text: 'Select Subject'
+                }));
+              for (var i in data['subject_data']) {
+              subject=data['subject_data'][i]
+
+              
+              $('#test_subject').append($('<option>', {
+                    value: subject,
+                    text: subject
+                }));
+              }
+            }
+        });
+
+    });
+
+
+</script>
     {% endblock %}

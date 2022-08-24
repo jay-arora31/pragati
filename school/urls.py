@@ -36,6 +36,8 @@ urlpatterns = [
       path('assign_cultural_teacher/',views.assign_cultural_teacher,name='assign_cultural_teacher' ),
       path('student_register/',views.student_register,name='student_register' ),
       path('view_sports_teacher/',views.view_sports_teacher,name='view_sports_teacher' ),
+      path('class_wise_subject/',views.class_wise_subject,name='class_wise_subject' ),
+      path('teacher_namewise_email/',views.teacher_namewise_email,name='teacher_namewise_email' ),
 
       
 

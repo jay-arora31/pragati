@@ -126,3 +126,10 @@ class StudentAccount(models.Model):
     s_info= models.ForeignKey(settings.AUTH_USER_MODEL,db_index=True,on_delete =models.CASCADE)
     def __str__(self):
         return self.s_info.email
+
+class COINFO(models.Model):
+    co_no=models.CharField(max_length =255,null=True,blank=True)
+    co_info=models.CharField(max_length =255,null=True,blank=True)
+    co_teacher=models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    co_school=models.ForeignKey( School, on_delete=models.CASCADE)
+    co_class=models.CharField(max_length =255,null=True,blank=True)

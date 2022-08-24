@@ -1,4 +1,5 @@
 from hashlib import new
+from lib2to3.pgen2.literals import test
 from urllib import request
 from django.shortcuts import render
 from distutils.command import check
@@ -210,12 +211,59 @@ def view_all_test(request):
 
 def select_test_outcome(request):
     tests=AddTest.objects.filter(teacher__t_info__email=request.user)
+    class_list1=[]
+    for i in tests:
+        class_list1.append(i.test_class)
+    list_temp=set(class_list1)
+    
+    class_list=list(list_temp)
     context={
         'tests':tests,
+        'class_list':class_list
     }
     return render(request,'select_test_outcome.html',context )
+def teacher_select_wise_subject(request):
+          data = {}
+          if request.GET.get('course_class', None) is not None:
+              course_class = request.GET.get('course_class')
+              teacher=Teacher.objects.get(t_info__email=request.user)
+              subjects=class_subject.objects.filter(subject_class=course_class,subject_school__s_info__email=teacher.t_school.s_info.email)
+              print(subjects)
+              subject_data=[]
+              for i in subjects:
+                print(i.subject_name)
+                subject_data.append(i.subject_name)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['subject_data']=subject_data
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
 
+'''
+def class_subject_wise_tests(request):
+          data = {}
+          if request.GET.get('course_class', None) is not None:
+              course_class = request.GET.get('course_class')
+              teacher=Teacher.objects.get(t_info__email=request.user)
+              subjects=class_subject.objects.filter(subject_class=course_class,subject_school__s_info__email=teacher.t_school.s_info.email)
+              print(subjects)
+              subject_data=[]
+              for i in subjects:
+                print(i.subject_name)
+                subject_data.append(i.subject_name)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['subject_data']=subject_data
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
 
+'''
 
 def add_question_outcome(request):
     if request.method == 'GET':

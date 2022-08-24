@@ -25,8 +25,6 @@ urlpatterns = [
             path('add_student/',views.add_student,name='add_student' ),
             path('add_student_excel/',views.add_student_excel,name='add_student_excel' ),
             path('view_student/',views.view_student,name='view_student' ),
-
-            
             path('filter_class_subject/',views.filter_class_subject,name='filter_class_subject' ),
             path('add_test/',views.add_test,name='add_test' ),
             path('view_all_test/',views.view_all_test,name='view_all_test' ),
@@ -44,6 +42,7 @@ urlpatterns = [
             path('view_sport/',views.view_sport,name='view_sport' ),
             path('testing_function/',views.testing_function,name='testing_function' ),
             path('testing_function_login/',views.testing_function_login,name='testing_function_login' ),
+            path('teacher_select_wise_subject/',views.teacher_select_wise_subject,name='teacher_select_wise_subject' ),
 
 
 ]

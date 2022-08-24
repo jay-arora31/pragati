@@ -45,7 +45,7 @@
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Class</label>
-                  <select class="form-control" name="test_class">
+                  <select class="form-control" name="test_class" id="test_class">
                     <option selected>Choose Class</option>
                     {% for i in class_all %}
                     <option value="{{i}}">{{i}}</option>
@@ -58,11 +58,9 @@
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Subject</label>
-                  <select class="form-control" name="test_subject">
+                  <select class="form-control" name="test_subject" id="test_subject">
                     <option selected>Choose Subject</option>
-                    {% for i in subjects %}
-                <option value="{{i}}">{{i}}</option>
-                {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -72,9 +70,14 @@
                   <label>Test</label>
                   <select class="form-control" name="test_type">
                     <option selected>Choose Test Type</option>
-                    {% for i in tests %}
-                <option value="{{i.test.test_name}}">{{i.test.test_name}}</option>
-                {% endfor %}
+           
+                <option value="Unit_Test_1">Unit Test 1</option>
+                <option value="Unit_Test_2">Unit Test 2</option>
+                <option value="Unit_Test_3">Unit Test 3</option>
+                <option value="Unit_Test_4">Unit Test 4</option>
+                <option value="Semester1">Semester 1</option>
+                <option value="Semester2">Semester 2</option>
+              
                   </select>
                 </div>
               </div>
@@ -91,5 +94,37 @@
       </div>
     </div>
   </div>
+  <script>
+    $("#test_class").change(function () {
+     var course_class = $(this).val();
 
+     $.ajax({
+         url: '/teacher/teacher_select_wise_subject/',
+         data: {
+             
+             'course_class': course_class
+         },
+         dataType: 'json',
+         success: function (data) {
+           $("#test_subject").empty();
+           $('#test_subject').append($('<option>', {
+                 value: 'Select Subject',
+                 text: 'Select Subject'
+             }));
+           for (var i in data['subject_data']) {
+           subject=data['subject_data'][i]
+
+           
+           $('#test_subject').append($('<option>', {
+                 value: subject,
+                 text: subject
+             }));
+           }
+         }
+     });
+
+ });
+
+
+</script>
     {% endblock %}

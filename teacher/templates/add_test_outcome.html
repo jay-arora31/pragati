@@ -22,7 +22,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form action="{% url  'add_question_outcome' %}" method="GET">
+            <form action="{% url 'add_question_outcome' %}" method="POST">
               <!-- <div class="row"> -->
               <div class="col-12">
                 <h5 class="form-title"><span>Filter Class</span></h5>
@@ -80,35 +80,33 @@
               {% with ''|center:count as range %}
               {% for _ in range %}
 
-              <div class=" col-sm-11">
-                <div class="form-group">
-                  <span>
-                    <label for="">Question {{ forloop.counter}}</label>
-                    <input type="text" class="form-control " name="mark{{ forloop.counter}}" placeholder="Enter Question Marks">
-                  </span>
-            <span>
-              
-            </span>
-                </div>
-              </div>
-
              
-              <div class=" col-sm-11">
+              <div class=" col-sm-9">
                 <div class="form-group">
-                  <select class="form-control mb-3"  name="text{{ forloop.counter}}" aria-label=".form-select-lg example">
-                    <option selected>Choose Course Outcome for Question {{ forloop.counter}} </option>
-                    {% with ''|center:co_count as range %}
-                    {% for _ in range %}
-                    <option value="CO{{ forloop.counter}}">CO{{ forloop.counter}}</option>
-                    {% endfor %}
-                    {% endwith %}
-                                    
-                  </select>
+                  
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text form-control">Question {{ forloop.counter}}</span>
+                  </div>
+                    <input type="text" class="form-control"  name="mark{{ forloop.counter}}"  placeholder="Maximum Marks">
+                  
+                 <div class="input-group-append">       
+                      <select class="form-control mb-3"  name="text{{ forloop.counter}}" aria-label=".form-select-lg example">
+                        <option selected>Select Course Outcome </option>
+                        {% with ''|center:co_count as range %}
+                        {% for _ in range %}
+                        <option value="CO{{ forloop.counter}}">CO{{ forloop.counter}}</option>
+                        {% endfor %}
+                        {% endwith %}
+                                        
+                      </select>
+                </div>
+           
          
                 </div>
               </div>
 
-       
+            </div>
               {% endfor %}
               {% endwith %}
            

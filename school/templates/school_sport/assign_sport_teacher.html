@@ -65,7 +65,7 @@
               <div class="col-sm-11">
                 <div class="form-group">
                   <label>Teacher</label>
-                  <select name="t_name" class="form-control">
+                  <select name="t_name" id="t_name" class="form-control">
                     <option>Select Teacher</option>
                     {% for i in teachers %}
                     <option value="{{i.t_name}}">{{i.t_name}}</option>
@@ -76,11 +76,9 @@
               <div class="col-sm-11">
                 <div class="form-group">
                   <label>Teacher Email</label>
-                  <select name="t_email"  class="form-control">
+                  <select name="t_email" id="t_email" class="form-control">
                     <option>Select Teacher Email</option>
-                    {% for i in teachers %}
-                    <option value="{{i.t_info.email}}">{{i.t_info.email}}</option>
-                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -105,7 +103,40 @@
     </div>
   </div>
 </div>
+<script>
+  
 
+  $("#t_name").change(function () {
+        var teacher_name = $(this).val();
+
+        alert(teacher_name)
+        $.ajax({
+            url: '/school/teacher_namewise_email/',
+            data: {
+                
+                'teacher_name': teacher_name
+            },
+            dataType: 'json',
+            success: function (data) {
+              $("#t_email").empty();
+              $('#t_email').append($('<option>', {
+                    value: 'Select Email',
+                    text: 'Select Email'
+                }));
+              for (var i in data['email_data']) {
+              emails=data['email_data'][i]
+              alert(emails)
+              
+              $('#t_email').append($('<option>', {
+                    value: emails,
+                    text: emails
+                }));
+              }
+            }
+        });
+
+    });
+</script>
 {% endblock %}
 
 
