@@ -1,3 +1,4 @@
+from cgi import print_directory
 from distutils.command import check
 import imp
 from multiprocessing import context
@@ -14,54 +15,44 @@ from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
  
 def assign_teacher(request):
     if request.method == 'POST':
-            email = request.POST['t_email']
-            name = request.POST['t_name']
-            session = request.POST['session']
-            subjects = request.POST['subjects']
-            print("subjects------------=-=------------",subjects)
-            form =AssignCourseTeacher(request.POST)
-            print("------assign teacher")
-            print(form.errors.as_data())
-            if form.is_valid():
-                print("------form valid teacher")
-                assign_form=form.save(commit =False)
+                email = request.POST['t_email']
+                name = request.POST['t_name']
+                session = request.POST['session']
+                course_class = request.POST['course_class']
+                course_subject = request.POST['course_subject']
+
+
                 teacher=Teacher.objects.get(t_info__email=email)
                 school=School.objects.get(s_info__email=request.user)
+
                 
-                get_subject_detail=class_subject.objects.get(subject_class=assign_form.course_class,subject_name=subjects,subject_school__s_info__email=request.user)
-                checking=AssignedTeacher.objects.filter(course_name__subject_name=subjects,course_class=assign_form.course_class,course_session=session,course_school=school)
-                
-                print("checking email",email)
-                print(checking)
+
+                checking=SchoolAssignedTeacher.objects.filter(course_name__subject_info__subject_name=course_subject,course_name__subject_info__subject_class=course_class,course_school__s_info__email=request.user)
                 if not checking.exists():
-                    assign_form.course_name=get_subject_detail
-                    assign_form.course_teacher=teacher
-                    assign_form.course_school=school
-                    assign_form.course_session=session
+                    bind_datac=school_class_subject.objects.get(subject_info__subject_name=course_subject,subject_info__subject_class=course_class,subject_school__s_info__email=request.user)
 
-                    assign_form.save()
+                    obj=SchoolAssignedTeacher(course_name=bind_datac,course_teacher=teacher,course_school=school,course_session=session)
+                    obj.save()
                     messages.success(request,"Teacher Successfully Assigned to Class")
-                    form=AssignCourseTeacher()
-                    teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
-                    sessions=SchoolSessions.objects.all()
-                    return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions})
                 else:
-                    form=AssignCourseTeacher()
-                    messages.error(request,"class already assigned")
-
-                    teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
-                    sessions=SchoolSessions.objects.all()
-                    for i in teachers:
-                        print(i.t_name)
-                        print(i.t_info.email)
-                    return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions})
+                    messages.error(request,"Teacher Already Assigned to Class")
+                    
+    subject_data=GovtSubject.objects.all()
+    class_data=[]
+    for i in subject_data:
+        class_data.append(i.subject_class)
+        print("i.subject_class",i.subject_class)
+    subject_class1=set(class_data)
+    print(subject_class1)
+    subject_data2=list(subject_class1)
+    print(subject_data2)
     form=AssignCourseTeacher()
     teachers=Teacher.objects.filter(t_school__s_info__email=request.user)
     sessions=SchoolSessions.objects.all()
     for i in teachers:
         print(i.t_name)
         print(i.t_info.email)
-    return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions})
+    return render(request,'assign_teacher.html', {'form':form,'teachers':teachers,'sessions':sessions,'subject_data':subject_data2})
 
 def class_wise_subject(request):
           data = {}
@@ -187,24 +178,57 @@ def submit_marks(request):
 
 def assign_subject(request):
     if request.method=='POST':
-        form=AssignClassCourse(request.POST)
-        if form.is_valid():
-            print("subject is fine")
-            subject=form.save(commit=False)
-            checking=class_subject.objects.filter(subject_name=subject.subject_name,subject_class=subject.subject_class)
+            course_class=request.POST['course_class']
+            course_subject=request.POST['course_subject']
+            checking=school_class_subject.objects.filter(subject_info__subject_name=course_subject,subject_info__subject_class=course_class)
             if not checking.exists():
+                bind_data=GovtSubject.objects.get(subject_name=course_subject,subject_class=course_class)
                 school=School.objects.get(s_info__email=request.user)
-                subject.subject_school=school
-                subject.save()
+                obj=school_class_subject(subject_info=bind_data,subject_school=school)
+                obj.save()
                 messages.success(request,"Subject added to class successfully")
             else:
                 messages.error(request,"Already Added Subject to this class")
 
-    form=AssignClassCourse()
+    subject_data=GovtSubject.objects.all()
+    class_data=[]
+    for i in subject_data:
+        class_data.append(i.subject_class)
+        print("i.subject_class",i.subject_class)
+    subject_class1=set(class_data)
+    print(subject_class1)
+    subject_data2=list(subject_class1)
+    print(subject_data2)
     context={
-        'form':form
+        'subject_class':subject_data2,
+      
     }
     return render(request,'school/assign_subject.html',context)
+
+
+
+
+
+def govt_class_wise_subject(request):
+          data = {}
+          if request.GET.get('course_class', None) is not None:
+              course_class = request.GET.get('course_class')
+
+              subjects=GovtSubject.objects.filter(subject_class=course_class)
+              print(subjects)
+              subject_data=[]
+              for i in subjects:
+                print(i.subject_name)
+                subject_data.append(i.subject_name)
+              data['result'] = True
+              data['message'] = "Note posted successfully"
+              data['subject_data']=subject_data
+              ...
+          if request.is_ajax():
+             return JsonResponse(data)
+          else:
+             return JsonResponse(data)
+
 
 from django.db.models import Count
 
@@ -263,11 +287,10 @@ def get_topics_ajax(request):
 
 
 def view_assigned_teachers(request):
-        subjects=AssignedTeacher.objects.filter(course_school__s_info__email=request.user)
+        subjects=SchoolAssignedTeacher.objects.filter(course_school__s_info__email=request.user)
         for i in subjects:
-            print(i.course_name.subject_name)
+            print(i.course_name.subject_info.subject_name)
 
-            print(i.course_name.subject_learning)
         context={
             'subjects': subjects
         }    

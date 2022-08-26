@@ -30,20 +30,6 @@
              
               <div class=" col-sm-11">
                 <div class="form-group">
-                  <label>Session</label>
-                  <select class="form-control" name="test_session">
-                    <option selected>Choose Session</option>
-                    {% for i in session %}
-                    <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-     
-
-
-              <div class=" col-sm-11">
-                <div class="form-group">
                   <label>Class</label>
                   <select class="form-control" name="test_class" id="test_class">
                     <option selected>Choose Class</option>
@@ -64,6 +50,10 @@
                   </select>
                 </div>
               </div>
+           
+     
+
+
 
               <div class=" col-sm-11">
                 <div class="form-group">
@@ -82,7 +72,17 @@
                 </div>
               </div>
      
-         
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select class="form-control" name="test_session">
+                    <option selected>Choose Session</option>
+                    
+                    <option value="2022-2023">2022-2023</option>
+                 
+                  </select>
+                </div>
+              </div>
              
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Submit</button>

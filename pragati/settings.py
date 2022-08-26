@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authapp',
     'crispy_forms',
-    
+        'google_translate',
+
     'school',
     'teacher',
     'govt',
@@ -110,12 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST= 'smtp.gmail.com'
-EMAIL_HOST_USER= 'pragti.gov@gmail.com'
-EMAIL_HOST_PASSWORD='Jay@12345'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
+
 
 
 # Internationalization
@@ -145,6 +141,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [ os.path.join("static"), ]
 
 
+
+
+MEDIA_URL='/media/'
+MEDIA_ROOT = BASE_DIR/ 'media'
+
+
 AUTH_USER_MODEL='authapp.CustomUser'                                       #using the user authentication model of main.User
 LOGIN_URL='login'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+

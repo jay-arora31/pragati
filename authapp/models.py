@@ -8,7 +8,12 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
 
 
+CLASS_CHOICES= [
+        ('1', '1'),
+        ('2', '2'),
+       
 
+        ]
 
 
 class CustomUser(AbstractUser):
@@ -24,3 +29,18 @@ class CustomUser(AbstractUser):
 
 
 
+class GovtSubject(models.Model): 
+    subject_name=models.CharField(max_length =255, null=True,blank=True)
+    subject_class=models.CharField(max_length =255, null=True,blank=True,choices=CLASS_CHOICES)
+    subject_learning=models.IntegerField(null=True,blank=True,default=0)
+
+    def __str__(self):
+        return self.subject_name
+
+class GovtAssignOutcome(models.Model):
+    ot_no=models.CharField(max_length =255, null=True,blank=True)
+    ot_name=models.CharField(max_length =255, null=True,blank=True)
+    ot_class=models.ForeignKey( GovtSubject, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ot_name

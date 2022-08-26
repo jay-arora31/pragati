@@ -1,0 +1,87 @@
+
+     
+
+
+{% extends 'govtbase.html' %}
+{% load static %}
+
+
+{% block content %}
+<style>
+#circle {
+    background: #f00;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+</style>
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Schools</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">School</a></li>
+            <li class="breadcrumb-item active">View School</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-table">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-center mb-0 datatable">
+                  <thead>
+                    <tr>
+                      <th>School name</th>
+                      <th>Email</th>
+                     
+                      <!-- <th>Roll No</th>
+                      <th>Class</th> -->
+  
+                      <th class="text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in school_data %}
+                    <tr>
+                      <div class="bg-dark circle">  </div>     <td>{{i.s_name}}</td>
+                      <div class="bg-dark circle">  </div>     <td>{{i.s_info.email}}</td>
+
+                  
+                      <td class="text-right">
+                        <div class="actions">
+
+                            {% if not i.s_info.is_active %}
+
+                            <a href="{% url 'school_active' i.s_info.email %}" class="">
+                                <button class="btn btn-sm btn-success">Active</button>
+                              </a>
+                            {% else %}
+                              
+                            <a href="{% url 'school_inactive'  i.s_info.email %}" class="">
+                                <button class="btn btn-sm btn-danger">Inactive</button>
+                               </a>
+                            {% endif  %}
+                            
+                          <a  href="{% url 'school_delete'  i.s_info.email %}"  class="btn btn-sm bg-danger-light">
+                            <i class="fas fa-trash"></i>
+                          </a>
+
+
+                        </div>
+                      </td>
+                    </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+    {% endblock %}

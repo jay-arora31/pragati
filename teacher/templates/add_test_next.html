@@ -1,0 +1,152 @@
+
+     
+
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Add Test</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">Students Test</a></li>
+            <li class="breadcrumb-item active">Add Test</li>
+          </ul>
+        </div>
+    
+      </div>
+    </div>
+    <div class="row">
+        <h2>Course Outcome</h2>
+
+        {% for i in ot_list %}
+
+        {{ forloop.counter}} {{i}}  <br>
+
+        {% endfor %}
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="form-title"><span>Student Information</span></h5>
+            <form action="{% url 'add_test_next' %}" method="POST">
+              {% csrf_token %}
+             
+                  <div class=" col-sm-11">
+                    <div class="form-group">
+                      <label>Class</label>
+                      <select class="form-control" name="course_class">
+                        <option >Choose Class</option>
+                    
+                        <option selected value="{{course_class}}">{{course_class}}</option>
+                       
+                      </select>
+                    </div>
+                  </div>
+               
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Test</label>
+                  <select class="form-control" name="testtype">
+                    <option >Choose Test Type</option>
+           
+                <option selected value="{{testtype}}">{{testtype}}</option>
+    
+              
+                  </select>
+                </div>
+              </div>
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Subject</label>
+                  <select class="form-control" name="subject">
+                    <option >Choose Subject</option>
+                 
+                    <option  selected value="{{subject}}">{{subject}}</option>
+                  </select>
+                </div>
+              </div>
+     
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select class="form-control" name="session">
+                    <option >Choose Session</option>
+                  
+                    <option selected value="{{session}}">{{session}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label class="">No. Questions</label>
+                 <input type="text" class="form-control" value="{{noque1}}" name="noque" id="noque" >
+                 <!-- <input type="button" value="Generate" onclick="textBox();" /> -->
+                        
+                </div>
+              </div>
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label class="">Total marks</label>
+                 <input type="text" class="form-control" name="tot" value="{{tot}}" id="noque" >
+                 <!-- <input type="button" value="Generate" onclick="textBox();" /> -->
+                        
+                </div>
+              </div>
+
+              {% with ''|center:noque1 as range %}
+              {% for _ in range %}
+
+             
+              <div class=" col-sm-9">
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text form-control">Question {{ forloop.counter}}</span>
+                  </div>
+                    <input type="text" class="form-control"  name="mark{{ forloop.counter}}"  placeholder="Maximum Marks">
+                  
+                 <div class="input-group-append">       
+                      <select class="form-control mb-3"  name="text{{ forloop.counter}}" aria-label=".form-select-lg example">
+                        <option selected>Select Course Outcome </option>
+                        {% for i in ot_list %}
+                        <option value="CO{{ forloop.counter}}">CO{{ forloop.counter}}</option>
+                        {% endfor %}
+                        
+                                        
+                      </select>
+                </div>
+           
+         
+                </div>
+              </div>
+
+            </div>
+
+            <div class=" col-sm-11">
+                <div class="form-group">
+                  <label class="">Question Info</label>
+                 <input type="text" class="form-control" name="question{{ forloop.counter}}" id="noque" >
+                 <!-- <input type="button" value="Generate" onclick="textBox();" /> -->
+                        
+                </div>
+              </div>
+              {% endfor %}
+              {% endwith %}
+           
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    {% endblock %}

@@ -226,6 +226,7 @@
 
 
       MumbaiSuburban: ["Kurla (Mulund)", "Andheri", "Borivali"],
+      MumbaiCity: ["Mumbai City"],
 
 
 
@@ -519,7 +520,7 @@
         <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
         <!-- Modal Content -->
-        <form class="modal-content animate" action="/action_page.php">
+        <form class="modal-content animate" action="{% url 'register_school' %}" method="POST"  enctype="multipart/form-data">
           <div class="imgcontainer">
             <img src="{% static 'login/img/123.png' %}" alt="Avatar" class="avatar" style="width:100px;height:50px">
             <!-- <img src="img/ppp.png" alt="Avatar" class="avatar" style="width:90px;height:50px;margin-left:60px"> -->
@@ -530,15 +531,19 @@
 
           <div class="container">
 
-            <label for="uname"><b>School Name</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
+            {% csrf_token %}
+            <label for="dis"><b>UDISE CODE</b></label><br>
+            <input type="text" name="udise">
+          {{school_form}}
+          {{school_info_form.s_name|as_crispy_field}}
 
-            <label for="email"><b>email</b></label>
-            <input type="text" placeholder="Enter email" name="email" required>
+          <br>
+          
+
             <br>
             <label for="dis"><b>District</b></label><br>
             <!-- <input type="text" placeholder="Enter District" name="dis" required> -->
-            <select id="districtSelect" size="1" onchange="makeSubmenu(this.value)">
+            <select id="districtSelect" size="1" name="district" onchange="makeSubmenu(this.value)">
               <option value="" disabled selected>Choose District</option>
               <option>Ahmednagar</option>
               <option>Akola</option>
@@ -555,6 +560,7 @@
               <option>Jalna</option>
               <option>Kolhapur</option>
               <option>Latur</option>
+              <option>MumbaiCity</option>
               <option>MumbaiSuburban</option>
               <option>Nagpur</option>
               <option>Nanded</option>
@@ -581,12 +587,12 @@
 
             <label for="cit"><b>City</b></label><br>
             <!-- <input type="text" placeholder="Enter City" name="cit" required> -->
-            <select id="citySelect" size="1">
+            <select id="citySelect" size="1" name="city">
               <option value="" disabled selected>Choose City</option>
               <option></option>
             </select>
 
-
+      
             <br>
             <br>
             <button class="sub" type="submit">Register</button>
@@ -786,7 +792,7 @@
               <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Safe and Secure</p>
             </div>
           </div>
-          <a class="btn  py-3 px-5 mt-2" href="">Read More</a>
+          <a class="btn" style="width:120px;border-radius:0%" href="">Read More</a>
         </div>
       </div>
     </div>
@@ -842,50 +848,81 @@
 
 
 
-  <!-- Testimonial Start -->
-  <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container">
-      <div class="text-center">
-        <h6 class="section-title bg-white text-center text-primary px-3">What our motive is!</h6>
-        <h1 class="mb-5">To make tracking easier!</h1>
+ 
+  <!-- Testimonial End -->
+
+<style>
+   
+      .blink {
+        animation: blinker 0.1s linear infinite;
+        color: #1c87c9;
+        font-size: 30px;
+        font-weight: bold;
+        font-family: sans-serif;
+      }
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
+      }
+      .blink-one {
+        animation: blinker-one 0.3s linear infinite;
+      }
+      @keyframes blinker-one {
+        0% {
+          opacity: 0;
+        }
+      }
+    
+
+</style>
+<div class="container-xxl py-5 category">
+  <div class="container">
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+      <h6 class="section-title bg-white text-center  px-3" style="color:#181d38;font-size:x-large">PRAGATI</h6>
+      <h1 class="mb-5"></h1>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;padding:23px; background-color: #F7E7CE; margin-left:74px; border:#694710;border-radius:5%; border-width:2px; border-style:solid;;">
+        <a class="position-relative d-block h-100 overflow-hidden" href="">
+          <!-- <img class="img-fluid position-absolute w-100 h-100" src="{% static 'login/img/4.jpg' %}" alt="" style="object-fit: cover;"> -->
+           <h4 style="text-align:center;font-family: serif;margin-top:14px;color:	#800000"><strong>INSTRUCTIONS </strong></h4>
+            <br>
+           
+              <div style="color:black;">
+                <strong>
+                  <p style="text-align:left;">&#10146; Enter your registered username</p>
+              <p style="text-align:left;">&#10146; Enter your password</p>
+              <p style="text-align:left;">&#10146; After confirm login password and security text click on login here button for login</p>
+              <p style="text-align:left;">&#10146; School should be registered to login</p>
+              <p style="text-align:left;">&#10146; Verfified by the government</p>
+              
+              
+              
+                </strong>
+                
+
+              </div>
+          
+            
+           
+        </a>
       </div>
-      <div class="owl-carousel testimonial-carousel position-relative">
-        <div class="testimonial-item text-center">
-          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/sch.png' %}" style="width: 80px; height: 80px;">
-          <h5 class="mb-0">SCHOOLS</h5>
-          <p>GNHS</p>
-          <div class="testimonial-text bg-light text-center p-4">
-            <p class="mb-0">We get to know details about our whole school activities, that is school at a glance </p>
-          </div>
-        </div>
-        <div class="testimonial-item text-center">
-          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/stud.jfif'  %}" style="width: 80px; height: 80px;">
-          <h5 class="mb-0">STUDENT</h5>
-          <p>A 4th grade student</p>
-          <div class="testimonial-text bg-light text-center p-4">
-            <p class="mb-0">It gets us to analyse our progress at one glance</p>
-          </div>
-        </div>
-        <div class="testimonial-item text-center">
-          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/stud.jfif' %}" style="width: 80px; height: 80px;">
-          <h5 class="mb-0">STUDENT</h5>
-          <p>A 5th grade student</p>
-          <div class="testimonial-text bg-light text-center p-4">
-            <p class="mb-0">It gets us to analyse our progress at one glance</p>
-          </div>
-        </div>
-        <div class="testimonial-item text-center">
-          <img class="border rounded-circle p-2 mx-auto mb-3" src="{% static 'login/img/sch.png' %}" style="width: 80px; height: 80px;">
-          <h5 class="mb-0">SCHOOLS</h5>
-          <p>GNHS1</p>
-          <div class="testimonial-text bg-light text-center p-4">
-            <p class="mb-0">We get to know details about our whole school activities, that is school at a glance </p>
-          </div>
-        </div>
+      <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;padding:23px;background-color: #F7E7CE;margin-left:54px;border:#694710;box-shadow:5px 10 px;border-radius:5%; border-width:2px; border-style:solid;">
+        <a class="position-relative d-block h-100 overflow-hidden" href="">
+          <!-- <img class="img-fluid position-absolute w-100 h-100" src="{% static 'login/img/4.jpg' %}" alt="" style="object-fit: cover;"> -->
+          <h4 style="text-align:center;font-family: serif;margin-top:14px;color:	#800000"><strong>GUIDLINES </strong></h4>
+          <marquee behavior="scroll" direction="up" style="text-align:center;">
+            
+            <p style="text-align:left;">&#10146; Application Acceptance (New/Renewal) for A.Y. 21-22 has been commenced. Last date for Application Acceptance (New/Renewal) for A.Y. 21-22 is 31'st AUGUST 2022. Except Social Justice (SJSA) Department, It is up to 13’th August 2022.</p>
+            <p style="text-align:left;">&#10146; Application Re-apply has been extended for A.Y. 20-21 till 31'st AUGUST 2022. Except Social Justice (SJSA) Department, It is up to 13’th August 2022.</p>
+            <p style="text-align:left;">&#10146;Guidelines and Rules of procedure for application submission. Please read carefully.</p>      
+            </marquee>
+        </a>
       </div>
     </div>
   </div>
-  <!-- Testimonial End -->
+</div>
 
 
   <!-- Footer Start -->

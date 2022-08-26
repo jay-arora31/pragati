@@ -28,8 +28,9 @@
                 <div class="form-group">
                   <label>Session</label>
                   <select class="form-control" name="test_session">
-                    {% for i in tests %}
-                    <option value="{{i.session}}" selected>{{i.session}}</option>
+                    <option value="" selected>Select Session</option>
+                    {% for i in session_list %}
+                    <option value="{{i}}" >{{i}}</option>
                     {% endfor %}
                   </select>
                 
@@ -40,9 +41,9 @@
                   <label>Class</label>
                   <select class="form-control" name="test_class" id="test_class">
                     <option selected>Choose Class</option>
-                    {% for i in class_list %}
-                    <option value="{{i}}">Standard {{i}}</option>
-                                        {% endfor %}
+                    {%  for i in class_list  %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -68,16 +69,15 @@
               <div class=" col-sm-11">
                 <div class="form-group">
                   <label>Test</label>
-                  <select class="form-control" name="test_type">
-                    <option selected>Choose TestType</option>
-                    {% for i in tests %}
-                    <option value="{{i.test_name}}">{{i.test_name}}</option>
-                    {% endfor %}
+                  <select class="form-control" id="test_type" name="test_type">
+                    <option selected>Choose Test</option>
+
+                 
                   </select>
                 </div>
               </div>
      
-         <button type="submit">Submit</button>
+         <button type="submit"  class="btn btn-primary">Submit</button>
 
             </form>
           </div>
@@ -115,6 +115,79 @@
         });
 
     });
+
+
+
+
+
+
+    $("#test_subject").change(function () {
+        var test_subject = $(this).val();
+        var course_class = $('#test_class').val();
+
+        $.ajax({
+            url: '/teacher/class_subject_test/',
+            data: {
+                
+                'course_class': course_class,
+                'test_subject': test_subject
+            },
+            dataType: 'json',
+            success: function (data) {
+              $("#test_type").empty();
+              $('#test_type').append($('<option>', {
+                    value: 'Select Test',
+                    text: 'Select Test'
+                }));
+              for (var i in data['subject_data']) {
+              subject=data['subject_data'][i]
+
+              
+              $('#test_type').append($('<option>', {
+                    value: subject,
+                    text: subject
+                }));
+              }
+            }
+        });
+
+    });
+
+
+
+
+
+
+    // $("#test_session").change(function () {
+    //     var test_session = $(this).val();
+
+    //     $.ajax({
+    //         url: '/teacher/class_subject_test/',
+    //         data: {
+                
+    //             'test_session': test_session
+    //         },
+    //         dataType: 'json',
+    //         success: function (data) {
+    //           $("#test_subject").empty();
+    //           $('#test_subject').append($('<option>', {
+    //                 value: 'Select Subject',
+    //                 text: 'Select Subject'
+    //             }));
+    //           for (var i in data['subject_data']) {
+    //           subject=data['subject_data'][i]
+
+              
+    //           $('#test_subject').append($('<option>', {
+    //                 value: subject,
+    //                 text: subject
+    //             }));
+    //           }
+    //         }
+    //     });
+
+    // });
+
 
 
 </script>

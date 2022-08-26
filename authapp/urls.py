@@ -24,6 +24,10 @@ urlpatterns = [
       path('govt_home/',views.govt_home,name='govt_home' ),
       path('teacher_home/',views.teacher_home,name='teacher_home' ),
       path('student_home/',views.student_home,name='student_home' ),
+      path('school_view/',views.school_view,name='school_view' ),
+      path('school_active/<str:email>',views.school_active,name='school_active' ),
+      path('school_inactive/<str:email>',views.school_inactive,name='school_inactive' ),
+      path('school_delete/<str:email>',views.school_delete,name='school_delete' ),
 
       
       path('register_school/',views.register_school,name='register_school' ),
@@ -31,6 +35,27 @@ urlpatterns = [
 
       path('',views.login,name='login' ),
       path('logout/',views.logout,name='logout_view' ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      path('gov_add_subject/',views.gov_add_subject,name='gov_add_subject' ),
+      path('gov_view_subject/',views.gov_view_subject,name='gov_view_subject' ),
+      path('gov_view_subject_delete/<int:id>',views.gov_view_subject_delete,name='gov_view_subject_delete' ),
+
+      
 
 ]
 

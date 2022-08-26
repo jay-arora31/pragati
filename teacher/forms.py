@@ -20,11 +20,10 @@ class AddTestForm(forms.ModelForm):
         super(AddTestForm,self).__init__(*args,**kwargs)
         self.fields['test_name'].widget.attrs['class'] = 'form-control form-group'
         self.fields['test_class'].widget.attrs['class'] = 'form-control form-group'
-        self.fields['total_marks'].widget.attrs['class'] = 'form-control form-group'
         self.fields['no_que'].widget.attrs['class'] = 'form-control form-group'
     class Meta:
                 model =AddTest
-                fields =('test_name','test_class','no_que','total_marks')
+                fields =('test_name','test_class','no_que')
                 widgets = {
      
 

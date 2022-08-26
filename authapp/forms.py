@@ -29,6 +29,28 @@ class CustomUserCreationForm(UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields.pop('password2')
         self.fields['password1'].help_text =""
+        self.fields['email'].help_text =""
+    
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+
+        self.helper = FormHelper()
+        self.helper.layout=Layout(
+            
+            'email',
+            'password1',
+            Submit('submit', 'Sign up')
+        )
+class CustomUserCreationForm1(UserCreationForm):
+    
+    class Meta(UserCreationForm.Meta):
+        model =CustomUser
+        fields =['email']
+
+
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields.pop('password2')
+        self.fields['password1'].help_text =""
         #self.fields['username'].help_text=""
         self.fields['password1'].widget.attrs.update(style='max-height: 33px')
         #self.fields['username'].widget.attrs.update(style='max-height: 33px')
@@ -44,23 +66,43 @@ class CustomUserCreationForm(UserCreationForm):
             'password1',
             Submit('submit', 'Sign up')
         )
-
 class School_info(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(School_info,self).__init__(*args,**kwargs)
-        self.fields['s_name'].widget.attrs['placeholder'] = 'Type a message...'
- 
+
+
     class Meta:
             model =School
-            fields =('s_name','s_city','s_district')
+            fields =('s_name',)
             widgets = {
                     's_name': forms.TextInput(attrs={'class': 'name'}),
                 }
             labels = {
                         's_name': ('School Name'),
-                        's_city': ('School City'),
-                        's_district': ('School District'),
+             
                     }
+
+
+class add_subject_gov(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super(add_subject_gov,self).__init__(*args,**kwargs)
+
+        self.fields['subject_name'].widget.attrs['class'] = 'form-control'
+        self.fields['subject_class'].widget.attrs['class'] = 'form-control'
+
+    class Meta:
+            model =GovtSubject
+            fields =('subject_class','subject_name')
+            widgets = {
+                    
+                }
+            labels = {
+                        'subject_name': ('Subject Name'),
+                        'subject_class': ('Subject Class'),
+             
+                    }
+
+
 
 class Teacher_info(forms.ModelForm):
     def __init__(self,*args,**kwargs):

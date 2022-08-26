@@ -101,13 +101,14 @@
         <div class="page-header">
           <div class="row align-items-center">
             <div class="col">
+              <div style="border:1px solid black; padding:13px;height:1284px;background-color:antiquewhite;width:950px">
+                <div>
               <h3 class="page-title">Report Card</h3>
               <!-- <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="subjects.html">Sports</a></li>
                 <li class="breadcrumb-item active">Edit Sports</li>
               </ul> -->
-            </div>
-          </div>
+          
         </div>
         <div class="row">
           <div class="col-sm-12">
@@ -116,20 +117,50 @@
                   
                   <form>
                       <head>
-                          <title> Student Report Card </title>
                           <!-- <h4> Student Report Card </h4> -->
                         </head>
-                        <body>
-                           <h6> <b>Name:</b>  Jay </h6>
-                           <h6> <b>Class:</b>  2</h6>
-                           <h6> <b> Roll No.:</b> 1</h6>
-                           <h6> <b>Session:</b>  2022-2023</h6>
-                                
-                        </body>
+                        <div>
+                          <!-- <img src="gov1.png" style="width:143px;height:113px;float:left" alt=""> -->
+                          <h2 style="text-align:center;font-family:'Cloister';">
+                              <b> Nehru Vidyalaya ,Pune</b>
+                          </h2>
+                          <h2 style="text-align:center;font-family:'Cloister'">नेहरू विद्यालय, पुणे</h2>
+                          <h2 style="text-align:center;font-family:'Cloister'">
+                              <b> STATEMENT OF MARKS</b>
+                          </h2>
+                          <h2 style="text-align:center;font-family:'Cloister'">गुणपत्रक</h2>
+                          <div>
+                              <div class="card-body" style="background-color:antiquewhite;border:1px solid antiquewhite">
+                                  <form>
+                                      <body>
+                                          <h6>
+                                              <b>Name:</b>
+                                              Jay
+                                          </h6>
+                                          <h6>
+                                              <b>Class:</b>
+                                              2
+                                          </h6>
+                                          <h6>
+                                              <b> Roll No.:</b>
+                                              1
+                                          </h6>
+                                          <h6>
+                                              <b>Session:</b>
+                                              2022-2023
+                                          </h6>
+                                          <h6>
+                                              <b>School:</b>
+                                              GNHS
+                                          </h6>
+                                          <img src="prof1.png" style="float:right;margin-top:-135px;width:184px;height:155px" alt="">
+                                      </body>
+                                  </form>
+                              </div>
                   </form>
   
                   <!-- <footer>
-                        <p>Copyright © 2020 Dreamguys.</p>
+                         
                       </footer> -->
                 </div>
               </div>
@@ -138,6 +169,7 @@
                 
                 <form>
                     <head>
+
                         <title> Student Report Card </title>
                         <h2> Student Report Card </h2>
                       </head>
@@ -145,6 +177,7 @@
                         <table>
                           <thead>
                             <tr>
+
                               <td >subject </td>
                               <td>Unit Test 1 </td>
                               <td>Unit Test 2</td>
@@ -163,7 +196,51 @@
                             <tr>
                                 <td>{{key}}</td>
                            {% for key1,value1 in value.items %}
-                              <td> {{value1}}</td>
+                              <td> {{value1}}
+
+                                <!-- Button trigger modal -->
+                                  {% for key11,value11 in student_mark_dict.items %}  
+                                  {% for key22,value22 in value11.items %}  
+                                  {% for key33,value33 in value22.items %}  
+                                  {% if  key33 == test_lists.forloop.counter %}
+                                <div style="width: 23px;" class="container">
+                                  <!-- <h2>Small Modal</h2> -->
+                                  <!-- Trigger the modal with a button -->
+                                  <button  style="text-align:center;margin-left:-39px;background-color:white;color:black;border:white" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#{{key11}}{{key33}}">22</button>
+                                
+                                  <!-- Modal -->
+
+                                  <div class="modal fade" id="{{key11}}{{key33}}" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                      <div class="modal-content">
+                                        {{key33}}
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                        </div>
+                                        <div>
+                                          <table style="background-color: white;">
+                                            {% for key44,value44 in value33.items %}
+                                              <tr>
+                                                <th>{{value44}}</th>
+                                                
+                                              </tr>
+                                            {% endfor %}
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                  {% endfor %}
+                                  {% endfor %}
+                                  {% endfor %}
+                                </div>
+                                              
+                              </td>
                            
                               {%  endfor %}
                             </tr>
@@ -186,7 +263,7 @@
                 
 
                 <!-- <footer>
-                      <p>Copyright © 2020 Dreamguys.</p>
+                       
                     </footer> -->
               </div>
             </div>
@@ -249,8 +326,10 @@
                   
   
                   <!-- <footer>
-                        <p>Copyright © 2020 Dreamguys.</p>
+                         
                       </footer> -->
                 </div>
               </div>
+            </div>
+            </div>
               {% endblock %}

@@ -23,17 +23,37 @@
         <div class="card">
           <div class="card-body">
             <h5 class="form-title"><span>Student Information</span></h5>
-            <form action="{% url 'add_test' %}" method="POST">
+            <form action="{% url 'add_test_next' %}" method="GET">
               {% csrf_token %}
              
+                  <div class=" col-sm-11">
+                    <div class="form-group">
+                      <label>Class</label>
+                      <select class="form-control" name="course_class">
+                        <option selected>Choose Class</option>
+                        {% for i in subjects %}
+                        <option value="{{i.course_name.subject_info.subject_class}}">{{i.course_name.subject_info.subject_class}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+               
               <div class=" col-sm-11">
                 <div class="form-group">
-                  {{form}}
+                  <label>Test</label>
+                  <select class="form-control" name="test_type">
+                    <option selected>Choose Test Type</option>
+           
+                <option value="Unit_Test_1">Unit Test 1</option>
+                <option value="Unit_Test_2">Unit Test 2</option>
+                <option value="Unit_Test_3">Unit Test 3</option>
+                <option value="Unit_Test_4">Unit Test 4</option>
+                <option value="Semester1">Semester 1</option>
+                <option value="Semester2">Semester 2</option>
+              
+                  </select>
                 </div>
               </div>
-     
-   
-     
 
               <div class=" col-sm-11">
                 <div class="form-group">
@@ -41,7 +61,7 @@
                   <select class="form-control" name="subject">
                     <option selected>Choose Subject</option>
                     {% for i in subjects %}
-                    <option value="{{i.course_name.subject_name}}">{{i.course_name.subject_name}}</option>
+                    <option value="{{i.course_name.subject_info.subject_name}}">{{i.course_name.subject_info.subject_name}}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -58,7 +78,59 @@
                   </select>
                 </div>
               </div>
-     
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label class="">No. Questions</label>
+                 <input type="text" class="form-control" name="noque" id="noque" >
+                 <!-- <input type="button" value="Generate" onclick="textBox();" /> -->
+                        
+                </div>
+              </div>
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label class="">Total marks</label>
+                 <input type="text" class="form-control" name="tot" id="noque" >
+                 <!-- <input type="button" value="Generate" onclick="textBox();" /> -->
+                        
+                </div>
+              </div>
+              <!-- <div class="col-sm-11">
+                <div class="form-group">
+                    <input type="text" name="noot" id="noot">
+                    <input type="button" value="Generate" onclick="textBox();" />
+                    
+                </div>
+              </div> -->
+<!--          
+              <div class="col-sm-11">
+                <div class="form-group">
+                    <div id="divSelections">
+                    </div>        
+                    <div id="divSelections1">
+                    </div>
+                    <script type="text/javascript">
+                        function textBox() {
+                            var number = parseInt(document.getElementById('noot').value);
+                            var count=0
+                            for (var i = 0; i < number; i++) {
+                              count=count+1
+                                var existingSelection = document.getElementById('divSelections').innerHTML;
+                          
+                                document.getElementById('divSelections').innerHTML = existingSelection + '<label for="">CO ' + count + '</label> <input type="text" class="form-control" id="mark' + i + '" name="mark' + count + '"><br> <br> <br>';
+                            }
+                            var que_count=0
+
+                            for (var i = 0; i < number; i++) {
+                              que_count=que_count+1
+                                var existingSelection = document.getElementById('divSelections1').innerHTML;
+                               
+                                document.getElementById('divSelections1').innerHTML = existingSelection + '<label for="">Question ' + que_count + '</label> <input type="text" class="form-control" id="que' + que_count + '" name="que' + que_count + '"><br> <br> <br>';
+                            }
+                        }
+                    
+                    </script>
+                </div>
+              </div> -->
 
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Submit</button>

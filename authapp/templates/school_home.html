@@ -1,10 +1,25 @@
 
 
 {% extends 'base.html' %}
+{% load google_translate %}
+
 {% load static %}
 
 {% block content %}
+
+<style>
+  #google_translate_element{
+    position: relative;
+    left: 985px;
+    top: -110px;
+  }
+</style>
 <div class="col-sm-12">
+  {% google_translate %}
+
+
+
+
           Sport : {{sport_badges}}
             <div class="card">
               <div class="card-body">

@@ -1,0 +1,106 @@
+
+     
+
+
+{% extends 'govtbase.html' %}
+{% load static %}
+
+
+{% block content %}
+<style>
+#circle {
+    background: #f00;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+</style>
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Schools</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">School</a></li>
+            <li class="breadcrumb-item active">View School</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            
+            <div class=" col-sm-11">
+                <div class="form-group">
+                
+                  <select class="" id="test_type" name="test_type">
+                        <option value="">Select Class</option>
+                    {% for i in class_data %}
+
+                    <option value="{{i.subject_class}}">{{i.subject_class}}</option>
+
+                 {% endfor %}
+                  </select>
+                </div>
+              </div>
+          <div class="card card-table">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-center mb-0 datatable">
+                  <thead>
+                    <tr>
+                      <th>Subject Class</th>
+                      <th>Subject Name</th>
+                      <th>Number of Course Outcome</th>
+               
+                      <!-- <th>Roll No</th>
+                      <th>Class</th> -->
+  
+                      <th class="text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in class_data %}
+                    <tr>
+                        <td>
+                            {{i.subject_class}}
+                            
+                        </td>
+                        
+                        
+                        <td>
+                            {{i.subject_name}}
+
+                        </td>
+                        <td>
+                            {{i.subject_learning}}
+
+                        </td>
+                
+                 
+    
+                        
+  
+                      <td class="text-right">
+                        <div class="actions">
+
+                            
+                          <a  href="{% url 'gov_view_subject_delete' i.pk %}"  class="btn btn-sm bg-danger-light">
+                            <i class="fas fa-trash"></i>
+                          </a>
+
+
+                        </div>
+                      </td>
+                    </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+    {% endblock %}

@@ -9,23 +9,43 @@
         
             
         
-                    <li class="submenu">
+                    <!-- <li class="submenu">
                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Student</span> <span class="menu-arrow"></span></a>
                      <ul>
                        <li><a href="{% url 'filter_class_subject' %}">Add Student Manually</a></li>
                        <li><a href="{% url 'add_student_excel' %}">Add Students from excel</a></li>
                        <li><a href="{% url 'view_student' %}">View Student</a></li>
                      </ul>
-                   </li>
+                     
+                   </li> -->
+                   <li class="submenu">
+                    <a href="#"><i class="fa fa-university"></i> <span> Subjects </span> <span class="menu-arrow"></span></a>
+                    <ul>
+                      <!-- <li><a href="{% url 'filter_class_subject' %}">Add School</a></li> -->
+                      <li><a href="{% url 'gov_add_subject' %}">Add Subjects</a></li>
+                      <li><a href="{% url 'gov_view_subject' %}">View Subjects</a></li>
+                     
+                    </ul>
+                    
+                  </li>
+                   <li class="submenu">
+                    <a href="#"><i class="fa fa-university"></i> <span> School </span> <span class="menu-arrow"></span></a>
+                    <ul>
+                      <!-- <li><a href="{% url 'filter_class_subject' %}">Add School</a></li> -->
+                      <li><a href="{% url 'school_view' %}">View School</a></li>
+                     
+                    </ul>
+                    
+                  </li>
+                 
                   
-                   
                   </ul>
                 </div>
             </div>
          </div>
    
       <footer>
-               <p>Copyright © 2020 Dreamguys.</p>
+                
       </footer>
 
 

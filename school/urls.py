@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
       path('assign_teacher/',views.assign_teacher,name='assign_teacher' ),
@@ -38,7 +39,8 @@ urlpatterns = [
       path('view_sports_teacher/',views.view_sports_teacher,name='view_sports_teacher' ),
       path('class_wise_subject/',views.class_wise_subject,name='class_wise_subject' ),
       path('teacher_namewise_email/',views.teacher_namewise_email,name='teacher_namewise_email' ),
+      path('govt_class_wise_subject/',views.govt_class_wise_subject,name='govt_class_wise_subject' ),
 
       
 
-]
+]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

@@ -31,10 +31,10 @@
               <label>Session</label>
               <select class="form-control" name="subject">
                 <option value="" selected>Select Subject</option>
-                {% for i in data  %}
-                <option value="{{i.subject.subject_name}}"
-                 selected>{{i.subject.subject_name}}</option>
-                {% endfor %}
+              
+                
+                <option value="English" >English</option>
+              
               </select>
               <label>Session</label>
               <select class="form-control" name="session">
@@ -46,17 +46,16 @@
               <label>Class</label>
               <select class="form-control" name="subject_class">
               <option value="">Select Session</option>
-              {% for i in data  %}
-              <option value="{{i.subject.subject_class}}"
-               selected>{{i.subject.subject_class}}</option>
-              {% endfor %}
+              <option value="1" selected>1</option>
               </select>
               <button class="btn-primary" type="submit">Submit </button>
             </form>
             </div>
           </div>
           
-
+          {% if image_bool == True %}
+          <img src="{% static 'course_outcome.jpg'  %}" alt=""  height="230px" width="230px" style="position: relative; left: 600px; top: -280px;" >
+          {% endif %}
 
           <div class=" col-sm-5">
             <div class="form-group">
@@ -70,14 +69,14 @@
             <table class="table table-hover table-center mb-0 datatable">
                 <thead>
                   <tr>
-                    {% for i in heading_list %}
+                    <th>Roll no.</th>
+                    {% for i in co_head %}
                     <th>{{i}}</th>
                
              
                     <!-- <th>Roll No</th>
                     <th>Class</th> -->
                     {% endfor %}
-                    <th class="">Action</th>
                   </tr>
                 </thead>
                 <tbody>

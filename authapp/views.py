@@ -1,18 +1,21 @@
+from email import message
+from multiprocessing import context
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 import django.contrib.auth as auth1
 import operator
 from django.contrib.auth import logout, authenticate, login, get_user_model
-from authapp.models import CustomUser
+from authapp.models import CustomUser, GovtAssignOutcome
 from django.contrib.auth import logout,login as auth_login
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render,get_object_or_404,redirect,reverse
 from django.contrib import messages
 from .decorators import school_auth
-from authapp.forms import CustomUserCreationForm,School_info,Teacher_info
+from authapp.forms import CustomUserCreationForm,School_info,Teacher_info,CustomUserCreationForm1,add_subject_gov
 from django.shortcuts import render, HttpResponseRedirect
 import plotly.express as px
+from .models import *
 
 from school.models import *
 
@@ -31,6 +34,10 @@ def home( request):
 
 def register_school( request):
     if request.method =='POST':
+            district=request.POST['district']
+            city=request.POST['city']
+
+
             form =CustomUserCreationForm(request.POST)
             info_form =School_info(request.POST)
             if form.is_valid() and info_form.is_valid():
@@ -38,10 +45,14 @@ def register_school( request):
                 user=form.save(commit =False)
                 user.email =user.email.lower()
                 user.username=user.email
-                user.active =False
+                user.is_active =False
                 user.is_school=True
                 user.save()
                 school_info=info_form.save(commit=False)
+                school_info.s_district=district
+                school_info.s_city=city
+                school_info.s_info=user
+
                 school_info.s_info=user
                 school_info.save()
                 return redirect('login')
@@ -52,7 +63,7 @@ def register_school( request):
 
 def register_teacher( request):
     if request.method =='POST':
-            form =CustomUserCreationForm(request.POST)
+            form =CustomUserCreationForm1(request.POST)
             info_form =Teacher_info(request.POST)
             if form.is_valid() and info_form.is_valid():
                 print("form is va;id")
@@ -67,12 +78,14 @@ def register_teacher( request):
                 school=School.objects.get(s_info__username=request.user)
                 teacher_info.t_school=school
                 teacher_info.save()
-                return redirect('school_home')
-    form=CustomUserCreationForm()
+                messages.success(request,"Teacher Added Successfully")
+                return redirect('register_teacher')
+    form=CustomUserCreationForm1()
     info_form=Teacher_info()
     return render(request,'register_teacher.html',{'form':form,'info_form':info_form})
 
 def login(request):
+    
     if request.method == 'POST':
    
         # AuthenticationForm_can_also_be_used__
@@ -100,8 +113,9 @@ def login(request):
         else:
             messages.info(request, f'account done not exit plz sign in')
     form = AuthenticationForm()
-
-    return render(request,'login.html', {'form':form,})
+    school_form=CustomUserCreationForm()
+    school_info_form=School_info()
+    return render(request,'login.html', {'form':form,'school_form':school_form,'school_info_form':school_info_form})
 
 def school_home(request):
     student=Student.objects.filter(student_school__s_info__email=request.user)
@@ -323,6 +337,43 @@ def govt_home(request):
 import json
 
 
+def school_view(request):
+    school_data=School.objects.all()
+    context={
+        'school_data':school_data,
+    }
+    return render(request,'govtemplate/school_view.html',context)
+
+def school_active(request,email):
+    school_email=email
+    obj_school=CustomUser.objects.get(email=school_email)
+    print("Active function")
+    print(obj_school)
+    obj_school.is_active=True
+    obj_school.save()
+    return redirect('school_view')
+
+
+def school_inactive(request,email):
+    school_email=email
+    obj_school=CustomUser.objects.get(email=school_email)
+    print("Active function")
+    print(obj_school)
+    obj_school.is_active=False
+    obj_school.save()
+    return redirect('school_view')
+
+
+def school_delete(request,email):
+    school_email=email
+    obj = get_object_or_404(School,s_info__email=school_email)
+    print(obj)
+    obj.delete()
+
+    print("Delete function")
+    return redirect('school_view')
+
+
 def teacher_home(request):
     students=Student.objects.filter(student_teacher__t_info__email=request.user)
     data=[]
@@ -380,3 +431,65 @@ def teacher_home(request):
 
 def student_home(request):
     return render(request,'student_home.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#================================================Gov Views==============================
+
+def gov_add_subject(request):
+    if request.method=='POST':
+
+        form=add_subject_gov(request.POST)
+        no_ot=request.POST['noot']
+      
+        val=int(no_ot)
+        print(type(val))
+        if form.is_valid():
+            subject_form=form.save(commit=False)
+
+            subject_form.subject_learning=val
+            subject_form.save()
+            ot=0
+            for i in range(val):
+                ot+=1
+                ot_name = request.POST.get('text'+str(i),'')
+
+                obj_ot=GovtAssignOutcome(ot_no=ot,ot_name=ot_name,ot_class=subject_form)
+                obj_ot.save()
+
+    form=add_subject_gov()
+    context={
+        'form':form
+    }
+
+
+    return render(request,'govtemplate/add_subject.html',context)
+
+
+def gov_view_subject(request):
+    class_data=GovtSubject.objects.all().order_by('subject_class')
+    print(class_data)
+    context={
+        'class_data':class_data
+    }    
+    return render(request,'govtemplate/view_subjects.html',context)
+
+
+def gov_view_subject_delete(request,id):
+    sub_id=id
+    obj=GovtSubject.objects.get(id=id)
+    obj.delete()
+    messages.success(request,"Subject Deleted SuccessFully")   
+    return redirect('gov_view_subject')
+

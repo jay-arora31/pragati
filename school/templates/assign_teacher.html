@@ -45,19 +45,27 @@
 
               <div class="col-sm-11">
                 <div class="form-group">
-                  {{form}}
+                  <label for="">Class</label>
+                  <select class="form-control form-select-lg mb-3"   name="course_class"  id="course_class" aria-label=".form-select-lg example">
+                    <option selected>Choose Class</option>
+                    {% for i in subject_data %}
+                    <option value="{{i}}"  >{{i}}</option>
+                    {% endfor %}
+                  </select>
+        
                 </div>
               </div>
               <div class="col-sm-11">
                 <div class="form-group">
-                  <label>Subject</label>
-                  <select name="subjects" id="subjects" class="form-control">
-                    <option>Select Subject</option>
-                   
-             
+                  <label for="">Subject</label>
+                  <select class="form-control form-select-lg mb-3"   name="course_subject" id="course_subject" aria-label=".form-select-lg example">
+                    <option selected>Choose Subject</option>
+                  
                   </select>
+        
                 </div>
               </div>
+            
               <div class="col-sm-11">
                 <div class="form-group">
                   <label>Teacher</label>
@@ -83,9 +91,8 @@
                   <label>Session</label>
                   <select  name="session" class="form-control">
                     <option>Select Session</option>
-                    {% for i in sessions %}
-                    <option value="{{i.session}}">{{i.session}}</option>
-                    {% endfor %}
+                    
+                    <option value="2022-2023">2022-2023</option>
                   </select>
                 </div>
               </div>
@@ -101,27 +108,28 @@
 </div>
 
 <script>
-      $("#class_id").change(function () {
+   
+
+
+   $("#course_class").change(function () {
         var course_class = $(this).val();
 
         $.ajax({
-            url: '/school/class_wise_subject/',
+            url: '/school/govt_class_wise_subject/',
             data: {
                 
                 'course_class': course_class
             },
             dataType: 'json',
             success: function (data) {
-              $("#subjects").empty();
-              $('#subjects').append($('<option>', {
+              $("#course_subject").empty();
+              $('#course_subject').append($('<option>', {
                     value: 'Select Subject',
                     text: 'Select Subject'
                 }));
               for (var i in data['subject_data']) {
               subject=data['subject_data'][i]
-
-              
-              $('#subjects').append($('<option>', {
+              $('#course_subject').append($('<option>', {
                     value: subject,
                     text: subject
                 }));
@@ -130,13 +138,10 @@
         });
 
     });
-
-
-
     $("#t_name").change(function () {
         var teacher_name = $(this).val();
 
-        alert(teacher_name)
+       
         $.ajax({
             url: '/school/teacher_namewise_email/',
             data: {
@@ -152,7 +157,7 @@
                 }));
               for (var i in data['email_data']) {
               emails=data['email_data'][i]
-              alert(emails)
+           
               
               $('#t_email').append($('<option>', {
                     value: emails,

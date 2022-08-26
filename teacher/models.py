@@ -40,6 +40,43 @@ class AddTest(models.Model):
     def __str__(self):
         return self.test_name
 
+class SchoolAddTest(models.Model):
+    test_name=models.CharField(max_length =255, null=True,blank=True,choices=TEST_CHOICES)
+    total_marks=models.CharField(max_length =255, null=True,blank=True)
+    no_que=models.CharField(max_length =255, null=True,blank=True)
+    session=models.CharField(max_length =255, null=True,blank=True)
+    subject_info=models.ForeignKey( school_class_subject, on_delete=models.CASCADE)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.test_name
+
+class SchoolAssignOutcome(models.Model):
+    question_no=models.IntegerField( null=True,blank=True)
+    course_ot=models.CharField(max_length =255, null=True,blank=True)
+    mark=models.CharField(max_length =255, null=True,blank=True)
+    ques_info=models.CharField(max_length =255, null=True,blank=True)
+    test=models.ForeignKey( SchoolAddTest, on_delete=models.CASCADE)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+
+
+
+
+class TestMark(models.Model):
+    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
+    subject_data=models.CharField(max_length =255, null=True,blank=True)
+    subject_class=models.CharField(max_length =255, null=True,blank=True)
+    question_info=models.ForeignKey( SchoolAssignOutcome, on_delete=models.CASCADE)
+    obtain_mark=models.IntegerField(null=True,blank=True)
+    test_type=models.ForeignKey( SchoolAddTest, on_delete=models.CASCADE)
+    subject =models.ForeignKey( school_class_subject, on_delete=models.CASCADE)
+    school =models.ForeignKey( School, on_delete=models.CASCADE)
+    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.question_info.question_no)
+
+
 class AssignOutcome(models.Model):
     question_no=models.IntegerField( null=True,blank=True)
     course_ot=models.CharField(max_length =255, null=True,blank=True)
@@ -53,16 +90,7 @@ class AssignOutcome(models.Model):
 
 
 
-class TestMark(models.Model):
-    student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
-    question_info=models.ForeignKey( AssignOutcome, on_delete=models.CASCADE)
-    obtain_mark=models.IntegerField(null=True,blank=True)
-    test_type=models.ForeignKey( AddTest, on_delete=models.CASCADE)
-    subject =models.ForeignKey( class_subject, on_delete=models.CASCADE)
-    school =models.ForeignKey( School, on_delete=models.CASCADE)
-    teacher =models.ForeignKey( Teacher, on_delete=models.CASCADE)
-    def __str__(self):
-        return str(self.question_info.question_no)
+
 
 class Sports(models.Model):
     student_info=models.ForeignKey( Student, on_delete=models.CASCADE)

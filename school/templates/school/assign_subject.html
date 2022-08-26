@@ -38,17 +38,37 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-body">
-          <form action="{% url 'assign_subject' %}" method="POST">
+          <form action="{% url 'assign_subject' %}"  enctype="multipart/form-data" method="POST">
             <div class="row">
                       
               {% csrf_token %}
 
               <div class="col-sm-11">
                 <div class="form-group">
-                  {{form}}
+                  <label for="">Class</label>
+                  <select class="form-control form-select-lg mb-3"   name="course_class"  id="course_class" aria-label=".form-select-lg example">
+                    <option selected>Choose Class</option>
+                    {% for i in subject_class %}
+                    <option value="{{i}}"  >{{i}}</option>
+                    {% endfor %}
+                  </select>
+        
+                </div>
+              </div>
+              <div class="col-sm-11">
+                <div class="form-group">
+                  <label for="">Subject</label>
+                  <select class="form-control form-select-lg mb-3"   name="course_subject" id="course_subject" aria-label=".form-select-lg example">
+                    <option selected>Choose Subject</option>
+                  
+                  </select>
+        
                 </div>
               </div>
             
+              
+             
+  
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
@@ -60,6 +80,38 @@
   </div>
 </div>
 
+<script>
+  
+  $("#course_class").change(function () {
+        var course_class = $(this).val();
+
+        alert(course_class)
+        $.ajax({
+            url: '/school/govt_class_wise_subject/',
+            data: {
+                
+                'course_class': course_class
+            },
+            dataType: 'json',
+            success: function (data) {
+              $("#course_subject").empty();
+              $('#course_subject').append($('<option>', {
+                    value: 'Select Subject',
+                    text: 'Select Subject'
+                }));
+              for (var i in data['subject_data']) {
+              subject=data['subject_data'][i]
+              alert(subject)
+              $('#course_subject').append($('<option>', {
+                    value: subject,
+                    text: subject
+                }));
+              }
+            }
+        });
+
+    });
+</script>
 {% endblock %}
 
 

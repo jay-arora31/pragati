@@ -52,6 +52,10 @@
                   <label>Session</label>
                   <select class="form-control" name="course_session"  id="course_session">
                     <option selected>Choose Session</option>
+                    {% for i in session %}
+                    <option value="{{i}}">{{i}}</option>
+
+                    {% endfor %}
 
                   </select>
                 </div>
@@ -72,29 +76,5 @@
   <script >
 
 
-    $("#student_class1").change(function () {
-        var course_class = $(this).val();
-
-        alert(course_class)
-        $.ajax({
-            url: '/teacher/add_student_filter_class_subject/',
-            data: {
-                
-                'course_class': course_class
-            },
-            dataType: 'json',
-            success: function (data) {
-              for (var i in data['session_list']) {
-              subject=data['session_list'][i]
-              alert(subject)
-              $('#course_session').append($('<option>', {
-                    value: subject,
-                    text: subject
-                }));
-              }
-            }
-        });
-
-    });
 </script>
     {% endblock %}
