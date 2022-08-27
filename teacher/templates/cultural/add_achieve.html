@@ -1,0 +1,172 @@
+
+     
+
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Add Students</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">Students</a></li>
+            <li class="breadcrumb-item active">Add Students</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="form-title"><span>Student Information</span></h5>
+            <form action="{% url 'select_cultural' %}" method="POST">
+              {% csrf_token %}
+        
+                 
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Cultural Name</label>
+                 <input type="text" class="form-control"
+                  placeholder="Enter Cultural name" name="sport_name" id="">
+                </div>
+              </div>
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Cultural Level</label>
+                  <select class="form-control" name="sport_level" required>
+                    <option value="">Select Cultural Level</option>
+             
+                    <option value="School" >School</option>
+                    <option value="National" >National</option>
+                    <option value="State" >State</option>
+                    <option value="participated" >participated</option>
+                  </select>                </div>
+              </div>
+             
+
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Cultural Rank</label>
+                  <select class="form-control" name="sport_rank" required>
+                    <option value="">Select Cultural Rank</option>
+             
+                    <option value="1st Rank" >1st Rank</option>
+                    <option value="2nd Rank" >2nd Rank</option>
+                    <option value="3rd Rank" >3rd Rank</option>
+                    <option value="participated" >participated</option>
+                  </select>                </div>
+              </div>
+     
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Class</label>
+                  <select class="form-control" id="sport_classes1" name="sport_classes" required>
+                    <option value="">Select Class</option>
+                   
+                    <option value="1" >1</option>
+                  </select>
+                </div>
+              </div>
+     
+
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Session</label>
+                  <select class="form-control" name="sport_session" id="sport_session1">
+                  
+                    <option value="" >Select Session</option>
+                    <option value="2022-2023">2022-2023</option>
+                  </select>
+                </div>
+              </div>
+     
+
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Select Roll No.</label>
+                  <select class="form-control" name="roll" id="roll">
+                  
+                    <option value="" >Select Roll Number</option>
+                  </select>
+                </div>
+              </div>
+     
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+    
+    $("#sport_classes1").change(function () 
+    {
+        alert("Hey 1")
+        var sport_class = $(this).val();
+
+        alert(sport_class)
+        $.ajax({
+            url: '/teacher/sport_filter_session/',
+            data: {
+                
+                'sport_class': sport_class
+            },
+            dataType: 'json',
+            success: function (data) {
+              for (var i in data['session_list']) {
+              subject=data['session_list'][i]
+              alert(subject)
+              $('#sport_session1').append($('<option>', {
+                    value: subject,
+                    text: subject
+                }));
+              }
+            }
+        });
+
+    });
+
+
+
+        
+    $("#sport_session1").change(function () 
+    {
+        alert("Hey 1")
+        var sport_class = $("#sport_classes1").val();
+
+        var sport_session = $(this).val();
+
+        alert(sport_class)
+        alert(sport_session)
+        $.ajax({
+            url: '/teacher/sport_filter_roll/',
+            data: {
+                
+                'sport_class': sport_class,
+                'sport_session':sport_session
+            },
+            dataType: 'json',
+            success: function (data) {
+              for (var i in data['roll_list']) {
+              subject=data['roll_list'][i]
+              $('#roll').append($('<option>', {
+                    value: subject,
+                    text: subject
+                }));
+              }
+            }
+        });
+
+    });
+</script>
+    {% endblock %}

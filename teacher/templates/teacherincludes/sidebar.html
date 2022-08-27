@@ -25,13 +25,7 @@
                       <li><a href="{% url 'view_all_test' %}">View Test</a></li>
                     </ul>
                   </li>
-                  <li class="submenu">
-                    <a href="#"><i class="fas fa-user-graduate"></i> <span>Add Test Outcomes</span> <span class="menu-arrow"></span></a>
-                    <ul>
-                      <li><a href="{% url 'select_test_outcome' %}">Add Outcomes</a></li>
-                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
-                    </ul>
-                  </li>
+                  
                   <!-- <li class="submenu">
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Outcome Details</span> <span class="menu-arrow"></span></a>
                     <ul>
@@ -44,7 +38,7 @@
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Evaluation</span> <span class="menu-arrow"></span></a>
                     <ul>
                       <li><a href="{% url 'select_subject_test' %}">Add Marks</a></li>
-                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
+                      
                     </ul>
                   </li>
                     <!-- <li class="submenu">
@@ -60,7 +54,6 @@
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Student Outcomes</span> <span class="menu-arrow"></span></a>
                     <ul>
                       <li><a href="{% url 'filter_student_marks_outcomes1' %}"> View Outcomes</a></li>
-                      <li><a href="{% url 'view_all_test' %}">View Test</a></li>
                     </ul>
                   </li>
 
@@ -71,16 +64,16 @@
                    <li class="submenu">
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Sports</span> <span class="menu-arrow"></span></a>
                     <ul>
-                      <li><a href="#"> Add Achievement</a></li>
-                      <li><a href="#">View Achievement</a></li>
+                      <li><a href="{% url 'select_sport' %}"> Add Achievement</a></li>
+                      <li><a hhref="{% url 'view_sport' %}">View Achievement</a></li>
                     </ul>
                   </li>
-
+                  
 
                   <li class="submenu">
                     <a href="#"><i class="fas fa-user-graduate"></i> <span>Cultural</span> <span class="menu-arrow"></span></a>
                     <ul>
-                      <li><a href="#"> Add Achievement</a></li>
+                      <li><a href="{% url 'select_cultural' %}"> Add Achievement</a></li>
                       <li><a href="#">View Achievement</a></li>
                     </ul>
                   </li>

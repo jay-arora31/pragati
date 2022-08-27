@@ -184,27 +184,29 @@ def govt_home(request):
         school_email=i.s_info.email
         class_list=[]
 
-        classes=class_subject.objects.filter(subject_school__s_info__email=school_email)
+        classes=school_class_subject.objects.filter(subject_school__s_info__email=school_email)
         for a in classes:
-            if a.subject_class not in class_list:
-                class_list.append(a.subject_class)
+            if a.subject_info.subject_class not in class_list:
+                class_list.append(a.subject_info.subject_class)
         for class_single in class_list:
             print("==================================class single=====================")
             class_count+=1
             subject_list=[]
             class_data=class_single
             student_dict={}
-            subjects=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data)
-            subject_count_data=class_subject.objects.filter(subject_school__s_info__email=school_email,subject_class=class_data).count()
+            subjects=school_class_subject.objects.filter(subject_school__s_info__email=school_email,subject_info__subject_class=class_data)
+            subject_count_data=school_class_subject.objects.filter(subject_school__s_info__email=school_email,subject_info__subject_class=class_data).count()
             student_check_dict={}
             for i in subjects:
+
+
+
                 subject_count+=1
-                subject_data=i.subject_name
-                outcome_data=AssignOutcome.objects.filter(
+                subject_data=i.subject_info.subject_name
+                outcome_data=SchoolAssignOutcome.objects.filter(
                 school__s_info__email=school_email,
-                subject__subject_name=subject_data,
-                test__session='2022-2023',
-                subject__subject_class= class_data)
+                test__subject_info__subject_info__subject_name=subject_data,
+                 test__subject_info__subject_info__subject_class= class_data)
                 heading_list=[]
                 heading_list.append('Roll')
                 outcome_dict={}
@@ -212,14 +214,14 @@ def govt_home(request):
                     if i.course_ot in outcome_dict:
                             if i.course_ot not in heading_list:
                                 heading_list.append(i.course_ot)
-                            outcome_dict[i.course_ot]+=i.mark
+                            outcome_dict[i.course_ot]+=int(i.mark)
                     else:
-                        outcome_dict[i.course_ot]=i.mark
+                        outcome_dict[i.course_ot]=int(i.mark)
                 student=TestMark.objects.filter(
                 school__s_info__email=school_email,
-                subject__subject_name=subject_data,
-                test_type__session='2022-2023',
-                subject__subject_class=class_data
+                subject__subject_info__subject_name=subject_data,
+             
+                subject__subject_info__subject_class=class_data
                 )
                 print(student)
                 student_dict={}
@@ -231,9 +233,9 @@ def govt_home(request):
                         for j in student:
                             if j.student_info.student_roll==i.student_info.student_roll:
                                 if j.question_info.course_ot in new_dict:
-                                    new_dict[j.question_info.course_ot]+=j.obtain_mark
+                                    new_dict[j.question_info.course_ot]+=int(j.obtain_mark)
                                 else:
-                                    new_dict[j.question_info.course_ot]=j.obtain_mark
+                                    new_dict[j.question_info.course_ot]=int(j.obtain_mark)
                 student_dict_keys=list(student_dict.keys())
                 iteration=0
                 all_over_dict={}

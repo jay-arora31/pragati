@@ -43,6 +43,18 @@
               </div>
      
 
+              <div class=" col-sm-11">
+                <div class="form-group">
+                  <label>Subject</label>
+                  <select class="form-control" name="test_subject">
+                    <option selected>Choose Subject</option>
+                    {% for i in course_subjects %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+                  </select>
+                </div>
+              </div>
+
 
               <div class=" col-sm-11">
                 <div class="form-group">
@@ -50,9 +62,7 @@
                   <select class="form-control" name="course_session">
                     <option >Select Course Session</option>
 
-                    {% for i in course_session  %}
-                    <option value="{{i}}" >{{i}}</option>
-                    {% endfor %}
+                  <option value="2022-2023">2022-2023</option>
                   </select>
                 </div>
               </div>

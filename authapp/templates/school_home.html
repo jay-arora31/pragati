@@ -14,23 +14,151 @@
     top: -110px;
   }
 </style>
-<div class="col-sm-12">
-  {% google_translate %}
-
-
-
-
-          Sport : {{sport_badges}}
-            <div class="card">
-              <div class="card-body">
-
-                {{request.user}}
-                {{ chart|safe }}
-
-              </div>
+<div class="content container-fluid" >
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Welcome !</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active">Teacher's Dashboard</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-one w-100">
+        <div class="card-body">
+          <div class="db-widgets d-flex justify-content-between align-items-center">
+            <div class="db-icon">
+              <i class="fas fa-user-graduate" style="color: black"></i>
+            </div>
+            <div class="db-info">
+              <h3>2</h3>
+              <h6>Total Students</h6>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-one w-100">
+        <div class="card-body">
+          <div class="db-widgets d-flex justify-content-between align-items-center">
+            <div class="db-icon">
+              <i class="fas fa-chalkboard" style="color: black"></i>
+            </div>
+            <div class="db-info">
+              <h3>2</h3>
+              <h6>Assigned Subject</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <!-- <div class="row" style="border:solid">
+    <div class="col-12">
+      {{chart|safe}}
+    </div>
+    
+  </div> -->
+  <br><br>
+  <div class="row" >
+    <div class="col-6" style="border:solid;border-radius:5px ;background-color:#F3EDED">
+      <h6>Attainment Chart</h6>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+      <canvas id="myChart4"></canvas>
+      <script>
+        var ctx = document.getElementById("myChart4").getContext('2d');
+var myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+  labels: ["Class 1"],
+  datasets: [{
+    label: 'Attained all LOs',
+    backgroundColor: "#A8FF89",
+    data: [0],
+  }, {
+    label: 'Not Attained all LOs',
+    backgroundColor: "#FFBC53",
+    data: [1],
+  }],
+},
+options: {
+  
+  scales: {
+    xAxes: [{
+      stacked: true,
+      gridLines: {
+        display: false,
+      }
+    }],
+    yAxes: [{
+      stacked: true,
+      ticks: {
+        beginAtZero: true,
+        steps:1 ,
+        max: 10
+      },
+      type: 'linear',
+      gridLines: {
+        display: false,
+      }
+    }]
+  },
+  responsive: true,
+  
+}
+});
+      </script>
+    </div>
+    <br>
+    <div class="col-6" style="border:solid;border-radius:5px;background-color:#F3EDED">
+      <h6>Data Entry Chart</h6>
+  <canvas id="doughtChart" width="300" height="300" style=" background-color: #F3EDED;padding: 10px;"></canvas>
+      <script>
+        var ctx = document.getElementById("doughtChart");
+var myChart = new Chart(ctx, {
+type: 'doughnut',
+data: {
+  labels: ['100% data entry','Remaining'],
+  datasets: [{
+    label: 'Number of students data filed',
+    data: [1,0],
+    backgroundColor: [
+      '#A8FF89',
+      '#FFBC53',
+    ],
+    
+    borderWidth: 0
+  }]
+},
+options: {
+   //cutoutPercentage: 40,
+  responsive: false,
+
+}
+});
+      </script>
+
+    </div>
+  </div>
+  <br><br>
+  <!-- <div class="col-12" style="background-color:white;border:solid;border-radius:5px">
+    <div id="apexcharts-area"></div>
+  </div> -->
+</div>
+<!-- <div class="card-body">
+  <div id="apexcharts-area"></div>
+</div> -->
+
+   
+</div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+
 
 
 {% endblock %}

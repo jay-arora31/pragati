@@ -1,3 +1,631 @@
-studnet home 
 
-{{request.user}}
+  {% extends 'student_base.html' %}
+  {% load static %}
+  
+  {% block content %}
+  <style>
+    body {
+        font-family: 'Lato', Arial, sans-serif;
+        color: black;
+    }
+    
+    .container > header {
+        margin: 0 auto;
+        padding: 1em;
+        text-align: center;
+    }
+    
+    .container > header h1 {
+      font-weight: 600;
+        font-size: 3em;
+        margin: 0;
+    }
+    
+    .wrapper {
+        line-height: 1.5em;
+        margin: 0 auto;
+        padding: 2em 0 3em;
+        width: 90%;
+        max-width: 2000px;
+        overflow: hidden;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #fff;
+    }
+    
+    th {
+        background-color: #F5C16C;
+        font-weight: bold;
+        color: #fff;
+        white-space: nowrap;
+    }
+    
+    td, th {
+        padding: 1em 1.5em;
+        text-align: left;
+    }
+    
+    tbody th {
+        background-color: #2ea879;
+    }
+    tbody tr:nth-child(2n-1) {
+        background-color: #f5f5f5;
+        transition: all .125s ease-in-out;
+    }
+    tbody tr:hover {
+        background-color: #f5ead7;
+    }
+    
+    td.rank {
+        text-transform: capitalize;
+    }
+    html {
+        font-family:arial;
+        font-size: 18px;
+      }
+      
+      td {
+        border: 1px solid #726E6D;
+        padding: 15px;
+      }
+      
+      thead{
+        font-weight:bold;
+        text-align:center;
+        background: #F5C16C;
+        color:white;
+      }
+      
+      table {
+        border-collapse: collapse;
+      }
+      
+      .footer {
+        text-align:right;
+        font-weight:bold;
+      }
+      
+      tbody >tr:nth-child(odd) {
+        background: white;
+      }
+      
+    
+  </style>
+
+   
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <!-- <h3 class="page-title">Report Card</h3> -->
+                        <div style="border:1px solid black; padding:13px;height:2784px;background-color:antiquewhite;width:950px">
+                            <div>
+                                <!-- <img src="gov1.png" style="width:143px;height:113px;float:left" alt=""> -->
+                                <h2 style="text-align:center;font-family:'Cloister';">
+                                    <b> Nehru Vidyalaya ,Amravati</b>
+                                </h2>
+                                <h2 style="text-align:center;font-family:'Cloister'">नेहरू विद्यालय,अमरावती </h2>
+                                <h2 style="text-align:center;font-family:'Cloister'">
+                                    <b> STATEMENT OF MARKS</b>
+                                </h2>
+                                <h2 style="text-align:center;font-family:'Cloister'">गुणपत्रक</h2>
+                                <div>
+                                    <div class="card-body" style="background-color:antiquewhite;border:1px solid antiquewhite">
+                                        <form>
+                                            <body>
+                                                <h6>
+                                                    <b>Name:</b>
+                                                    Jay Arora
+                                                </h6>
+                                                <h6>
+                                                    <b>Class:</b>
+                                                    1
+                                                </h6>
+                                                <h6>
+                                                    <b> Roll No.:</b>
+                                                    1
+                                                </h6>
+                                                <h6>
+                                                    <b>Session:</b>
+                                                    2022-2023
+                                                </h6>
+                                                <h6>
+                                                    <b>School:</b>
+                                                    Nehru Vidyalaya,Amravati
+                                                </h6>
+                                                <img src="{% static 'prof1.png' %}" style="float:right;margin-top:-135px;width:184px;height:155px" alt="">
+                                            </body>
+                                        </form>
+                                    </div>
+                                    <div class="card-body" style="width:900px">
+                                        <form>
+                                            <head>
+                                                <title> Student Report Card</title>
+                                                <h5> Student Marks</h5>
+                                            </head>
+                                            <body>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td>subject</td>
+                                                            <td>Unit Test 1
+                                                                <br>(10)
+                                                            </td>
+                                                            <td>Unit Test 2
+                                                                <br>(10)
+                                                            </td>
+                                                            <td>Unit Test 3
+                                                                <br>(10)
+                                                            </td>
+                                                            <td>Unit Test 4
+                                                                <br>(10)
+                                                            </td>
+                                                            <td>Semester 1
+                                                                <br>(30)
+                                                            </td>
+                                                            <td>Semester 2
+                                                                <br>(30)
+                                                            </td>
+                                                            <td>Total</td>
+                                                            <!-- <td > marks </td> -->
+                                                            <!-- <td > CO's</td> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>English</td>
+                                                            <td>
+                                                                <div style="width: 23px;" class="container">
+                                                                    <!-- <h2>Small Modal</h2> -->
+                                                                    <!-- Trigger the modal with a button -->
+                                                                    <button
+                                                                        style="text-align:center;margin-left:-39px;background-color:white;color:black;border:white"
+                                                                        type="button"
+                                                                        class="btn btn-info btn-lg"
+                                                                        data-toggle="modal"
+                                                                        data-target="#myModal"
+                                                                    >6</button>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="myModal" role="dialog">
+                                                                        <div class="modal-dialog modal-sm">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                    <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                                                                </div>
+                                                                                <div>
+                                                                                    <table style="background-color: white;">
+                                                                                        <tr>
+                                                                                            <th>Question No.</th>
+                                                                                            <th>Marks</th>
+                                                                                            <th>CO's</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>1</td>
+                                                                                            <td>0/2</td>
+                                                                                            <td>1</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>2</td>
+                                                                                            <td>0/2</td>
+                                                                                            <td>2</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>3</td>
+                                                                                            <td>2/2</td>
+                                                                                            <td>3</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>4</td>
+                                                                                            <td>2/2</td>
+                                                                                            <td>4</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>5</td>
+                                                                                            <td>2/2</td>
+                                                                                            <td>5</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td> <div style="width: 23px;" class="container">
+                                                                <!-- <h2>Small Modal</h2> -->
+                                                                <!-- Trigger the modal with a button -->
+                                                                <button
+                                                                    style="text-align:center;margin-left:-39px;background-color:white;color:black;border:white"
+                                                                    type="button"
+                                                                    class="btn btn-info btn-lg"
+                                                                    data-toggle="modal"
+                                                                    data-target="#Modal1"
+                                                                >5</button>
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="Modal1" role="dialog">
+                                                                    <div class="modal-dialog modal-sm">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                                                            </div>
+                                                                            <div>
+                                                                                <table style="background-color: white;">
+                                                                                    <tr>
+                                                                                        <th>Question No.</th>
+                                                                                        <th>Marks</th>
+                                                                                        <th>CO's</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>1</td>
+                                                                                        <td>0/2</td>
+                                                                                        <td>1</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>2</td>
+                                                                                        <td>0/2</td>
+                                                                                        <td>2</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>3</td>
+                                                                                        <td>2/2</td>
+                                                                                        <td>3</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>4</td>
+                                                                                        <td>2/2</td>
+                                                                                        <td>4</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>5</td>
+                                                                                        <td>2/2</td>
+                                                                                        <td>5</td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div></td>
+                                                            <td>6</td>
+                                                            <td>8</td>
+                                                            <td>26</td>
+                                                            <td>24</td>
+                                                            <td> 75</td>
+                                                            <!-- <td> A </td> -->
+                                                            <!-- <td> 12.0 </td> -->
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                    <tfoot>
+                                                    </table>
+                                                </body>
+                                            </form>
+                                        </div>
+                                        <div class="card" style="width:900px;margin-top:23px">
+                                            <div class="card-body">
+                                                <form>
+                                                    <head>
+                                                        <title> Student Report Card</title>
+                                                        <h5> Learning Outcomes</h5>
+                                                    </head>
+                                                    <body>
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td>subject</td>
+                                                                    <td>
+                                                                        <a class="vote-up-off" title="ASSOCIATE WORDS WITH PICTURE">LO1</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="vote-up-off" title="NAMES FAMILIAR OBJECTS SEEN IN THE PICTURE">LO2</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="vote-up-off" title="ENJOYS,RECITES RHYMES,POEMSWITH ACTION">LO3</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="vote-up-off" title="DIFFERENTIATE BETWEEN SMALL AND CAPITAL LETTERS IN PRINT">LO4</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="vote-up-off" title="ASSOCIATE WORDS WITH PICTURE">LO5</a>
+                                                                    </td>
+                                                                    <td>Total Lo's Attained</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>English</td>
+                                                                    <td><div style="width: 23px;" class="container">
+                                                                        <!-- <h2>Small Modal</h2> -->
+                                                                        <!-- Trigger the modal with a button -->
+                                                                        <button
+                                                                            style="text-align:center;margin-left:-39px;background-color:white;color:black;border:white"
+                                                                            type="button"
+                                                                            class="btn btn-info btn-lg"
+                                                                            data-toggle="modal"
+                                                                            data-target="#Modal"
+                                                                        ><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                                        <!-- Modal -->
+                                                                        <div class="modal fade" id="Modal" role="dialog">
+                                                                            <div class="modal-dialog modal-sm">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                        <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <table style="background-color: white;">
+                                                                                            <tr>
+                                                                                                <th>Question No.</th>
+                                                                                                <th>Marks</th>
+                                                                                               
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>identify the following pictures each one mark</td>
+                                                                                                <td>0/2</td>
+                                                                                                <!-- <td>2</td> -->
+                                                                                            </tr>
+                                                                                            
+                                                                                            
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                    
+                                                                    <td>
+                                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                                    </td>
+                                                                    <td>
+                                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                                    </td>
+                                                                    <td> 3</td>
+                                                                    <!-- <td> 3.0 </td> -->
+                                                                    <!-- <td> A </td> -->
+                                                                    <!-- <td> 12.0 </td> -->
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <!-- <tr>
+                                                        <td colspan="2" class="footer">Total</td>
+                                                        <td> 15.0 </td>
+                                                        <td colspan="2">55.95 </td>
+                                                      </tr> -->
+                                                                <!-- <tr> -->
+                                                                <!-- <td colspan="2" class="footer">Result</td> -->
+                                                                <!-- <td colspan="3">Pass</td> -->
+                                                                <!-- </tr> -->
+                                                            </table>
+                                                            <br>
+                                                          
+                                                            </body>
+                                                        </form>
+                                                        <!-- <footer>
+                                                <p>Copyright © 2020 Dreamguys.</p>
+                                              </footer> -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="background-color:antiquewhite;border:1px solid antiquewhite;margin-top:0px;">
+                                                    <form style="border:2px solid black;padding:23px">
+                                                        <body >
+                                                            
+                                                            <h2 >
+                                                                <b>Extra Cirricular Performance</b>
+                                                            </h2>
+                                                            <h4>
+                                                                Sports:Basketball(National Level)
+                                                            </h4>
+                                                            <h4>
+                                                                Cultural: Active Member
+                                                            </h4>
+                                                            <!-- <h6>
+                                                    <b>Class:</b>
+                                                    2
+                                                </h6>
+                                                <h6>
+                                                    <b> Roll No.:</b>
+                                                    1
+                                                </h6>
+                                                <h6>
+                                                    <b>Session:</b>
+                                                    2022-2023
+                                                </h6>
+                                                <h6>
+                                                    <b>School:</b>
+                                                    GNHS
+                                                </h6> -->
+                                                        </body>
+                                                    </form>
+                                                </div>
+                                                <div class="card-body" style="background-color:antiquewhite;border:1px solid antiquewhite">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="content container-fluid" >
+                                            <div class="page-header">
+                                              <div class="row">
+                                                <div class="col-sm-12">
+                                                  <!-- <h3 class="page-title">Welcome !</h3> -->
+                                                  <ul class="breadcrumb">
+                                                    <!-- <li class="breadcrumb-item active">Student's Dashboard</li> -->
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                                                <div class="card bg-one w-100">
+                                                  <div class="card-body">
+                                                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                                                      <div class="db-icon">
+                                                        <i class="fas fa-user-graduate" style="color: black"></i>
+                                                      </div>
+                                                      <div class="db-info">
+                                                        <h3>3/5</h3>
+                                                        <h6>LO Attainment</h6>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                                                <div class="card bg-one w-100">
+                                                  <div class="card-body">
+                                                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                                                      <div class="db-icon">
+                                                        <i class="fas fa-chalkboard" style="color: black"></i>
+                                                      </div>
+                                                      <div class="db-info">
+                                                        <h3>75%</h3>
+                                                        <h6>Current Percentage</h6>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
+                                            </div>
+                                          </div>
+                                            <!-- <div class="row" style="border:solid">
+                                              <div class="col-12">
+                                                {{chart|safe}}
+                                              </div>
+                                              
+                                            </div> -->
+                                            <br><br>
+                                           
+                                            
+                                                <h4 style="text-align:center">Cumulative Performance Chart</h4>
+                                                <div class="col-12" style="border:solid;border-radius:5px ;background-color:#F3EDED;float:left">
+                                                  <h6 style="text-align:center">English</h6>
+                                                  <hr>
+                                                  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+                                                  <canvas id="ctx" width="100%" height="50"></canvas>
+                                                  <script>
+                                                    var myChart = new Chart(ctx, {
+                                                        type: 'bar',
+                                                        data: {
+                                                            labels: ['Unit 1','Unit 2','Unit 3','Unit 4','Semester 1','Semester 2',''],
+                                                            datasets: [{
+                                                                
+                                                                label: ' marks',
+                                                                data:[22,24,21,17,46,38,0],
+                                                                backgroundColor: [
+                                                                  '#FFD792',
+                                                                    '#FABF5A',
+                                                                    '#FF9743',
+                                                                    '#E66700',
+                                                                    '#FF7200',
+                                                                    '#FF2E00'
+                                                                ],
+                                                                borderColor: [
+                                                                  '#FFD792',
+                                                                    '#FABF5A',
+                                                                    '#FF9743',
+                                                                    '#E66700',
+                                                                    '#FF7200',
+                                                                    '#FF2E00'
+                                                                ],
+                                                                borderWidth: 1
+                                                            }]
+                                                        },
+                                                        options: {
+                                                          scales: {
+                                                               xAxes: [{
+                                                                  gridLines: {
+                                                                     display: false
+                                                                  }
+                                                               }],
+                                                               yAxes: [{
+                                                                  gridLines: {
+                                                                     display: false
+                                                                  }
+                                                               }]
+                                                          }
+                                                       }
+                                                    });
+                                                
+                                            </script>
+                                                </div>
+                                                <br><br>
+                                                <hr>
+                                                <br><br>
+                                               
+                                              
+                                              </div>
+                                              <div class="col-12" style="border:solid;border-radius:5px ;background-color:#F3EDED;float:right;height:100px;width:70px;margin-top:15px">
+                                                <h6 style="text-align:center">Comparative Performance</h6>
+                                                <hr>
+                                                <canvas id="Compgrp" style="width:100%;max-width:600px"></canvas>
+                                                <script>
+                                          
+                                          
+                                                  new Chart("Compgrp", {
+                                                    type: "line",
+                                                    data: {
+                                                      labels: ['Unit 1','Unit 2','Unit 3','Unit 4','Semester 1','Semester 2'],
+                                                      datasets: [{
+                                                        fill: false,
+                                                        lineTension: 0,
+                                                        backgroundColor: "rgba(0,0,255,1.0)",
+                                                        borderColor: "rgba(0,0,255,0.1)",
+                                                        data: [23,17,20,21,40,41]
+                                                      }]
+                                                    },
+                                                    options: {
+                                                      legend: {display: false},
+                                                      scales: {
+                                                        yAxes: [{ticks: {min: 0, max:100}},
+                                                        gridLines : {
+                                                          display: false
+                                                       }
+                                                       }],
+                                                       xAxes: [
+                                                       gridLines : {
+                                                         display: false
+                                                      }
+                                                      }]
+                                                      }
+                                                    }
+                                                  });
+                                                  </script>
+                                              </div>
+                                             
+                                           
+                                          
+                                            <!-- <div class="col-12" style="background-color:white;border:solid;border-radius:5px">
+                                              <div id="apexcharts-area"></div>
+                                            </div> -->
+                                         
+                                          <!-- <div class="card-body">
+                                            <div id="apexcharts-area"></div>
+                                          </div> -->
+                                    </div>
+                                </div>
+                            </div>
+             
+
+              {% endblock %}

@@ -46,6 +46,7 @@ urlpatterns = [
             path('add_subject_outcome/',views.add_subject_outcome,name='add_subject_outcome' ),
             path('class_subject_test/',views.class_subject_test,name='class_subject_test' ),
             path('add_test_next/',views.add_test_next,name='add_test_next' ),
+            path('select_cultural/',views.select_cultural,name='select_cultural' ),
 
 
 

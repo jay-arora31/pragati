@@ -133,16 +133,15 @@ def add_student_excel(request):
                 student_obj=Student(student_roll=df['StudentRoll'][i],student_name=df['StudentName'][i],student_teacher=teacher,student_school=school,student_class=course_class,student_session=course_session)
                 student_obj.save()
             return redirect('add_student_excel')
-    classes=AssignedTeacher.objects.filter(course_teacher__t_info__email=request.user)
+    classes=SchoolAssignedTeacher.objects.filter(course_teacher__t_info__email=request.user)
     teacher_classes=[]
     teacher_session=[]
     course_subjects=[]
     for i in classes:
-        print(i.course_class)
-        print(i.course_session)
-        course_subjects.append(i.course_name.subject_name)
-        teacher_classes.append(i.course_class)
-        teacher_session.append(i.course_session)
+        print(i.course_name.subject_info.subject_class)
+       
+        course_subjects.append(i.course_name.subject_info.subject_name)
+        teacher_classes.append(i.course_name.subject_info.subject_class)
     class_filter=set(teacher_classes)
     session_filter=set(teacher_session)
     teacher_classes=[]
@@ -233,7 +232,7 @@ def add_test_next(request):
          
             teacher=Teacher.objects.get(t_info__email=request.user)
             school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
-            bind_data=school_class_subject.objects.get(subject_info__subject_name=subject,subject_info__subject_class=course_class)
+            bind_data=school_class_subject.objects.get(subject_info__subject_name=subject,subject_info__subject_class=course_class,subject_school__s_info__email=teacher.t_school.s_info.email)
    
             tot=0
             count=0
@@ -302,10 +301,11 @@ def add_test_next(request):
 def view_all_test(request):
     teacher=Teacher.objects.get(t_info__email=request.user)
     school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
-    tests=AddTest.objects.filter(school=school,teacher__t_info__email=request.user)
+    tests=SchoolAddTest.objects.filter(school=school,teacher__t_info__email=request.user)
     context={
         'tests':tests,
     }
+    print(tests)
     return render(request,'view_all_tests.html',context )
 
 
@@ -851,7 +851,7 @@ def filter_student_marks_outcomes1(request):
                     for j in student_dict[i]:
                         check_value=int(student_dict[i][j])
                         out_check=int(outcome_dict[j])
-                        if check_value>=out_check*0.6:
+                        if check_value>=out_check*0.8:
                             grade_dict[j]=(True)
                         else:
                             grade_dict[j]=(False)
@@ -936,6 +936,56 @@ def select_sport(request):
         'sport_classes':sport_classes,
     }
     return render(request,'sport/select_sport.html' ,context)
+
+
+def select_cultural(request):
+    if request.method=='POST':
+            sport_name=request.POST['sport_name']
+            sport_level=request.POST['sport_level']
+            sport_rank=request.POST['sport_rank']
+            sport_classes=request.POST['sport_classes']
+            sport_session=request.POST['sport_session']
+            roll=request.POST['roll']
+            print(
+                "Data Printing",
+            sport_name,
+            sport_level,
+            sport_rank,
+            sport_classes,
+            sport_session,
+            roll
+                
+            )
+            teacher=Teacher.objects.get(t_info__email=request.user)
+            school=School.objects.get(s_info__email=teacher.t_school.s_info.email)
+            studentinfo=Student.objects.get(
+                student_roll=roll,
+                student_class=sport_classes,
+                student_session=sport_session,
+                student_school__s_info__email=teacher.t_school.s_info.email,
+
+
+              )
+            sport_obj=Cultural(
+                student_info=studentinfo,
+                cultural_name=sport_name,
+                cultural_level=sport_level,
+                cultural_rank=sport_rank,
+                cultural_class=sport_classes,
+                cultural_session=sport_session,
+                school=school,
+                teacher=teacher
+            )
+            sport_obj.save()
+            return redirect('select_cultural')
+    classes=AssignCulturalTeacher.objects.filter(cul_teacher__t_info__email=request.user)
+    sport_classes=[]
+    for i in classes:
+        sport_classes.append(i.sport_class)
+    context={
+        'sport_classes':sport_classes,
+    }
+    return render(request,'cultural/add_achieve.html' ,context)
 
 
 def view_sport(request):

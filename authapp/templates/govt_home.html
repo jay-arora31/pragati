@@ -101,7 +101,6 @@
 </div>
 </div>
 
-<!-- 
 <div class="content container-fluid">
   <div class="page-header">
     <div class="row align-items-center">
@@ -188,8 +187,110 @@
       </div>
     </div>
   </div>
-</div> -->
+</div> 
+<div class="row" style="border:solid;border-radius:5px ;background-color:#F3EDED">
+  <h4 style="margin-left:5px">Count  of  School  in  each  District</h4>
+  <hr>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+  <canvas id="dist" width="100" height="50"></canvas>
+  <script>
+    const myChart = new Chart(dist, {
+        type: 'bar',
+        data: {
+            labels: ['Ahmednagar',
+            'Akola',
+            'Amravati',
+            'Aurangabad',
+            'Bhandara',
+            'Buldhana',
+            'Chandrapur',
+            'Dhule',
+            'Gadchiroli',
+            'Gondia',
+            'Hingoli',
+            'Jalgaon',
+            'Jalna',
+            'Kolhapur',
+            'Latur',
+            'MumbaiSuburban',
+            'Nagpur',
+            'Nanded',
+            'Nandurbar',
+            'Nashik',
+            'Osmanabad',
+            'Palghar',
+            'Parbhani',
+            'Pune',
+            'Raigad',
+            'Ratnagiri',
+            'Sangli',
+            'Satara',
+            'Sindhudurg',
+            'Solapur',
+            'Thane',
+            'Wardha',
+            'Washim',
+            'Yavatmal'],
+            datasets: [{
+                
+                label: ' Number of school in each District.',
+                data:[0,1,1],
+                backgroundColor: [
+                  '#FFBC53',
+                  '#FFBC53',
+                  '#FFBC53',
+                  '#FFBC53'
+                ],
+                borderColor: [
+                  '#FFBC53',
+                  '#FFBC53',
+                  '#FFBC53',
+                  '#FFBC53'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              grid: {
+                offset: false
+              },
+              xAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    steps:1 ,
+                    
+                    max: 68,
+                    autoSkip: false
 
+                }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                  beginAtZero: true,
+                  steps:1 ,
+                  
+                  max: 10
+              }
+          }]
+            }
+        }
+    });
+
+</script>
+</div>
+<br>
+
+
+<br><br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
 
 
 {% endblock %}

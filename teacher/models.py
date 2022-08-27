@@ -109,6 +109,8 @@ class Cultural(models.Model):
     student_info=models.ForeignKey( Student, on_delete=models.CASCADE)
     cultural_name=models.CharField(max_length =255, null=True,blank=True)
     cultural_rank=models.CharField(max_length =255, null=True,blank=True)
+    cultural_level=models.CharField(max_length =255, null=True,blank=True)
+
     cultural_class=models.IntegerField(null=True,blank=True)
     cultural_session=models.CharField(max_length =255, null=True,blank=True)
     school =models.ForeignKey( School, on_delete=models.CASCADE)

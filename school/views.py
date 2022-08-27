@@ -180,7 +180,7 @@ def assign_subject(request):
     if request.method=='POST':
             course_class=request.POST['course_class']
             course_subject=request.POST['course_subject']
-            checking=school_class_subject.objects.filter(subject_info__subject_name=course_subject,subject_info__subject_class=course_class)
+            checking=school_class_subject.objects.filter(subject_info__subject_name=course_subject,subject_school__s_info__email=request.user)
             if not checking.exists():
                 bind_data=GovtSubject.objects.get(subject_name=course_subject,subject_class=course_class)
                 school=School.objects.get(s_info__email=request.user)
