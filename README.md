@@ -1,6 +1,6 @@
 # Pragati
 
-[Presentation](https://github.com/jay-arora31/pragati/files/10995934/Pragati.pdf)
+#### Presentation : https://drive.google.com/file/d/1gXMUA_tD1yF0NlSwdO6kKj8UBfx4wmzQ/view?usp=drive_link
 
 
 ## Main Page
